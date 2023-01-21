@@ -53,6 +53,12 @@ namespace BepInPluginSample
         // =========================================================
         #endregion
 
+        static Dictionary<string,List<string>> items=new Dictionary<string,List<string>>();
+        static List<string>  itemkeys =new List<string>();
+        static string itemkey = "";
+
+
+
         public void Awake()
         {
             #region GUI
@@ -87,11 +93,44 @@ namespace BepInPluginSample
             // =========================================================
             #endregion
 
+            items[""] = new List<string>();
+            items["Item_Passive_"] = new List<string>();
+            items["Reward_"] = new List<string>();
+            items["Item_Active_"] = new List<string>();
+            items["Item_Equip_"] = new List<string>();
+            items["ItemClass_"] = new List<string>();
+            items["RandomDrop_"] = new List<string>();
+
+            itemkeys = items.Keys.ToList();
+
             System.Reflection.MemberInfo[] members = typeof(GDEItemKeys).GetMembers();
             foreach (var memberInfo in members)
             {
-                Logger.LogMessage($"Name: {memberInfo.Name} ; Member Type: {memberInfo.MemberType}");
+                //Logger.LogMessage($"Name: {memberInfo.Name}");
+                try
+                {
+                    System.Reflection.FieldInfo f = typeof(GDEItemKeys).GetField(memberInfo.Name);
+
+                    // Type: String ; IsPublic: True ; IsStatic: True ;
+                    if (f?.FieldType == typeof(String))
+                    {
+                        Logger.LogMessage($"Name: {memberInfo.Name} ; Type: {f.FieldType.Name} ; IsPublic: {f.IsPublic} ; IsStatic: {f.IsStatic} ; GetValue: {f.GetValue(null)} ;");
+
+                             if (memberInfo.Name.StartsWith("Item_Passive_")) items["Item_Passive_"].Add((String)(f.GetValue(null)));
+                        else if (memberInfo.Name.StartsWith("Reward_")) items["Reward_"].Add((String)(f.GetValue(null)));
+                        else if (memberInfo.Name.StartsWith("Item_Active_")) items["Item_Active_"].Add((String)(f.GetValue(null)));
+                        else if (memberInfo.Name.StartsWith("Item_Equip_")) items["Item_Equip_"].Add((String)(f.GetValue(null)));
+                        else if (memberInfo.Name.StartsWith("ItemClass_")) items["ItemClass_"].Add((String)(f.GetValue(null)));
+                        else if (memberInfo.Name.StartsWith("RandomDrop_")) items["RandomDrop_"].Add((String)(f.GetValue(null)));
+                        
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.LogWarning(e);
+                }
             }
+
         }
 
         #region GUI
@@ -269,11 +308,11 @@ namespace BepInPluginSample
 
                 if (GUILayout.Button("get rewards"))
                 {
-                    List<string> eventList = new List<string>();
-                    GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.RandomEvent, out eventList);
-                    FieldEventSelect.FieldEventSelectOpen(eventList, null, StageSystem.instance.RandomEventMainObject_S1, true);
+                    InventoryManager.Reward(new List<ItemBase>
+                    {
+                        ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 10)
+                    });
                 }
-
 
                 if (GUILayout.Button("get reward1"))
                 {
@@ -349,6 +388,14 @@ namespace BepInPluginSample
                 }
 
 
+
+                if (GUILayout.Button("get allevent"))
+                {
+                    List<string> eventList = new List<string>();
+                    GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.RandomEvent, out eventList);
+                    FieldEventSelect.FieldEventSelectOpen(eventList, null, StageSystem.instance.RandomEventMainObject_S1, true);
+                }
+
                 if (GUILayout.Button("save"))
                 {
                     SaveManager.savemanager.ProgressOneSave();
@@ -385,6 +432,11 @@ namespace BepInPluginSample
                         if (GUILayout.Button($"WaitCount ={1 + PlayData.PartySpeed} ; {BattleSystem.instance.AllyTeam.WaitCount}")) { BattleSystem.instance.AllyTeam.WaitCount = 1 + PlayData.PartySpeed; }
 
                         GUILayout.Label($"BattleChar count {BattleSystem.instance.AllyTeam.AliveChars.Count}");
+                        if (GUILayout.Button($"HP = /=2 ; "))
+                            foreach (BattleChar c in BattleSystem.instance.AllyTeam.AliveChars)
+                            {
+                                c.HP = c.Info.get_stat.maxhp / 2;
+                            }
                         foreach (BattleChar c in BattleSystem.instance.AllyTeam.AliveChars)
                         {
                             GUILayout.Label($"{c.Info.Name}");
@@ -409,6 +461,18 @@ namespace BepInPluginSample
                     //}
                 }
 
+                GUILayout.Label("---");
+                foreach (var i in itemkeys)
+                {
+                    if (GUILayout.Button($"{i}")) { itemkey=i; }
+                }
+                GUILayout.Label($"---{itemkey}---");
+                foreach (var i in items[itemkey])
+                {
+                    if (GUILayout.Button($"{i}")) { }
+                }
+                GUILayout.Label("---");
+                
                 #region GUI
                 GUILayout.EndScrollView();
             }
@@ -431,13 +495,14 @@ namespace BepInPluginSample
         [HarmonyPatch(typeof(BattleAlly), "Damage",
             typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
         [HarmonyPrefix]
-        public static void Damage(ref int Dmg)
+        public static void Damage(BattleAlly __instance, ref int Dmg)
         {
             if (!noDamage.Value)
             {
                 return;
             }
             Dmg = 0;
+            __instance.Recovery = __instance.Info.get_stat.maxhp;
         }
 
         [HarmonyPatch(typeof(BattleTeam), "AP", MethodType.Setter)]
@@ -451,10 +516,10 @@ namespace BepInPluginSample
             __0 = __instance.MAXAP;
         }
 
-        
+
         [HarmonyPatch(typeof(BattleTeam), "GetDiscardCount", MethodType.Getter)]
         [HarmonyPostfix]
-        public static void GetDiscardCount( ref int __result)//BattleTeam __instance,
+        public static void GetDiscardCount(ref int __result)//BattleTeam __instance,
         {
             if (!addDiscard.Value)
             {
