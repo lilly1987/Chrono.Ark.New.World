@@ -485,7 +485,13 @@ namespace BepInPluginSample
                 GUILayout.Label($"--- {itemkey} ---");
                 foreach (var i in items[itemkey])
                 {
-                    if (GUILayout.Button($"{i}")) { InventoryManager.Reward(ItemBase.GetItem(i)); }
+                    if (GUILayout.Button($"{i}")) {
+                        if (Input.GetKey(KeyCode.LeftShift))
+                        {
+                            InventoryManager.Reward(ItemBase.GetItem(i,10));
+                        }else
+                        InventoryManager.Reward(ItemBase.GetItem(i)); 
+                    }
                 }
                 GUILayout.Label("--- reward ---");
 
@@ -496,9 +502,25 @@ namespace BepInPluginSample
                 GUILayout.Label($"--- {rewardkey} ---");
                 foreach (var i in rewards[rewardkey])
                 {
-                    if (GUILayout.Button($"{i}")) { InventoryManager.Reward(InventoryManager.RewardKey(i, false)); }
+                    if (GUILayout.Button($"{i}")) {
+                        if (Input.GetKey(KeyCode.LeftShift))
+                        {
+                            List<ItemBase> list12 = new List<ItemBase>();
+                            list12.AddRange(InventoryManager.RewardKey(i, false));
+                            list12.AddRange(InventoryManager.RewardKey(i, false));
+                            list12.AddRange(InventoryManager.RewardKey(i, false));
+                            list12.AddRange(InventoryManager.RewardKey(i, false));
+                            list12.AddRange(InventoryManager.RewardKey(i, false));
+                            list12.AddRange(InventoryManager.RewardKey(i, false));
+                            list12.AddRange(InventoryManager.RewardKey(i, false));
+                            list12.AddRange(InventoryManager.RewardKey(i, false));
+                            InventoryManager.Reward(list12); 
+                        }
+                        else
+                            InventoryManager.Reward(InventoryManager.RewardKey(i, false)); 
+                    }
                 }
-                GUILayout.Label("---");
+                GUILayout.Label($"--- {Input.GetKey(KeyCode.LeftShift)} ---");
 
                 #region GUI
                 GUILayout.EndScrollView();
