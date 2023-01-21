@@ -210,6 +210,8 @@ namespace BepInPluginSample
                 if (GUILayout.Button($"0 Mna {noAP.Value}")) { noAP.Value = !noAP.Value; }
                 if (GUILayout.Button($"MyTurn add Discard 10 {addDiscard.Value}")) { addDiscard.Value = !addDiscard.Value; }
 
+                if (GUILayout.Button("TimeMoney +1000")) { SaveManager.NowData.TimeMoney += 1000; }
+
                 if (GUILayout.Button("gold +100")) { PlayData.Gold += 100; }
                 if (GUILayout.Button("gold *10")) { PlayData.Gold *= 10; }
 
@@ -220,13 +222,13 @@ namespace BepInPluginSample
                 {
                     UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(new List<ItemBase>
                         {
-                            //PlayData.GetPassiveRandom(),
-                            //PlayData.GetPassiveRandom(),
-                            //PlayData.GetPassiveRandom(),
-                            //PlayData.GetPassiveRandom(),
-                            //PlayData.GetPassiveRandom(),
-                            //PlayData.GetPassiveRandom(),
-                            //PlayData.GetPassiveRandom(),
+                            PlayData.GetPassiveRandom(),
+                            PlayData.GetPassiveRandom(),
+                            PlayData.GetPassiveRandom(),
+                            PlayData.GetPassiveRandom(),
+                            PlayData.GetPassiveRandom(),
+                            PlayData.GetPassiveRandom(),
+                            PlayData.GetPassiveRandom(),
                             PlayData.GetPassiveRandom()
                         });
                 }
@@ -450,6 +452,18 @@ namespace BepInPluginSample
         }
 
         
+        [HarmonyPatch(typeof(BattleTeam), "GetDiscardCount", MethodType.Getter)]
+        [HarmonyPostfix]
+        public static void GetDiscardCount( ref int __result)//BattleTeam __instance,
+        {
+            if (!addDiscard.Value)
+            {
+                return;
+            }
+            __result += 10;
+        }
+
+        /*
         [HarmonyPatch(typeof(BattleTeam), "MyTurn")]
         [HarmonyPostfix]
         public static void SetAP(BattleTeam __instance)
@@ -460,7 +474,7 @@ namespace BepInPluginSample
             }
             __instance.DiscardCount = __instance.GetDiscardCount+10;
         }
-
+        */
 
 
         /*
