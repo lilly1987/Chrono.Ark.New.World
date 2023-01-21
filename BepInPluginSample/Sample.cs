@@ -53,9 +53,13 @@ namespace BepInPluginSample
         // =========================================================
         #endregion
 
-        static Dictionary<string,List<string>> items=new Dictionary<string,List<string>>();
-        static List<string>  itemkeys =new List<string>();
+        static Dictionary<string, List<string>> items = new Dictionary<string, List<string>>();
+        static List<string> itemkeys = new List<string>();
         static string itemkey = "";
+
+        static Dictionary<string, List<string>> rewards = new Dictionary<string, List<string>>();
+        static List<string> rewardkeys = new List<string>();
+        static string rewardkey = "";
 
 
 
@@ -94,14 +98,23 @@ namespace BepInPluginSample
             #endregion
 
             items[""] = new List<string>();
-            items["Item_Passive_"] = new List<string>();
-            items["Reward_"] = new List<string>();
+            rewards[""] = new List<string>();
+
+            // InventoryManager.Reward(ItemBase.GetItem(
+            items["Item_Consume_"] = new List<string>();
             items["Item_Active_"] = new List<string>();
             items["Item_Equip_"] = new List<string>();
-            items["ItemClass_"] = new List<string>();
+            items["Item_Scroll_"] = new List<string>();
+            items["Item_Misc_"] = new List<string>();
+            items["Item_Passive_"] = new List<string>();
+            items["Item_Potions_"] = new List<string>();
+            //items["ItemClass_"] = new List<string>();
             items["RandomDrop_"] = new List<string>();
 
+            rewards["Reward_"] = new List<string>();
+
             itemkeys = items.Keys.ToList();
+            rewardkeys = rewards.Keys.ToList();
 
             System.Reflection.MemberInfo[] members = typeof(GDEItemKeys).GetMembers();
             foreach (var memberInfo in members)
@@ -116,13 +129,17 @@ namespace BepInPluginSample
                     {
                         Logger.LogMessage($"Name: {memberInfo.Name} ; Type: {f.FieldType.Name} ; IsPublic: {f.IsPublic} ; IsStatic: {f.IsStatic} ; GetValue: {f.GetValue(null)} ;");
 
-                             if (memberInfo.Name.StartsWith("Item_Passive_")) items["Item_Passive_"].Add((String)(f.GetValue(null)));
-                        else if (memberInfo.Name.StartsWith("Reward_")) items["Reward_"].Add((String)(f.GetValue(null)));
+                        if (memberInfo.Name.StartsWith("Item_Consume_")) items["Item_Consume_"].Add((String)(f.GetValue(null)));
                         else if (memberInfo.Name.StartsWith("Item_Active_")) items["Item_Active_"].Add((String)(f.GetValue(null)));
                         else if (memberInfo.Name.StartsWith("Item_Equip_")) items["Item_Equip_"].Add((String)(f.GetValue(null)));
-                        else if (memberInfo.Name.StartsWith("ItemClass_")) items["ItemClass_"].Add((String)(f.GetValue(null)));
+                        else if (memberInfo.Name.StartsWith("Item_Scroll_")) items["Item_Scroll_"].Add((String)(f.GetValue(null)));
+                        else if (memberInfo.Name.StartsWith("Item_Misc_")) items["Item_Misc_"].Add((String)(f.GetValue(null)));
+                        else if (memberInfo.Name.StartsWith("Item_Passive_")) items["Item_Passive_"].Add((String)(f.GetValue(null)));
+                        else if (memberInfo.Name.StartsWith("Item_Potions_")) items["Item_Potions_"].Add((String)(f.GetValue(null)));
+                        //else if (memberInfo.Name.StartsWith("ItemClass_")) items["ItemClass_"].Add((String)(f.GetValue(null)));
                         else if (memberInfo.Name.StartsWith("RandomDrop_")) items["RandomDrop_"].Add((String)(f.GetValue(null)));
-                        
+                        else if (memberInfo.Name.StartsWith("Reward_")) rewards["Reward_"].Add((String)(f.GetValue(null)));
+
                     }
                 }
                 catch (Exception e)
@@ -245,16 +262,18 @@ namespace BepInPluginSample
                 // =========================================================
                 #endregion
 
+                if (GUILayout.Button("save")) SaveManager.savemanager.ProgressOneSave();
+
                 if (GUILayout.Button($"0 Damage {noDamage.Value}")) { noDamage.Value = !noDamage.Value; }
                 if (GUILayout.Button($"0 Mna {noAP.Value}")) { noAP.Value = !noAP.Value; }
                 if (GUILayout.Button($"MyTurn add Discard 10 {addDiscard.Value}")) { addDiscard.Value = !addDiscard.Value; }
 
                 if (GUILayout.Button("TimeMoney +1000")) { SaveManager.NowData.TimeMoney += 1000; }
 
-                if (GUILayout.Button("gold +100")) { PlayData.Gold += 100; }
+                if (GUILayout.Button("gold +1000")) { PlayData.Gold += 1000; }
                 if (GUILayout.Button("gold *10")) { PlayData.Gold *= 10; }
 
-                if (GUILayout.Button("Soul +10")) { PlayData.Soul += 10; }
+                if (GUILayout.Button("Soul +1000")) { PlayData.Soul += 1000; }
                 if (GUILayout.Button("Soul *10")) { PlayData.Soul *= 10; }
 
                 if (GUILayout.Button("GetPassiveRandom"))
@@ -293,6 +312,8 @@ namespace BepInPluginSample
                     });
                 }
 
+
+
                 if (GUILayout.Button("get potions"))
                 {
                     List<string> list9 = new List<string>();
@@ -314,7 +335,7 @@ namespace BepInPluginSample
                     });
                 }
 
-                if (GUILayout.Button("get reward1"))
+                if (GUILayout.Button("get Jar*2 SmallReward Sou*10"))
                 {
                     List<ItemBase> list12 = new List<ItemBase>();
                     list12.AddRange(InventoryManager.RewardKey(GDEItemKeys.Reward_R_Jar, false));
@@ -325,7 +346,7 @@ namespace BepInPluginSample
                 }
 
 
-                if (GUILayout.Button("get reward2"))
+                if (GUILayout.Button("get Reward_Ancient_Chest4"))
                 {
                     Item_Equip item = InventoryManager.RewardKey(GDEItemKeys.Reward_Ancient_Chest4, false)[0] as Item_Equip;
                     Item_Equip item_Equip = InventoryManager.RewardKey(GDEItemKeys.Reward_Ancient_Chest4, false)[0] as Item_Equip;
@@ -360,7 +381,7 @@ namespace BepInPluginSample
                     });
                 }
 
-                if (GUILayout.Button("get reward5"))
+                if (GUILayout.Button("get reward5 JokerCard"))
                 {
                     InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Passive_JokerCard));
                 }
@@ -387,8 +408,6 @@ namespace BepInPluginSample
                     });
                 }
 
-
-
                 if (GUILayout.Button("get allevent"))
                 {
                     List<string> eventList = new List<string>();
@@ -396,10 +415,7 @@ namespace BepInPluginSample
                     FieldEventSelect.FieldEventSelectOpen(eventList, null, StageSystem.instance.RandomEventMainObject_S1, true);
                 }
 
-                if (GUILayout.Button("save"))
-                {
-                    SaveManager.savemanager.ProgressOneSave();
-                }
+
 
                 /*
                 if (GUILayout.Button("Soul *10")) {
@@ -461,18 +477,29 @@ namespace BepInPluginSample
                     //}
                 }
 
-                GUILayout.Label("---");
+                GUILayout.Label("--- item ---");
                 foreach (var i in itemkeys)
                 {
-                    if (GUILayout.Button($"{i}")) { itemkey=i; }
+                    if (GUILayout.Button($"{i}")) { itemkey = i; }
                 }
-                GUILayout.Label($"---{itemkey}---");
+                GUILayout.Label($"--- {itemkey} ---");
                 foreach (var i in items[itemkey])
                 {
-                    if (GUILayout.Button($"{i}")) { }
+                    if (GUILayout.Button($"{i}")) { InventoryManager.Reward(ItemBase.GetItem(i)); }
+                }
+                GUILayout.Label("--- reward ---");
+
+                foreach (var i in rewardkeys)
+                {
+                    if (GUILayout.Button($"{i}")) { rewardkey = i; }
+                }
+                GUILayout.Label($"--- {rewardkey} ---");
+                foreach (var i in rewards[rewardkey])
+                {
+                    if (GUILayout.Button($"{i}")) { InventoryManager.Reward(InventoryManager.RewardKey(i, false)); }
                 }
                 GUILayout.Label("---");
-                
+
                 #region GUI
                 GUILayout.EndScrollView();
             }
@@ -528,6 +555,31 @@ namespace BepInPluginSample
             __result += 10;
         }
 
+        [HarmonyPatch(typeof(InventoryManager), "Reward", typeof(List<ItemBase>))]
+        [HarmonyPrefix]
+        public static void Reward(List<ItemBase> Items)//InventoryManager __instance,
+        {
+            foreach (var item in Items)
+            {
+                logger.LogMessage($"Reward1 : {item.GetName}");
+            }
+        }
+
+        [HarmonyPatch(typeof(InventoryManager), "Reward", typeof(ItemBase))]
+        [HarmonyPrefix]
+        public static void Reward(ItemBase Item)//InventoryManager __instance,
+        {
+            logger.LogMessage($"Reward2 : {Item.GetName}");
+        }
+        /*
+         // public static void Reward(string rewardkey)
+        [HarmonyPatch(typeof(InventoryManager), "Reward", typeof(string))]//, MethodType.StaticConstructor
+        [HarmonyPrefix]
+        public static void Reward(string rewardkey)//InventoryManager __instance,
+        {
+            logger.LogMessage($"Reward3 : {rewardkey}");
+        }
+        */
         /*
         [HarmonyPatch(typeof(BattleTeam), "MyTurn")]
         [HarmonyPostfix]
