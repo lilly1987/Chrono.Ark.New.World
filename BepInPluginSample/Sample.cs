@@ -327,7 +327,7 @@ namespace BepInPluginSample
                     list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 5));
                     list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy, 5));
 
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven, 4));
 
                     InventoryManager.Reward(list12);
                 }
