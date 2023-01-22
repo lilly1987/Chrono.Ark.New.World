@@ -355,13 +355,13 @@ namespace BepInPluginSample
 
                     InventoryManager.Reward(list12);
                 }
-                
-                if (GUILayout.Button($"get my ArtifactPlusInven"))
+
+                if (GUILayout.Button($"get my ArtifactPlusInven {items["Item_Passive_"].Count - 4}"))
                 {
 
                     List<ItemBase> list12 = new List<ItemBase>();
 
-                    for (int i = 0; i < items["Item_Passive_"].Count-4; i++)
+                    for (int i = 0; i < items["Item_Passive_"].Count - 4; i++)
                     {
                         list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
                     }
@@ -667,17 +667,44 @@ namespace BepInPluginSample
                     if (GUILayout.Button($"{i}")) { itemkey = i; }
                 }
                 GUILayout.Label($"--- {itemkey} ---");
-                if (GUILayout.Button($"grt all {items[itemkey].Count}"))
+                if (GUILayout.Button($"grt 16"))
+                {
+                    string s;
+                    var _sitems = new List<string>(items[itemkey]);
+                    List<ItemBase> _items = new List<ItemBase>();
+                    int c= items[itemkey].Count >16 ? 16 : items[itemkey].Count;
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        for (int i = 0; i < c; i++)
+                        {
+                            s = _sitems.Random();
+                            _items.Add(ItemBase.GetItem(s, 9));
+                            _sitems.Remove(s);
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < c; i++)
+                        {
+                            s = _sitems.Random();
+                            _items.Add(ItemBase.GetItem(s));
+                            _sitems.Remove(s);
+                        }
+                    }
+                    InventoryManager.Reward(_items);
+                }
+                if (GUILayout.Button($"grt all {items[itemkey].Count} : bug!"))
                 {
                     List<ItemBase> list = new List<ItemBase>();
                     if (Input.GetKey(KeyCode.LeftShift))
                     {
-                        foreach (var i in items[itemkey]) { 
+                        foreach (var i in items[itemkey])
+                        {
                             list.Add(ItemBase.GetItem(i, 10));
-                            if (items[itemkey].Count>=16)
+                            if (list.Count >= 16)
                             {
                                 InventoryManager.Reward(list);
-                                items[itemkey].Clear();
+                                list.Clear();
                             }
                         }
                     }
@@ -686,14 +713,14 @@ namespace BepInPluginSample
                         foreach (var i in items[itemkey])
                         {
                             list.Add(ItemBase.GetItem(i));
-                            if (items[itemkey].Count >= 16)
+                            if (list.Count >= 16)
                             {
                                 InventoryManager.Reward(list);
-                                items[itemkey].Clear();
+                                list.Clear();
                             }
                         }
                     }
-                    if (items[itemkey].Count >0 )
+                    if (list.Count > 0)
                         InventoryManager.Reward(list);
                 }
                 GUILayout.Label($"--- {itemkey} ---");
