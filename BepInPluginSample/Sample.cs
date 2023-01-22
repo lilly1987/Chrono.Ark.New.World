@@ -47,6 +47,7 @@ namespace BepInPluginSample
         private static ConfigEntry<bool> noDamage;
         private static ConfigEntry<bool> noAP;
         private static ConfigEntry<bool> addDiscard;
+        private static ConfigEntry<bool> isFogout;
         // private static ConfigEntry<float> uiW;
         // private static ConfigEntry<float> xpMulti;
 
@@ -92,6 +93,7 @@ namespace BepInPluginSample
             noDamage = Config.Bind("game", "noDamage", true);
             noAP = Config.Bind("game", "noMana", true);
             addDiscard = Config.Bind("game", "addDiscard", true);
+            isFogout = Config.Bind("game", "isFogout", true);
             // xpMulti = Config.Bind("game", "xpMulti", 2f);
 
             // =========================================================
@@ -127,7 +129,7 @@ namespace BepInPluginSample
                     // Type: String ; IsPublic: True ; IsStatic: True ;
                     if (f?.FieldType == typeof(String))
                     {
-                        Logger.LogMessage($"Name: {memberInfo.Name} ; Type: {f.FieldType.Name} ; IsPublic: {f.IsPublic} ; IsStatic: {f.IsStatic} ; GetValue: {f.GetValue(null)} ;");
+                        //Logger.LogMessage($"Name: {memberInfo.Name} ; Type: {f.FieldType.Name} ; IsPublic: {f.IsPublic} ; IsStatic: {f.IsStatic} ; GetValue: {f.GetValue(null)} ;");
 
                         if (memberInfo.Name.StartsWith("Item_Consume_")) items["Item_Consume_"].Add((String)(f.GetValue(null)));
                         else if (memberInfo.Name.StartsWith("Item_Active_")) items["Item_Active_"].Add((String)(f.GetValue(null)));
@@ -262,11 +264,18 @@ namespace BepInPluginSample
                 // =========================================================
                 #endregion
 
-                if (GUILayout.Button("save")) SaveManager.savemanager.ProgressOneSave();
+
+                GUILayout.Label("---  ---");
 
                 if (GUILayout.Button($"0 Damage {noDamage.Value}")) { noDamage.Value = !noDamage.Value; }
                 if (GUILayout.Button($"0 Mna {noAP.Value}")) { noAP.Value = !noAP.Value; }
                 if (GUILayout.Button($"MyTurn add Discard 10 {addDiscard.Value}")) { addDiscard.Value = !addDiscard.Value; }
+                if (GUILayout.Button($"isFogout {isFogout.Value}")) { isFogout.Value = !isFogout.Value; }
+
+                GUILayout.Label("---  ---");
+
+                if (GUILayout.Button("save")) SaveManager.savemanager.ProgressOneSave();
+                if (GUILayout.Button("Mapping")) Fogout();
 
                 if (GUILayout.Button("TimeMoney +1000")) { SaveManager.NowData.TimeMoney += 1000; }
 
@@ -275,6 +284,55 @@ namespace BepInPluginSample
 
                 if (GUILayout.Button("Soul +1000")) { PlayData.Soul += 1000; }
                 if (GUILayout.Button("Soul *10")) { PlayData.Soul *= 10; }
+
+                GUILayout.Label("---  ---");
+
+                if (GUILayout.Button($"get my Passive"))
+                {
+                    List<ItemBase> list12 = new List<ItemBase>();
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_ShadowOrb));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_MagicLamp));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_GolemRelic));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_JokerCard));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_MagicBerry));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_BronzeMotor));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Memoryfragment));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_CuteComputer));
+
+                    InventoryManager.Reward(list12);
+                }
+
+                if (GUILayout.Button($"get my Equip"))
+                {
+                    List<ItemBase> list12 = new List<ItemBase>();
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_FlameDarkSword));
+
+                    InventoryManager.Reward(list12);
+                }
+
+                if (GUILayout.Button($"get my Item"))
+                {
+
+                    List<ItemBase> list12 = new List<ItemBase>();
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Enchant, 9));
+                    //list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Mapping, 9));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Uncurse, 9));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Transfer, 9));
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_Celestial, 18));
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare, 5));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 5));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy, 5));
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
+
+                    InventoryManager.Reward(list12);
+                }
+
+                GUILayout.Label("---  ---");
 
                 if (GUILayout.Button("GetPassiveRandom"))
                 {
@@ -431,6 +489,8 @@ namespace BepInPluginSample
                 }
                 */
 
+                GUILayout.Label("---  ---");
+
                 if (BattleSystem.instance != null)
                 {
                     if (BattleSystem.instance.AllyTeam != null)
@@ -522,6 +582,8 @@ namespace BepInPluginSample
                 }
                 GUILayout.Label($"--- {Input.GetKey(KeyCode.LeftShift)} ---");
 
+
+
                 #region GUI
                 GUILayout.EndScrollView();
             }
@@ -530,6 +592,13 @@ namespace BepInPluginSample
             #endregion
         }
 
+        private static void Fogout()
+        {
+            if (StageSystem.instance.gameObject.activeInHierarchy && StageSystem.instance != null && StageSystem.instance.Map != null)
+            {
+                StageSystem.instance.Fogout(false);
+            }
+        }
 
         public void OnDisable()
         {
@@ -583,7 +652,7 @@ namespace BepInPluginSample
         {
             foreach (var item in Items)
             {
-                logger.LogMessage($"Reward1 : {item.GetName}");
+                logger.LogMessage($"Reward1 : {item.itemkey}");
             }
         }
 
@@ -591,8 +660,22 @@ namespace BepInPluginSample
         [HarmonyPrefix]
         public static void Reward(ItemBase Item)//InventoryManager __instance,
         {
-            logger.LogMessage($"Reward2 : {Item.GetName}");
+            logger.LogMessage($"Reward2 : {Item.itemkey}");
         }
+
+        [HarmonyPatch(typeof(FieldSystem), "StageStart", typeof(string))]
+        [HarmonyPostfix]
+        public static void StageStart()//InventoryManager __instance, string StageKey
+        {
+            //logger.LogMessage($"Reward2 : {Item.GetName}");
+            if (!isFogout.Value)
+            {
+                return;
+            }
+            Fogout();
+        }
+
+
         /*
          // public static void Reward(string rewardkey)
         [HarmonyPatch(typeof(InventoryManager), "Reward", typeof(string))]//, MethodType.StaticConstructor
