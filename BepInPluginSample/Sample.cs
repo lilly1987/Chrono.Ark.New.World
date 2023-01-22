@@ -356,12 +356,14 @@ namespace BepInPluginSample
                     InventoryManager.Reward(list12);
                 }
 
-                if (GUILayout.Button($"get my ArtifactPlusInven {items["Item_Passive_"].Count - 4}"))
+                //if (GUILayout.Button($"get my ArtifactPlusInven {items["Item_Passive_"].Count - 4}"))
+                if (GUILayout.Button($"get my ArtifactPlusInven 4"))
                 {
 
                     List<ItemBase> list12 = new List<ItemBase>();
 
-                    for (int i = 0; i < items["Item_Passive_"].Count - 4; i++)
+                    //for (int i = 0; i < items["Item_Passive_"].Count - 4; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
                     }
