@@ -48,6 +48,7 @@ namespace BepInPluginSample
         private static ConfigEntry<bool> noAP;
         private static ConfigEntry<bool> addDiscard;
         private static ConfigEntry<bool> isFogout;
+        //private static ConfigEntry<bool> isMaxHpUp;
         // private static ConfigEntry<float> uiW;
         // private static ConfigEntry<float> xpMulti;
 
@@ -94,6 +95,7 @@ namespace BepInPluginSample
             noAP = Config.Bind("game", "noMana", true);
             addDiscard = Config.Bind("game", "addDiscard", true);
             isFogout = Config.Bind("game", "isFogout", true);
+            //isMaxHpUp = Config.Bind("game", "isMaxHpUp", true);
             // xpMulti = Config.Bind("game", "xpMulti", 2f);
 
             // =========================================================
@@ -271,6 +273,7 @@ namespace BepInPluginSample
                 if (GUILayout.Button($"0 Mna {noAP.Value}")) { noAP.Value = !noAP.Value; }
                 if (GUILayout.Button($"MyTurn add Discard 10 {addDiscard.Value}")) { addDiscard.Value = !addDiscard.Value; }
                 if (GUILayout.Button($"isFogout {isFogout.Value}")) { isFogout.Value = !isFogout.Value; }
+                //if (GUILayout.Button($"isMaxHpUp {isMaxHpUp.Value}")) { isMaxHpUp.Value = !isMaxHpUp.Value; }
 
                 GUILayout.Label("---  ---");
 
@@ -303,16 +306,70 @@ namespace BepInPluginSample
                     InventoryManager.Reward(list12);
                 }
 
-                if (GUILayout.Button($"get my Equip"))
+                if (GUILayout.Button($"select my Equip Legendary"))
                 {
                     List<ItemBase> list12 = new List<ItemBase>();
+                    foreach (var item in PlayData.TSavedata.EquipList_Legendary)
+                    {
+                        list12.Add(ItemBase.GetItem(item));
+                    }
+                    if (list12.Count > 0)
+                    {
+                        UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(list12);
+                    }
+                }
 
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_FlameDarkSword));
+                if (GUILayout.Button($"select my Equip Unique"))
+                {
+                    List<ItemBase> list12 = new List<ItemBase>();
+                    foreach (var item in PlayData.TSavedata.EquipList_Unique)
+                    {
+                        list12.Add(ItemBase.GetItem(item));
+                    }
+                    if (list12.Count > 0)
+                    {
+                        UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(list12);
+                    }
+                }
+
+                if (GUILayout.Button($"select my Equip "))
+                {
+                    UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(Equips());
+                }
+
+                if (GUILayout.Button($"get my Equip"))
+                {
+                    InventoryManager.Reward(Equips());
+                }
+
+                if (GUILayout.Button($"get my Item"))
+                {
+
+                    List<ItemBase> list12 = new List<ItemBase>();
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_Celestial, 30));
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare, 5));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 5 * 4));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy, 5));
+
+                    InventoryManager.Reward(list12);
+                }
+                
+                if (GUILayout.Button($"get my ArtifactPlusInven"))
+                {
+
+                    List<ItemBase> list12 = new List<ItemBase>();
+
+                    for (int i = 0; i < items["Item_Passive_"].Count-4; i++)
+                    {
+                        list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
+                    }
 
                     InventoryManager.Reward(list12);
                 }
 
-                if (GUILayout.Button($"get my Item"))
+                if (GUILayout.Button($"get my Scroll"))
                 {
 
                     List<ItemBase> list12 = new List<ItemBase>();
@@ -320,14 +377,6 @@ namespace BepInPluginSample
                     //list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Mapping, 9));
                     list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Uncurse, 9));
                     list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Transfer, 9));
-
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_Celestial, 18));
-
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare, 5));
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 5));
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy, 5));
-
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven, 4));
 
                     InventoryManager.Reward(list12);
                 }
@@ -474,6 +523,59 @@ namespace BepInPluginSample
                 }
 
 
+                if (GUILayout.Button("get roulette"))
+                {
+                    List<ItemBase> list = new List<ItemBase>();
+                    list.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SmallBarrierMachine));
+                    list.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_Item_Key));
+                    list.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter));
+                    list.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_GasMask));
+                    list.Add(ItemBase.GetItem(GDEItemKeys.Item_Active_PotLid));
+                    UIManager.InstantiateActive(UIManager.inst.RouletteUI).GetComponent<UI_MiniGame_Roulette>().Init();
+                }
+
+
+                if (GUILayout.Button("get stageevent"))
+                {
+                    List<string> list2 = new List<string>();
+                    foreach (GDERandomEventData gderandomEventData in StageSystem.instance.Map.StageData.RandomEventList)
+                    {
+                        list2.Add(gderandomEventData.Key);
+                    }
+                    FieldEventSelect.FieldEventSelectOpen(list2, null, StageSystem.instance.RandomEventMainObject_S1, true);
+                }
+
+
+
+                if (GUILayout.Button("get equipget"))
+                {
+                    InventoryManager.Reward(new List<ItemBase>
+                    {
+                        ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato),
+                        ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato_0),
+                        ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato_1),
+                        ItemBase.GetItem(GDEItemKeys.Item_Equip_FoxOrb),
+                        ItemBase.GetItem(GDEItemKeys.Item_Equip_FoxOrb_0),
+                        ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
+                    });
+                }
+
+
+
+                if (GUILayout.Button("get fastrun"))
+                {
+                    StageSystem.instance.Player.GetComponent<PlayerController>().FastRun();
+                }
+
+
+
+
+                if (GUILayout.Button("get fly"))
+                {
+                    StageSystem.instance.Player.GetComponent<PlayerController>().Fly();
+                }
+
+
 
                 /*
                 if (GUILayout.Button("Soul *10")) {
@@ -489,33 +591,55 @@ namespace BepInPluginSample
                 }
                 */
 
-                GUILayout.Label("---  ---");
+                GUILayout.Label("--- PlayData ---");
+
+                if (PlayData.TSavedata != null)
+                {
+                    if (GUILayout.Button($"maxhp +500 ;"))
+                        foreach (var c in PlayData.TSavedata.Party)
+                            c.OriginStat.maxhp += 500;
+
+                    foreach (var c in PlayData.TSavedata.Party)
+                    {
+                        GUILayout.Label($"{c.Name}");
+                        if (GUILayout.Button($"maxhp +500 ; {c.OriginStat.maxhp}")) { c.OriginStat.maxhp += 500; }
+                    }
+                }
+                GUILayout.Label("--- FieldSystem ---");
+
+                if (FieldSystem.instance != null)
+                {
+
+                }
+
+                GUILayout.Label("--- BattleSystem ---");
 
                 if (BattleSystem.instance != null)
                 {
-                    if (BattleSystem.instance.AllyTeam != null)
+                    var allyTeam = BattleSystem.instance.AllyTeam;
+                    if (allyTeam != null)
                     {
                         GUILayout.Label("AllyTeam");
 
-                        if (GUILayout.Button($"Mana {BattleSystem.instance.AllyTeam.AP} +10")) { BattleSystem.instance.AllyTeam.AP += 10; }
+                        if (GUILayout.Button($"Mana {allyTeam.AP} +10")) { allyTeam.AP += 10; }
 
-                        if (GUILayout.Button($"ActionCount =1 ; {BattleSystem.instance.AllyTeam.LucyAlly.ActionCount}")) { BattleSystem.instance.AllyTeam.LucyAlly.ActionCount = 1; }
-                        if (GUILayout.Button($"Overload =1 ; {BattleSystem.instance.AllyTeam.LucyAlly.Overload}")) { BattleSystem.instance.AllyTeam.LucyAlly.Overload = 1; }
-                        if (GUILayout.Button($"ActionNum =0 ; {BattleSystem.instance.AllyTeam.LucyAlly.ActionNum}")) { BattleSystem.instance.AllyTeam.LucyAlly.ActionNum = 0; }
+                        if (GUILayout.Button($"ActionCount =1 ; {allyTeam.LucyAlly.ActionCount}")) { allyTeam.LucyAlly.ActionCount = 1; }
+                        if (GUILayout.Button($"Overload =1 ; {allyTeam.LucyAlly.Overload}")) { allyTeam.LucyAlly.Overload = 1; }
+                        if (GUILayout.Button($"ActionNum =0 ; {allyTeam.LucyAlly.ActionNum}")) { allyTeam.LucyAlly.ActionNum = 0; }
 
-                        if (GUILayout.Button($"UsedDeckToDeckNum =0 ; {BattleSystem.instance.AllyTeam.UsedDeckToDeckNum}")) { BattleSystem.instance.AllyTeam.UsedDeckToDeckNum = 0; }
-                        if (GUILayout.Button($"GetDiscardCount ={BattleSystem.instance.AllyTeam.GetDiscardCount + 10} ; {BattleSystem.instance.AllyTeam.DiscardCount}")) { BattleSystem.instance.AllyTeam.DiscardCount = BattleSystem.instance.AllyTeam.GetDiscardCount + 10; }
-                        if (GUILayout.Button($"WaitCount ={1 + PlayData.PartySpeed} ; {BattleSystem.instance.AllyTeam.WaitCount}")) { BattleSystem.instance.AllyTeam.WaitCount = 1 + PlayData.PartySpeed; }
+                        if (GUILayout.Button($"UsedDeckToDeckNum =0 ; {allyTeam.UsedDeckToDeckNum}")) { allyTeam.UsedDeckToDeckNum = 0; }
+                        if (GUILayout.Button($"GetDiscardCount ={allyTeam.GetDiscardCount + 10} ; {allyTeam.DiscardCount}")) { allyTeam.DiscardCount = allyTeam.GetDiscardCount + 10; }
+                        if (GUILayout.Button($"WaitCount ={1 + PlayData.PartySpeed} ; {allyTeam.WaitCount}")) { allyTeam.WaitCount = 1 + PlayData.PartySpeed; }
 
-                        GUILayout.Label($"BattleChar count {BattleSystem.instance.AllyTeam.AliveChars.Count}");
-                        if (GUILayout.Button($"HP = /=2 ; "))
-                            foreach (BattleChar c in BattleSystem.instance.AllyTeam.AliveChars)
-                            {
-                                c.HP = c.Info.get_stat.maxhp / 2;
-                            }
-                        foreach (BattleChar c in BattleSystem.instance.AllyTeam.AliveChars)
+                        GUILayout.Label($"BattleChar count {allyTeam.AliveChars.Count}");
+
+                        //if (GUILayout.Button($"maxhp +1000 ;")) foreach (BattleChar c in allyTeam.AliveChars) c.Info.OriginStat.maxhp += 1000;
+                        if (GUILayout.Button($"HP = /=2 ; ")) foreach (BattleChar c in allyTeam.AliveChars) c.HP = c.Info.get_stat.maxhp / 2;
+
+                        foreach (BattleChar c in allyTeam.AliveChars)
                         {
                             GUILayout.Label($"{c.Info.Name}");
+                            //if (GUILayout.Button($"maxhp +1000 ; {c.Info.OriginStat.maxhp}")) { c.Info.OriginStat.maxhp += 1000; }
                             if (GUILayout.Button($"HP +100; {c.HP}")) { c.HP += 100; }
                             if (GUILayout.Button($"Recovery +100; {c.Recovery} ")) { c.Recovery += 100; }
                             if (GUILayout.Button($"HP Recovery +100")) { c.HP += 100; c.Recovery += 100; }
@@ -543,14 +667,46 @@ namespace BepInPluginSample
                     if (GUILayout.Button($"{i}")) { itemkey = i; }
                 }
                 GUILayout.Label($"--- {itemkey} ---");
+                if (GUILayout.Button($"grt all {items[itemkey].Count}"))
+                {
+                    List<ItemBase> list = new List<ItemBase>();
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        foreach (var i in items[itemkey]) { 
+                            list.Add(ItemBase.GetItem(i, 10));
+                            if (items[itemkey].Count>=16)
+                            {
+                                InventoryManager.Reward(list);
+                                items[itemkey].Clear();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var i in items[itemkey])
+                        {
+                            list.Add(ItemBase.GetItem(i));
+                            if (items[itemkey].Count >= 16)
+                            {
+                                InventoryManager.Reward(list);
+                                items[itemkey].Clear();
+                            }
+                        }
+                    }
+                    if (items[itemkey].Count >0 )
+                        InventoryManager.Reward(list);
+                }
+                GUILayout.Label($"--- {itemkey} ---");
                 foreach (var i in items[itemkey])
                 {
-                    if (GUILayout.Button($"{i}")) {
+                    if (GUILayout.Button($"{i}"))
+                    {
                         if (Input.GetKey(KeyCode.LeftShift))
                         {
-                            InventoryManager.Reward(ItemBase.GetItem(i,10));
-                        }else
-                        InventoryManager.Reward(ItemBase.GetItem(i)); 
+                            InventoryManager.Reward(ItemBase.GetItem(i, 10));
+                        }
+                        else
+                            InventoryManager.Reward(ItemBase.GetItem(i));
                     }
                 }
                 GUILayout.Label("--- reward ---");
@@ -562,7 +718,8 @@ namespace BepInPluginSample
                 GUILayout.Label($"--- {rewardkey} ---");
                 foreach (var i in rewards[rewardkey])
                 {
-                    if (GUILayout.Button($"{i}")) {
+                    if (GUILayout.Button($"{i}"))
+                    {
                         if (Input.GetKey(KeyCode.LeftShift))
                         {
                             List<ItemBase> list12 = new List<ItemBase>();
@@ -574,10 +731,10 @@ namespace BepInPluginSample
                             list12.AddRange(InventoryManager.RewardKey(i, false));
                             list12.AddRange(InventoryManager.RewardKey(i, false));
                             list12.AddRange(InventoryManager.RewardKey(i, false));
-                            InventoryManager.Reward(list12); 
+                            InventoryManager.Reward(list12);
                         }
                         else
-                            InventoryManager.Reward(InventoryManager.RewardKey(i, false)); 
+                            InventoryManager.Reward(InventoryManager.RewardKey(i, false));
                     }
                 }
                 GUILayout.Label($"--- {Input.GetKey(KeyCode.LeftShift)} ---");
@@ -590,6 +747,31 @@ namespace BepInPluginSample
             GUI.enabled = true;
             GUI.DragWindow(); // 창 드레그 가능하게 해줌. 마지막에만 넣어야함
             #endregion
+        }
+
+        private static List<ItemBase> Equips()
+        {
+            List<ItemBase> list12 = new List<ItemBase>();
+
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_FlameDarkSword));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_SwordOfStar));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_HalfMask));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_Revenger));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_FoxOrb_0));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_DarkPrestClothes));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_Arrowofangel));
+            // etc
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_Replica));
+            // atk
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_King_Sword));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_Ilya_Sword_0));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_Ilya_Sword_1));
+            // sup
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_King_Cape));
+            // def
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_King_Armor));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_BlackSpikedArmor));
+            return list12;
         }
 
         private static void Fogout()
@@ -675,6 +857,24 @@ namespace BepInPluginSample
             Fogout();
         }
 
+        //public Stat AllyLevelPlusStat(int PlusLv = 0)
+        /// <summary>
+        /// 다른곳하고 공유되서 비효율적
+        /// </summary>
+        /// <param name="__result"></param>
+        /*
+        [HarmonyPatch(typeof(Character), "AllyLevelPlusStat", typeof(int))]
+        [HarmonyPostfix]
+        public static void AllyLevelPlusStat(ref Stat __result)//InventoryManager __instance, string StageKey
+        {
+            if (!isMaxHpUp.Value)
+            {
+                return;
+            }
+            logger.LogMessage($"AllyLevelPlusStat maxhp : {__result.maxhp}");
+            __result.maxhp += 100;
+        }
+        */
 
         /*
          // public static void Reward(string rewardkey)
