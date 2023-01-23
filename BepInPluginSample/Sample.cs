@@ -49,6 +49,7 @@ namespace BepInPluginSample
         private static ConfigEntry<bool> noAP;
         private static ConfigEntry<bool> addDiscard;
         private static ConfigEntry<bool> isFogout;
+        private static ConfigEntry<bool> StageArkPartOn;
         //private static ConfigEntry<bool> isMaxHpUp;
         // private static ConfigEntry<float> uiW;
         // private static ConfigEntry<float> xpMulti;
@@ -96,6 +97,7 @@ namespace BepInPluginSample
             noAP = Config.Bind("game", "noMana", true);
             addDiscard = Config.Bind("game", "addDiscard", true);
             isFogout = Config.Bind("game", "isFogout", true);
+            StageArkPartOn = Config.Bind("game", "StageArkPartOn", true);
             //isMaxHpUp = Config.Bind("game", "isMaxHpUp", true);
             // xpMulti = Config.Bind("game", "xpMulti", 2f);
 
@@ -267,6 +269,36 @@ namespace BepInPluginSample
                 // =========================================================
                 #endregion
 
+                if (GUILayout.Button($"my cheat"))
+                {
+                    SaveManager.NowData.TimeMoney = 1000;
+                    PlayData.Gold = 10000;
+                    PlayData.Soul = 1000;
+                    PlayData.TSavedata.StageArkPartOn = true;
+
+                    Myitem("Item_Equip_");
+                    Myitem("Item_Passive_");
+
+                    List<ItemBase> list12 = new List<ItemBase>();
+                    for (int i = 0; i < 4; i++)
+                    {
+                        list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
+                    }
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_Celestial, 30));
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare, 5));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 5 * 4));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy, 5));
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Enchant, 9));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Transfer, 9));
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_Item_Key, 9));
+
+
+                    InventoryManager.Reward(list12);
+                }
 
                 GUILayout.Label("---  ---");
 
@@ -274,12 +306,14 @@ namespace BepInPluginSample
                 if (GUILayout.Button($"0 Mna {noAP.Value}")) { noAP.Value = !noAP.Value; }
                 if (GUILayout.Button($"MyTurn add Discard 10 {addDiscard.Value}")) { addDiscard.Value = !addDiscard.Value; }
                 if (GUILayout.Button($"isFogout {isFogout.Value}")) { isFogout.Value = !isFogout.Value; }
+                if (GUILayout.Button($"StageArkPartOn {StageArkPartOn.Value}")) { StageArkPartOn.Value = !StageArkPartOn.Value; }
                 //if (GUILayout.Button($"isMaxHpUp {isMaxHpUp.Value}")) { isMaxHpUp.Value = !isMaxHpUp.Value; }
 
                 GUILayout.Label("---  ---");
 
                 if (GUILayout.Button("save")) SaveManager.savemanager.ProgressOneSave();
                 if (GUILayout.Button("Mapping")) Fogout();
+                if (GUILayout.Button("StageArkPartOn")) PlayData.TSavedata.StageArkPartOn = true; ;
 
                 if (GUILayout.Button("TimeMoney +1000")) { SaveManager.NowData.TimeMoney += 1000; }
 
@@ -779,6 +813,20 @@ namespace BepInPluginSample
             #endregion
         }
 
+        private static void Myitem(string s="",int c=16)
+        {
+            if (items[s].Count>0)
+            {
+            List<ItemBase> list = new List<ItemBase>();
+            for (int i = 0; i < c; i++)
+            {
+                list.Add(ItemBase.GetItem(items[s].Random()));
+            }
+            InventoryManager.Reward(list);
+            list.Clear();
+            }
+        }
+
         private static List<ItemBase> Equips()
         {
             List<ItemBase> list12 = new List<ItemBase>();
@@ -793,6 +841,7 @@ namespace BepInPluginSample
             // etc
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_Replica));
             // atk
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_BlackMoonSword));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_King_Sword));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_Ilya_Sword_0));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_Ilya_Sword_1));
@@ -886,6 +935,18 @@ namespace BepInPluginSample
                 return;
             }
             Fogout();
+        }
+        
+        [HarmonyPatch(typeof(FieldSystem), "NextStage")]
+        [HarmonyPostfix]
+        public static void NextStage()//InventoryManager __instance, string StageKey
+        {
+            //logger.LogMessage($"Reward2 : {Item.GetName}");
+            if (!StageArkPartOn.Value)
+            {
+                return;
+            }
+            PlayData.TSavedata.StageArkPartOn = true;
         }
 
 
