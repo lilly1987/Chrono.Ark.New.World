@@ -110,6 +110,8 @@ namespace BepInPluginSample
             // InventoryManager.Reward(ItemBase.GetItem(
             items["Item_Consume_"] = new List<string>();
             items["Item_Active_"] = new List<string>();
+            items["Item_Equip_Legendary"] = new List<string>();
+            items["Item_Equip_Unique"] = new List<string>();
             items["Item_Equip_"] = new List<string>();
             items["Item_Scroll_"] = new List<string>();
             items["Item_Misc_"] = new List<string>();
@@ -138,7 +140,6 @@ namespace BepInPluginSample
 
                         if (memberInfo.Name.StartsWith("Item_Consume_")) items["Item_Consume_"].Add((String)(f.GetValue(null)));
                         else if (memberInfo.Name.StartsWith("Item_Active_")) items["Item_Active_"].Add((String)(f.GetValue(null)));
-                        else if (memberInfo.Name.StartsWith("Item_Equip_")) items["Item_Equip_"].Add((String)(f.GetValue(null)));
                         else if (memberInfo.Name.StartsWith("Item_Scroll_")) items["Item_Scroll_"].Add((String)(f.GetValue(null)));
                         else if (memberInfo.Name.StartsWith("Item_Misc_")) items["Item_Misc_"].Add((String)(f.GetValue(null)));
                         else if (memberInfo.Name.StartsWith("Item_Passive_")) items["Item_Passive_"].Add((String)(f.GetValue(null)));
@@ -146,6 +147,21 @@ namespace BepInPluginSample
                         //else if (memberInfo.Name.StartsWith("ItemClass_")) items["ItemClass_"].Add((String)(f.GetValue(null)));
                         else if (memberInfo.Name.StartsWith("RandomDrop_")) items["RandomDrop_"].Add((String)(f.GetValue(null)));
                         else if (memberInfo.Name.StartsWith("Reward_")) rewards["Reward_"].Add((String)(f.GetValue(null)));
+
+                        else if (memberInfo.Name.StartsWith("Item_Equip_"))
+                        {
+                            string key = (String)f.GetValue(null);/*
+                            // itemBase.InputInfo(key);
+                            var k = new GDEItem_EquipData(key).Itemclass.Key;
+                            if (k == GDEItemKeys.ItemClass_Legendary)
+                                items["Item_Equip_Legendary"].Add(key);
+                            else if (k == GDEItemKeys.ItemClass_Unique)
+                                items["Item_Equip_Unique"].Add(key);
+                            else*/
+                                items["Item_Equip_"].Add(key);
+
+                        }
+
 
                     }
                 }
@@ -191,6 +207,20 @@ namespace BepInPluginSample
             catch (Exception e)
             {
                 Logger.LogError(e);
+            }
+        }
+
+        public void Start()
+        {
+            foreach (var key in items["Item_Equip_"])
+            {
+                var k = new GDEItem_EquipData(key).Itemclass.Key;
+                if (k == GDEItemKeys.ItemClass_Legendary)
+                    items["Item_Equip_Legendary"].Add(key);
+                else if (k == GDEItemKeys.ItemClass_Unique)
+                    items["Item_Equip_Unique"].Add(key);
+                //else
+                //    items["Item_Equip_"].Add(key);
             }
         }
 
@@ -275,16 +305,19 @@ namespace BepInPluginSample
                     PlayData.Gold = 10000;
                     PlayData.Soul = 1000;
                     PlayData.TSavedata.StageArkPartOn = true;
+                    PlayData.TSavedata.ArkPassivePlus=8;
+                }
 
-                    Myitem("Item_Equip_");
-                    Myitem("Item_Passive_");
+                if (GUILayout.Button($"my cheat Item"))
+                { 
 
                     List<ItemBase> list12 = new List<ItemBase>();
+                    /*
                     for (int i = 0; i < 4; i++)
                     {
                         list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
                     }
-
+                    */
                     list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_Celestial, 30));
 
                     list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare, 5));
@@ -296,8 +329,18 @@ namespace BepInPluginSample
 
                     list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_Item_Key, 9));
 
-
                     InventoryManager.Reward(list12);
+                }
+                if (GUILayout.Button($"my cheat Passive"))
+                    Myitem("Item_Passive_");
+
+                if (GUILayout.Button($"my cheat Legendary"))
+                { 
+                    Myitem("Item_Equip_Legendary");
+                }
+                if (GUILayout.Button($"my cheat Unique"))
+                { 
+                    Myitem("Item_Equip_Unique");
                 }
 
                 GUILayout.Label("---  ---");
@@ -322,6 +365,8 @@ namespace BepInPluginSample
 
                 if (GUILayout.Button("Soul +1000")) { PlayData.Soul += 1000; }
                 if (GUILayout.Button("Soul *10")) { PlayData.Soul *= 10; }
+
+                if (GUILayout.Button($"ArkPassivePlus =8 {PlayData.TSavedata?.ArkPassivePlus}")) { PlayData.TSavedata.ArkPassivePlus = 8; }
 
                 GUILayout.Label("---  ---");
 
@@ -709,7 +754,7 @@ namespace BepInPluginSample
                     string s;
                     var _sitems = new List<string>(items[itemkey]);
                     List<ItemBase> _items = new List<ItemBase>();
-                    int c= items[itemkey].Count >16 ? 16 : items[itemkey].Count;
+                    int c = items[itemkey].Count > 16 ? 16 : items[itemkey].Count;
                     if (Input.GetKey(KeyCode.LeftShift))
                     {
                         for (int i = 0; i < c; i++)
@@ -813,17 +858,17 @@ namespace BepInPluginSample
             #endregion
         }
 
-        private static void Myitem(string s="",int c=16)
+        private static void Myitem(string s = "", int c = 16)
         {
-            if (items[s].Count>0)
+            if (items[s].Count > 0)
             {
-            List<ItemBase> list = new List<ItemBase>();
-            for (int i = 0; i < c; i++)
-            {
-                list.Add(ItemBase.GetItem(items[s].Random()));
-            }
-            InventoryManager.Reward(list);
-            list.Clear();
+                List<ItemBase> list = new List<ItemBase>();
+                for (int i = 0; i < c; i++)
+                {
+                    list.Add(ItemBase.GetItem(items[s].Random()));
+                }
+                InventoryManager.Reward(list);
+                list.Clear();
             }
         }
 
@@ -936,7 +981,7 @@ namespace BepInPluginSample
             }
             Fogout();
         }
-        
+
         [HarmonyPatch(typeof(FieldSystem), "NextStage")]
         [HarmonyPostfix]
         public static void NextStage()//InventoryManager __instance, string StageKey
