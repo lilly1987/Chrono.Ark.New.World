@@ -304,20 +304,23 @@ namespace BepInPluginSample
                     SaveManager.NowData.TimeMoney = 1000;
                     PlayData.Gold = 10000;
                     PlayData.Soul = 1000;
-                    PlayData.TSavedata.StageArkPartOn = true;
-                    PlayData.TSavedata.ArkPassivePlus=8;
+                    PlayData.TSavedata.StageArkPartOn = true;                    
+                    /*
+                    List<ItemBase> list12 = new List<ItemBase>();                    
+                     * for (int i = 0; i < 4; i++)
+                    {
+                        list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
+                    }
+                    InventoryManager.Reward(list12);
+                    */
+                    ArtifactPlusInven();
                 }
 
                 if (GUILayout.Button($"my cheat Item"))
                 { 
 
                     List<ItemBase> list12 = new List<ItemBase>();
-                    /*
-                    for (int i = 0; i < 4; i++)
-                    {
-                        list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
-                    }
-                    */
+
                     list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_Celestial, 30));
 
                     list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare, 5));
@@ -366,7 +369,7 @@ namespace BepInPluginSample
                 if (GUILayout.Button("Soul +1000")) { PlayData.Soul += 1000; }
                 if (GUILayout.Button("Soul *10")) { PlayData.Soul *= 10; }
 
-                if (GUILayout.Button($"ArkPassivePlus =8 {PlayData.TSavedata?.ArkPassivePlus}")) { PlayData.TSavedata.ArkPassivePlus = 8; }
+                if (GUILayout.Button($"ArkPassivePlus =8 {PlayData.TSavedata?.ArkPassivePlus}")) { ArtifactPlusInven(); }
 
                 GUILayout.Label("---  ---");
 
@@ -858,6 +861,15 @@ namespace BepInPluginSample
             #endregion
         }
 
+        private static void ArtifactPlusInven()
+        {
+            PlayData.TSavedata.ArkPassivePlus = 8;
+            for (int m = PlayData.TSavedata.Passive_Itembase.Count; m < PlayData.TSavedata.ArkPassivePlus; m++)
+            {
+                PlayData.TSavedata.Passive_Itembase.Add(null);
+            }
+        }
+
         private static void Myitem(string s = "", int c = 16)
         {
             if (items[s].Count > 0)
@@ -868,7 +880,7 @@ namespace BepInPluginSample
                     list.Add(ItemBase.GetItem(items[s].Random()));
                 }
                 InventoryManager.Reward(list);
-                list.Clear();
+                //list.Clear();
             }
         }
 
