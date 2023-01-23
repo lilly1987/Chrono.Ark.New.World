@@ -52,6 +52,7 @@ namespace BepInPluginSample
         private static ConfigEntry<bool> StageArkPartOn;
         private static ConfigEntry<bool> WaitCount;
         private static ConfigEntry<bool> WaitCountAdd;
+        private static ConfigEntry<bool> SkillAdd_Extended;
         //private static ConfigEntry<bool> isMaxHpUp;
         // private static ConfigEntry<float> uiW;
         // private static ConfigEntry<float> xpMulti;
@@ -102,6 +103,7 @@ namespace BepInPluginSample
             StageArkPartOn = Config.Bind("game", "StageArkPartOn", true);
             WaitCount = Config.Bind("game", "WaitCount", true);
             WaitCountAdd = Config.Bind("game", "WaitCountAdd", true);
+            SkillAdd_Extended = Config.Bind("game", "SkillAdd_Extended", true);
             //isMaxHpUp = Config.Bind("game", "isMaxHpUp", true);
             // xpMulti = Config.Bind("game", "xpMulti", 2f);
 
@@ -370,6 +372,14 @@ namespace BepInPluginSample
                     InventoryManager.Reward(list12);
                 }
 
+                if (GUILayout.Button($"get my Celestial"))
+                {
+                    CelestialCheat.Use();
+                }
+                if (GUILayout.Button($"get my AllSet"))
+                {
+                    CelestialCheat.AllSet();
+                }
 
                 GUILayout.Label("---  ---");
 
@@ -380,6 +390,7 @@ namespace BepInPluginSample
                 if (GUILayout.Button($"StageArkPartOn {StageArkPartOn.Value}")) { StageArkPartOn.Value = !StageArkPartOn.Value; }
                 if (GUILayout.Button($"WaitCount {WaitCount.Value}")) { WaitCount.Value = !WaitCount.Value; }
                 if (GUILayout.Button($"WaitCountAdd {WaitCountAdd.Value}")) { WaitCountAdd.Value = !WaitCountAdd.Value; }
+                if (GUILayout.Button($"SkillAdd_Extended {SkillAdd_Extended.Value}")) { SkillAdd_Extended.Value = !SkillAdd_Extended.Value; }
                 //if (GUILayout.Button($"isMaxHpUp {isMaxHpUp.Value}")) { isMaxHpUp.Value = !isMaxHpUp.Value; }
 
                 GUILayout.Label("---  ---");
@@ -1053,6 +1064,27 @@ namespace BepInPluginSample
                 return;
             }
             BattleSystem.instance.AllyTeam.WaitCount+=3;
+        }
+
+        // public void SkillAdd(GDESkillData Data, Skill_Extended SkillEn = null)
+        [HarmonyPatch(typeof(Character), "SkillAdd", typeof(GDESkillData), typeof(Skill_Extended))]
+        [HarmonyPostfix]
+        public static void SkillAdd(Character __instance, GDESkillData Data, Skill_Extended SkillEn)//InventoryManager __instance, string StageKey
+        {
+            //logger.LogMessage($"Reward2 : {Item.GetName}");
+            if (!SkillAdd_Extended.Value)
+            {
+                return;
+            }
+            if (SkillEn == null)
+            {
+                CelestialCheat.AllSet(CelestialCheat.GetList(),__instance.GetBattleChar);
+
+                PlayData.GetEnforce(false).Random();
+                //__instance.GetBattleChar
+                //__instance.SkillDatas.Last().SKillExtended = SkillEn;
+                //charInfoSkillData.SKillExtended = SkillEn;
+            }
         }
 
 
