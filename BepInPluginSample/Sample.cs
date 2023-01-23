@@ -4,6 +4,7 @@ using BepInEx.Logging;
 using GameDataEditor;
 using HarmonyLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -807,7 +808,8 @@ namespace BepInPluginSample
         {
             if (StageSystem.instance.gameObject.activeInHierarchy && StageSystem.instance != null && StageSystem.instance.Map != null)
             {
-                StageSystem.instance.Fogout(false);
+                //StageSystem.instance.Fogout(false);
+                StageSystem.instance.Fogout(true);
             }
         }
 
@@ -885,6 +887,7 @@ namespace BepInPluginSample
             }
             Fogout();
         }
+
 
         //public Stat AllyLevelPlusStat(int PlusLv = 0)
         /// <summary>
