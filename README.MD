@@ -87,3 +87,9 @@ UnityEngine.IMGUIModule.dll
 ### 빌드 테스트
 
 빌드(위에서설정한어셈블리명.dll)가 잘 된다면 코드 작성 시작
+
+
+
+# 세이브 위치
+
+C:\Users\lilly\AppData\LocalLow\AlFine\ChronoArk

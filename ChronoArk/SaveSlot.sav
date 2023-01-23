@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SaveSlotData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SaveSlotNum>0</SaveSlotNum>
+  <SaveLanguage>0</SaveLanguage>
+  <ScreenMode>0</ScreenMode>
+  <Resolution>11</Resolution>
+  <VSync>true</VSync>
+  <DepthofField>false</DepthofField>
+  <Antialiasing>false</Antialiasing>
+  <TextureQuality>0</TextureQuality>
+  <Shadow>false</Shadow>
+  <LowSpecMode>false</LowSpecMode>
+  <SoundMainVolume>80</SoundMainVolume>
+  <SoundEffectVolume>80</SoundEffectVolume>
+  <SoundBGMVolume>80</SoundBGMVolume>
+</SaveSlotData>
