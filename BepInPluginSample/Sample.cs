@@ -50,6 +50,8 @@ namespace BepInPluginSample
         private static ConfigEntry<bool> addDiscard;
         private static ConfigEntry<bool> isFogout;
         private static ConfigEntry<bool> StageArkPartOn;
+        private static ConfigEntry<bool> WaitCount;
+        private static ConfigEntry<bool> WaitCountAdd;
         //private static ConfigEntry<bool> isMaxHpUp;
         // private static ConfigEntry<float> uiW;
         // private static ConfigEntry<float> xpMulti;
@@ -98,6 +100,8 @@ namespace BepInPluginSample
             addDiscard = Config.Bind("game", "addDiscard", true);
             isFogout = Config.Bind("game", "isFogout", true);
             StageArkPartOn = Config.Bind("game", "StageArkPartOn", true);
+            WaitCount = Config.Bind("game", "WaitCount", true);
+            WaitCountAdd = Config.Bind("game", "WaitCountAdd", true);
             //isMaxHpUp = Config.Bind("game", "isMaxHpUp", true);
             // xpMulti = Config.Bind("game", "xpMulti", 2f);
 
@@ -316,24 +320,6 @@ namespace BepInPluginSample
                     ArtifactPlusInven();
                 }
 
-                if (GUILayout.Button($"my cheat Item"))
-                { 
-
-                    List<ItemBase> list12 = new List<ItemBase>();
-
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_Celestial, 30));
-
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare, 5));
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 5 * 4));
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy, 5));
-
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Enchant, 9));
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Transfer, 9));
-
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_Item_Key, 9));
-
-                    InventoryManager.Reward(list12);
-                }
                 if (GUILayout.Button($"my cheat Passive"))
                     Myitem("Item_Passive_");
 
@@ -346,6 +332,45 @@ namespace BepInPluginSample
                     Myitem("Item_Equip_Unique");
                 }
 
+                if (GUILayout.Button($"my cheat Item"))
+                {
+
+                    List<ItemBase> list12 = new List<ItemBase>();
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_Celestial, 30));
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare, 5));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 5 * 4));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy, 5));
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Enchant, 9));
+                    //list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Transfer, 9));
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_Item_Key, 9));
+
+                    InventoryManager.Reward(list12);
+                }
+
+
+                if (GUILayout.Button($"get my Passive"))
+                {
+                    List<ItemBase> list12 = new List<ItemBase>();
+
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Bookofmoon));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Bookofsun));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_BronzeMotor));
+                    //list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_CuteComputer));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_GolemRelic));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_JokerCard));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_MagicLamp));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_MagicBerry));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Memoryfragment));
+                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_ShadowOrb));
+
+                    InventoryManager.Reward(list12);
+                }
+
+
                 GUILayout.Label("---  ---");
 
                 if (GUILayout.Button($"0 Damage {noDamage.Value}")) { noDamage.Value = !noDamage.Value; }
@@ -353,6 +378,8 @@ namespace BepInPluginSample
                 if (GUILayout.Button($"MyTurn add Discard 10 {addDiscard.Value}")) { addDiscard.Value = !addDiscard.Value; }
                 if (GUILayout.Button($"isFogout {isFogout.Value}")) { isFogout.Value = !isFogout.Value; }
                 if (GUILayout.Button($"StageArkPartOn {StageArkPartOn.Value}")) { StageArkPartOn.Value = !StageArkPartOn.Value; }
+                if (GUILayout.Button($"WaitCount {WaitCount.Value}")) { WaitCount.Value = !WaitCount.Value; }
+                if (GUILayout.Button($"WaitCountAdd {WaitCountAdd.Value}")) { WaitCountAdd.Value = !WaitCountAdd.Value; }
                 //if (GUILayout.Button($"isMaxHpUp {isMaxHpUp.Value}")) { isMaxHpUp.Value = !isMaxHpUp.Value; }
 
                 GUILayout.Label("---  ---");
@@ -372,22 +399,6 @@ namespace BepInPluginSample
                 if (GUILayout.Button($"ArkPassivePlus =8 {PlayData.TSavedata?.ArkPassivePlus}")) { ArtifactPlusInven(); }
 
                 GUILayout.Label("---  ---");
-
-                if (GUILayout.Button($"get my Passive"))
-                {
-                    List<ItemBase> list12 = new List<ItemBase>();
-
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_ShadowOrb));
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_MagicLamp));
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_GolemRelic));
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_JokerCard));
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_MagicBerry));
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_BronzeMotor));
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Memoryfragment));
-                    list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_CuteComputer));
-
-                    InventoryManager.Reward(list12);
-                }
 
                 if (GUILayout.Button($"select my Equip Legendary"))
                 {
@@ -714,7 +725,8 @@ namespace BepInPluginSample
 
                         if (GUILayout.Button($"UsedDeckToDeckNum =0 ; {allyTeam.UsedDeckToDeckNum}")) { allyTeam.UsedDeckToDeckNum = 0; }
                         if (GUILayout.Button($"GetDiscardCount ={allyTeam.GetDiscardCount + 10} ; {allyTeam.DiscardCount}")) { allyTeam.DiscardCount = allyTeam.GetDiscardCount + 10; }
-                        if (GUILayout.Button($"WaitCount ={1 + PlayData.PartySpeed} ; {allyTeam.WaitCount}")) { allyTeam.WaitCount = 1 + PlayData.PartySpeed; }
+                        if (GUILayout.Button($"PartySpeed ={1 + PlayData.TSavedata._PartySpeed} ; {PlayData.TSavedata._PartySpeed}")) { PlayData.TSavedata._PartySpeed = 1 + PlayData.TSavedata._PartySpeed; }
+                        if (GUILayout.Button($"WaitCount ={1 + allyTeam.WaitCount} ; {allyTeam.WaitCount}")) { allyTeam.WaitCount = 1 + allyTeam.WaitCount; }
 
                         GUILayout.Label($"BattleChar count {allyTeam.AliveChars.Count}");
 
@@ -726,6 +738,7 @@ namespace BepInPluginSample
                             GUILayout.Label($"{c.Info.Name}");
                             //if (GUILayout.Button($"maxhp +1000 ; {c.Info.OriginStat.maxhp}")) { c.Info.OriginStat.maxhp += 1000; }
                             if (GUILayout.Button($"HP +100; {c.HP}")) { c.HP += 100; }
+                            if (GUILayout.Button($"HP =-1; {c.HP}")) { c.HP = -1; c.Recovery += 100; }
                             if (GUILayout.Button($"Recovery +100; {c.Recovery} ")) { c.Recovery += 100; }
                             if (GUILayout.Button($"HP Recovery +100")) { c.HP += 100; c.Recovery += 100; }
                             if (GUILayout.Button($"ActionCount =1; {c.ActionCount}")) { c.ActionCount = 1; }
@@ -863,7 +876,7 @@ namespace BepInPluginSample
 
         private static void ArtifactPlusInven()
         {
-            PlayData.TSavedata.ArkPassivePlus = 8;
+            PlayData.TSavedata.ArkPassivePlus = 9*2;
             for (int m = PlayData.TSavedata.Passive_Itembase.Count; m < PlayData.TSavedata.ArkPassivePlus; m++)
             {
                 PlayData.TSavedata.Passive_Itembase.Add(null);
@@ -939,6 +952,17 @@ namespace BepInPluginSample
                 return;
             }
             Dmg = 0;
+        }        
+
+        [HarmonyPatch(typeof(BattleAlly), "Damage",
+            typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
+        [HarmonyPrefix]
+        public static void Damage(BattleAlly __instance)
+        {
+            if (!noDamage.Value)
+            {
+                return;
+            }            
             __instance.Recovery = __instance.Info.get_stat.maxhp;
         }
 
@@ -1004,6 +1028,31 @@ namespace BepInPluginSample
                 return;
             }
             PlayData.TSavedata.StageArkPartOn = true;
+        }
+
+        
+        [HarmonyPatch(typeof(WaitButton), "WaitAct")]
+        [HarmonyPostfix]
+        public static void WaitAct()//InventoryManager __instance, string StageKey
+        {
+            //logger.LogMessage($"Reward2 : {Item.GetName}");
+            if (!WaitCount.Value)
+            {
+                return;
+            }
+            BattleSystem.instance.AllyTeam.WaitCount++;
+        }        
+
+        [HarmonyPatch(typeof(BattleTeam), "MyTurn")]
+        [HarmonyPostfix]
+        public static void MyTurn()//InventoryManager __instance, string StageKey
+        {
+            //logger.LogMessage($"Reward2 : {Item.GetName}");
+            if (!WaitCountAdd.Value)
+            {
+                return;
+            }
+            BattleSystem.instance.AllyTeam.WaitCount+=3;
         }
 
 
