@@ -10,6 +10,22 @@ namespace BepInPluginSample
     internal class CelestialCheat
     {
 
+        public static void info()
+        {
+            //PlayData.GetEnforce(false).Random(4);
+            foreach (var item in PlayData.GetEnforce(false))
+            {
+                Sample.logger.LogMessage($"a1 {item.Name}");
+                if (item.Data!=null)
+                {
+                    Sample.logger.LogMessage($"a1 {item.Data.Name}");
+                }
+                
+            }
+           
+        }
+
+
         public static List<Skill_Extended> GetEnforce(Skill SelectSkill = null)
         {
 
@@ -92,7 +108,7 @@ namespace BepInPluginSample
         }
 
 
-		public static void AllSet()
+		public static void Skill_ExtendedSet()
         {
             List<Skill_Extended> list = GetList();
 
@@ -150,7 +166,7 @@ namespace BepInPluginSample
             }
         }
 
-		public static bool Use()
+		public static bool Skill_ExtendedSelect()
         {
             List<Skill_Extended> list = GetList();
 
@@ -231,6 +247,7 @@ namespace BepInPluginSample
                     list.Add(Skill_Extended.DataToExtended(Temp));
                 }
             }
+            list.AddRange(PlayData.GetEnforce(false));
 
             return list;
         }

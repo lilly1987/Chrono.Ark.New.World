@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CelestialCheat.cs" />
+    <Compile Include="ItemBaseCheat.cs" />
     <Compile Include="Sample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
