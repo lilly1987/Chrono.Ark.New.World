@@ -131,6 +131,7 @@ namespace BepInPluginSample
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Crossoflight));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_MindsEye));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_WitchRelic));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_OldHourglass));
             InventoryManager.Reward(list12);
         }
 
