@@ -45,7 +45,9 @@ namespace BepInPluginSample
         #region 변수
         // =========================================================
 
+        private static ConfigEntry<bool> noDead;
         private static ConfigEntry<bool> noDamage;
+        private static ConfigEntry<bool> noRecovery;
         private static ConfigEntry<bool> noAP;
         private static ConfigEntry<bool> addDiscard;
         private static ConfigEntry<bool> isFogout;
@@ -96,7 +98,9 @@ namespace BepInPluginSample
             #region 변수 설정
             // =========================================================
 
+            noDead = Config.Bind("game", "noDead", true);
             noDamage = Config.Bind("game", "noDamage", true);
+            noRecovery = Config.Bind("game", "noRecovery", true);
             noAP = Config.Bind("game", "noMana", true);
             addDiscard = Config.Bind("game", "addDiscard", true);
             isFogout = Config.Bind("game", "isFogout", true);
@@ -164,7 +168,7 @@ namespace BepInPluginSample
                             else if (k == GDEItemKeys.ItemClass_Unique)
                                 items["Item_Equip_Unique"].Add(key);
                             else*/
-                                items["Item_Equip_"].Add(key);
+                            items["Item_Equip_"].Add(key);
 
                         }
 
@@ -349,7 +353,7 @@ namespace BepInPluginSample
                 {
                     ItemBaseCheat.ItemReward();
                 }
-                 
+
                 if (GUILayout.Button($"EquipsReward"))
                 {
                     ItemBaseCheat.EquipsReward();
@@ -387,8 +391,10 @@ namespace BepInPluginSample
 
                 GUILayout.Label("---  ---");
 
-                if (GUILayout.Button($"0 Damage {noDamage.Value}")) { noDamage.Value = !noDamage.Value; }
-                if (GUILayout.Button($"0 Mna {noAP.Value}")) { noAP.Value = !noAP.Value; }
+                if (GUILayout.Button($"Dead {noDead.Value}")) { noDead.Value = !noDead.Value; }
+                if (GUILayout.Button($"Damage {noDamage.Value}")) { noDamage.Value = !noDamage.Value; }
+                if (GUILayout.Button($"Recovery {noRecovery.Value}")) { noRecovery.Value = !noRecovery.Value; }
+                if (GUILayout.Button($"Mana {noAP.Value}")) { noAP.Value = !noAP.Value; }
                 if (GUILayout.Button($"MyTurn add Discard 10 {addDiscard.Value}")) { addDiscard.Value = !addDiscard.Value; }
                 if (GUILayout.Button($"isFogout {isFogout.Value}")) { isFogout.Value = !isFogout.Value; }
                 if (GUILayout.Button($"StageArkPartOn {StageArkPartOn.Value}")) { StageArkPartOn.Value = !StageArkPartOn.Value; }
@@ -437,7 +443,7 @@ namespace BepInPluginSample
                     }
                     if (list12.Count > 0)
                     {
-                        ItemBaseCheat.SelectItemUI(list12);                        
+                        ItemBaseCheat.SelectItemUI(list12);
                     }
                 }
                 /*
@@ -840,23 +846,29 @@ namespace BepInPluginSample
         [HarmonyPrefix]
         public static void Damage(BattleAlly __instance, ref int Dmg)
         {
-            if (!noDamage.Value)
+            if (noDamage.Value)
             {
-                return;
+                Dmg = 0;
+                //__instance.HP = 0;
             }
-            Dmg = 0;
-        }        
+        }
 
         [HarmonyPatch(typeof(BattleAlly), "Damage",
             typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
-        [HarmonyPrefix]
+        [HarmonyPostfix]
         public static void Damage(BattleAlly __instance)
         {
-            if (!noDamage.Value)
-            {
-                return;
-            }            
-            __instance.Recovery = __instance.Info.get_stat.maxhp;
+            if (noRecovery.Value)
+                __instance.Recovery = __instance.Info.get_stat.maxhp;
+        }
+        // public virtual void Dead(bool notdeadeffect = false)        
+        [HarmonyPatch(typeof(BattleAlly), "Dead", typeof(BattleChar), typeof(bool))]
+        [HarmonyPrefix]
+        public static bool Dead(bool notdeadeffect)
+        {
+            if (noDead.Value)
+                return false;
+            return true;
         }
 
         [HarmonyPatch(typeof(BattleTeam), "AP", MethodType.Setter)]
@@ -923,7 +935,7 @@ namespace BepInPluginSample
             PlayData.TSavedata.StageArkPartOn = true;
         }
 
-        
+
         [HarmonyPatch(typeof(WaitButton), "WaitAct")]
         [HarmonyPostfix]
         public static void WaitAct()//InventoryManager __instance, string StageKey
@@ -934,7 +946,7 @@ namespace BepInPluginSample
                 return;
             }
             BattleSystem.instance.AllyTeam.WaitCount++;
-        }        
+        }
 
         [HarmonyPatch(typeof(BattleTeam), "MyTurn")]
         [HarmonyPostfix]
@@ -945,7 +957,7 @@ namespace BepInPluginSample
             {
                 return;
             }
-            BattleSystem.instance.AllyTeam.WaitCount+=3;
+            BattleSystem.instance.AllyTeam.WaitCount += 3;
         }
 
         // public void SkillAdd(GDESkillData Data, Skill_Extended SkillEn = null)
@@ -960,9 +972,9 @@ namespace BepInPluginSample
             }
             if (SkillEn == null)
             {
-                CelestialCheat.AllSet(CelestialCheat.GetList(),__instance.GetBattleChar);
+                CelestialCheat.AllSet(CelestialCheat.GetList(), __instance.GetBattleChar);
 
-                
+
 
 
                 //__instance.GetBattleChar
