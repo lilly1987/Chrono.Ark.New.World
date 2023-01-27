@@ -844,8 +844,9 @@ namespace BepInPluginSample
         [HarmonyPatch(typeof(BattleAlly), "Damage",
             typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
         [HarmonyPrefix]
-        public static void Damage(BattleAlly __instance, ref int Dmg)
+        public static void DamagePr(BattleAlly __instance, ref int Dmg)
         {
+            logger.LogMessage($"Damage {Dmg}");
             if (noDamage.Value)
             {
                 Dmg = 0;
@@ -856,16 +857,20 @@ namespace BepInPluginSample
         [HarmonyPatch(typeof(BattleAlly), "Damage",
             typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
         [HarmonyPostfix]
-        public static void Damage(BattleAlly __instance)
+        public static void DamagePo(BattleAlly __instance, ref int Dmg)
         {
+            logger.LogMessage($"Damage {Dmg}");
             if (noRecovery.Value)
+            {
                 __instance.Recovery = __instance.Info.get_stat.maxhp;
+            }
         }
         // public virtual void Dead(bool notdeadeffect = false)        
-        [HarmonyPatch(typeof(BattleAlly), "Dead", typeof(BattleChar), typeof(bool))]
+        [HarmonyPatch(typeof(BattleAlly), "Dead",  typeof(bool))]
         [HarmonyPrefix]
         public static bool Dead(bool notdeadeffect)
         {
+            logger.LogMessage($"Dead {notdeadeffect}");
             if (noDead.Value)
                 return false;
             return true;
