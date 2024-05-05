@@ -161,13 +161,13 @@ namespace BepInPluginSample
                         else if (memberInfo.Name.StartsWith("Item_Equip_"))
                         {
                             string key = (String)f.GetValue(null);/*
-                            // itemBase.InputInfo(key);
-                            var k = new GDEItem_EquipData(key).Itemclass.Key;
-                            if (k == GDEItemKeys.ItemClass_Legendary)
-                                items["Item_Equip_Legendary"].Add(key);
-                            else if (k == GDEItemKeys.ItemClass_Unique)
-                                items["Item_Equip_Unique"].Add(key);
-                            else*/
+							// itemBase.InputInfo(key);
+							var k = new GDEItem_EquipData(key).Itemclass.Key;
+							if (k == GDEItemKeys.ItemClass_Legendary)
+								items["Item_Equip_Legendary"].Add(key);
+							else if (k == GDEItemKeys.ItemClass_Unique)
+								items["Item_Equip_Unique"].Add(key);
+							else*/
                             items["Item_Equip_"].Add(key);
 
                         }
@@ -316,13 +316,13 @@ namespace BepInPluginSample
                     PlayData.Soul = 1000;
                     PlayData.TSavedata.StageArkPartOn = true;
                     /*
-                    List<ItemBase> list12 = new List<ItemBase>();                    
-                     * for (int i = 0; i < 4; i++)
-                    {
-                        list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
-                    }
-                    InventoryManager.Reward(list12);
-                    */
+					List<ItemBase> list12 = new List<ItemBase>();                    
+						* for (int i = 0; i < 4; i++)
+					{
+						list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
+					}
+					InventoryManager.Reward(list12);
+					*/
                     ItemBaseCheat.ArtifactPlusInvenCheat();
                 }
 
@@ -333,22 +333,6 @@ namespace BepInPluginSample
 
                 if (GUILayout.Button($"Item_Passive_ random"))
                     Reward("Item_Passive_");
-
-
-
-                GUILayout.Label("---  ---");
-
-
-
-                if (GUILayout.Button($"Skill_ExtendedSelect"))
-                {
-                    CelestialCheat.Skill_ExtendedSelect();
-                }
-
-                if (GUILayout.Button($"Skill_ExtendedSet"))
-                {
-                    CelestialCheat.Skill_ExtendedSet();
-                }
 
                 if (GUILayout.Button($"ItemReward"))
                 {
@@ -374,16 +358,34 @@ namespace BepInPluginSample
                 {
                     ItemBaseCheat.ScrollReward();
                 }
+                if (GUILayout.Button("get key (LeftShift click = 10)"))
+                {
+                    ItemBaseCheat.RewardGetItem(GDEItemKeys.Item_Misc_Item_Key);
+                }
+
+                GUILayout.Label("---  ---");
+
+
+
+                if (GUILayout.Button($"Skill_ExtendedSelect"))
+                {
+                    CelestialCheat.Skill_ExtendedSelect();
+                }
+
+                if (GUILayout.Button($"Skill_ExtendedSet"))
+                {
+                    CelestialCheat.Skill_ExtendedSet();
+                }
+
+
+
+
 
                 if (GUILayout.Button($"Reward ArtifactPlusInven 8"))
                 {
                     ItemBaseCheat.ArtifactPlusInvenReward();
                 }
 
-                if (GUILayout.Button("get key"))
-                {
-                    ItemBaseCheat.RewardGetItem(GDEItemKeys.Item_Misc_Item_Key);
-                }
 
                 if (GUILayout.Button($"get my info"))
                 {
@@ -392,12 +394,12 @@ namespace BepInPluginSample
 
                 GUILayout.Label("---  ---");
 
-                if (GUILayout.Button($"Dead {noDead.Value}")) { noDead.Value = !noDead.Value; }
-                if (GUILayout.Button($"Damage {noDamage.Value}")) { noDamage.Value = !noDamage.Value; }
-                if (GUILayout.Button($"Recovery {noRecovery.Value}")) { noRecovery.Value = !noRecovery.Value; }
-                if (GUILayout.Button($"Mana {noAP.Value}")) { noAP.Value = !noAP.Value; }
+                if (GUILayout.Button($"no Dead {noDead.Value}")) { noDead.Value = !noDead.Value; }
+                if (GUILayout.Button($"no Damage {noDamage.Value}")) { noDamage.Value = !noDamage.Value; }
+                if (GUILayout.Button($"Recovery max {noRecovery.Value}")) { noRecovery.Value = !noRecovery.Value; }
+                if (GUILayout.Button($"Mana max {noAP.Value}")) { noAP.Value = !noAP.Value; }
                 if (GUILayout.Button($"MyTurn add Discard 10 {addDiscard.Value}")) { addDiscard.Value = !addDiscard.Value; }
-                if (GUILayout.Button($"isFogout {isFogout.Value}")) { isFogout.Value = !isFogout.Value; }
+                if (GUILayout.Button($"not isFogout {isFogout.Value}")) { isFogout.Value = !isFogout.Value; }
                 if (GUILayout.Button($"StageArkPartOn {StageArkPartOn.Value}")) { StageArkPartOn.Value = !StageArkPartOn.Value; }
                 if (GUILayout.Button($"WaitCount {WaitCount.Value}")) { WaitCount.Value = !WaitCount.Value; }
                 if (GUILayout.Button($"WaitCountAdd {WaitCountAdd.Value}")) { WaitCountAdd.Value = !WaitCountAdd.Value; }
@@ -448,11 +450,11 @@ namespace BepInPluginSample
                     }
                 }
                 /*
-                if (GUILayout.Button($"select my Equip "))
-                {
-                    UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(ItemBaseCheat.Equips());
-                }
-                */
+				if (GUILayout.Button($"select my Equip "))
+				{
+					UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(ItemBaseCheat.Equips());
+				}
+				*/
 
                 //if (GUILayout.Button($"get my ArtifactPlusInven {items["Item_Passive_"].Count - 4}"))
 
@@ -482,20 +484,20 @@ namespace BepInPluginSample
                     List<string> list9 = new List<string>();
                     GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.Item_Potions, out list9);
                     InventoryManager.Reward(new List<ItemBase>
-                        {
-                            ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_heal),
-                            ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_weak),
-                            ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_holywater)
-                        });
+                    {
+                        ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_heal),
+                        ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_weak),
+                        ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_holywater)
+                    });
                 }
 
 
                 if (GUILayout.Button("rewards"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
-                    {
-                        ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 10)
-                    });
+                {
+                    ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 10)
+                });
                 }
 
                 if (GUILayout.Button("Jar*2 SmallReward Sou*10"))
@@ -537,11 +539,11 @@ namespace BepInPluginSample
                 if (GUILayout.Button("reward4"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
-                    {
-                        ItemBase.GetItem(new GDESkillData(GDEItemKeys.Skill_S_Lucy_17)),
-                        ItemBase.GetItem(new GDESkillData(GDEItemKeys.Skill_S_Public_7)),
-                        ItemBase.GetItem(new GDESkillData(GDEItemKeys.Skill_S_Public_36))
-                    });
+                {
+                    ItemBase.GetItem(new GDESkillData(GDEItemKeys.Skill_S_Lucy_17)),
+                    ItemBase.GetItem(new GDESkillData(GDEItemKeys.Skill_S_Public_7)),
+                    ItemBase.GetItem(new GDESkillData(GDEItemKeys.Skill_S_Public_36))
+                });
                 }
 
                 if (GUILayout.Button("reward5 JokerCard"))
@@ -552,23 +554,23 @@ namespace BepInPluginSample
                 if (GUILayout.Button("reward7"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
-                    {
-                        ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_7)
-                    });
+                {
+                    ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_7)
+                });
                 }
                 if (GUILayout.Button("reward8"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
-                    {
-                        ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_8)
-                    });
+                {
+                    ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_8)
+                });
                 }
                 if (GUILayout.Button("reward9"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
-                    {
-                        ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_9)
-                    });
+                {
+                    ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_9)
+                });
                 }
 
                 if (GUILayout.Button("allevent"))
@@ -603,14 +605,14 @@ namespace BepInPluginSample
                 if (GUILayout.Button("equipget"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
-                    {
-                        ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato),
-                        ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato_0),
-                        ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato_1),
-                        ItemBase.GetItem(GDEItemKeys.Item_Equip_FoxOrb),
-                        ItemBase.GetItem(GDEItemKeys.Item_Equip_FoxOrb_0),
-                        ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
-                    });
+                {
+                    ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato),
+                    ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato_0),
+                    ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato_1),
+                    ItemBase.GetItem(GDEItemKeys.Item_Equip_FoxOrb),
+                    ItemBase.GetItem(GDEItemKeys.Item_Equip_FoxOrb_0),
+                    ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
+                });
                 }
 
                 if (GUILayout.Button("fastrun"))
@@ -624,18 +626,18 @@ namespace BepInPluginSample
                 }
 
                 /*
-                if (GUILayout.Button("Soul *10")) {
-                    using (List<Character>.Enumerator enumerator5 = PlayData.TSavedata.Party.GetEnumerator())
-                    {
-                        while (enumerator5.MoveNext())
-                        {
-                            Character character = enumerator5.Current;
-                            character.Hp /= 2;
-                        }
-                        return;
-                    }
-                }
-                */
+				if (GUILayout.Button("Soul *10")) {
+					using (List<Character>.Enumerator enumerator5 = PlayData.TSavedata.Party.GetEnumerator())
+					{
+						while (enumerator5.MoveNext())
+						{
+							Character character = enumerator5.Current;
+							character.Hp /= 2;
+						}
+						return;
+					}
+				}
+				*/
 
                 GUILayout.Label("--- PlayData ---");
 
@@ -693,8 +695,8 @@ namespace BepInPluginSample
                             if (GUILayout.Button($"HP Recovery +100")) { c.HP += 100; c.Recovery += 100; }
                             if (GUILayout.Button($"ActionCount =1; {c.ActionCount}")) { c.ActionCount = 1; }
                             if (GUILayout.Button($"Overload =1; {c.Overload}")) { c.Overload = 1; }
-                            if (GUILayout.Button($"ActionNum =0; {c.ActionNum }")) { c.ActionNum = 0; }
-                            if (GUILayout.Button($"SkillUseDraw =false; {c.SkillUseDraw }")) { c.SkillUseDraw = false; }
+                            if (GUILayout.Button($"ActionNum =0; {c.ActionNum}")) { c.ActionNum = 0; }
+                            if (GUILayout.Button($"SkillUseDraw =false; {c.SkillUseDraw}")) { c.SkillUseDraw = false; }
                         }
                     }
                     else
@@ -709,7 +711,7 @@ namespace BepInPluginSample
                     //}
                 }
 
-                GUILayout.Label("--- item ---");
+                GUILayout.Label("====== item ======");
                 foreach (var i in itemkeys)
                 {
                     if (GUILayout.Button($"{i}")) { itemkey = i; }
@@ -774,6 +776,7 @@ namespace BepInPluginSample
                 }
 
                 GUILayout.Label($"--- {itemkey} ---");
+                GUILayout.Label($"--- LeftShift click = 10 ---");
                 foreach (var i in items[itemkey])
                 {
                     if (GUILayout.Button($"{i}"))
@@ -781,13 +784,17 @@ namespace BepInPluginSample
                         ItemBaseCheat.RewardGetItem(i);
                     }
                 }
-                GUILayout.Label("--- reward ---");
+                GUILayout.Label("====== item ======");
+
+
+                GUILayout.Label("====== reward ======");
 
                 foreach (var i in rewardkeys)
                 {
                     if (GUILayout.Button($"{i}")) { rewardkey = i; }
                 }
                 GUILayout.Label($"--- {rewardkey} ---");
+                GUILayout.Label($"--- LeftShift click = 8 ---");
                 foreach (var i in rewards[rewardkey])
                 {
                     if (GUILayout.Button($"{i}"))
@@ -795,9 +802,44 @@ namespace BepInPluginSample
                         ItemBaseCheat.Reward(i);
                     }
                 }
-                GUILayout.Label($"--- {Input.GetKey(KeyCode.LeftShift)} ---");
+                GUILayout.Label("====== reward ======");
 
-
+                if (GUILayout.Button($"Friendship info"))
+                {
+                    List<string> list = new List<string>();
+                    GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.Character, out list);
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        GDECharacterData g = new GDECharacterData(list[i]);
+                        if (g.CanFriendShip && !(list[i] == GDEItemKeys.Character_Phoenix) && !(list[i] == GDEItemKeys.Character_TW_Blue) && Misc.IsOriginPlaybleChar(list[i]))
+                        {
+                            var c = SaveManager.NowData.statistics.GetCharData(list[i]);
+                            //SaveManager.NowData.statistics.GetCharData(list[i]).FriendshipLV
+                            logger.LogWarning($"{c.FriendshipLV} ; {c.FriendshipAmount} ; {g.name}");
+                        }
+                    }
+                }
+                if (GUILayout.Button($"Friendship unlook"))
+                {
+                    List<string> list = new List<string>();
+                    GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.Character, out list);
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        GDECharacterData g = new GDECharacterData(list[i]);
+                        if (g.CanFriendShip && !(list[i] == GDEItemKeys.Character_Phoenix) && !(list[i] == GDEItemKeys.Character_TW_Blue) && Misc.IsOriginPlaybleChar(list[i]))
+                        {
+                            var c = SaveManager.NowData.statistics.GetCharData(list[i]);
+                            //SaveManager.NowData.statistics.GetCharData(list[i]).FriendshipLV
+                            c.FriendshipLV = 4;
+                            c.FriendshipAmount = 0;
+                            logger.LogWarning($"{c.FriendshipLV} ; {c.FriendshipAmount} ; {g.name}");
+                        }
+                    }
+                }
+                #region Debug
+                if (GUILayout.Button($"Debug Mode {SaveManager.savemanager._DebugMode}"))
+                    SaveManager.savemanager._DebugMode = !SaveManager.savemanager._DebugMode;
+                #endregion
 
                 #region GUI
                 GUILayout.EndScrollView();
@@ -809,7 +851,7 @@ namespace BepInPluginSample
 
 
 
-        private static void Reward(string s = "", int c = 16)
+        private static void Reward(string s = "", int c = 24)
         {
             logger.LogWarning("Reward");
             if (items[s].Count > 0)
@@ -843,11 +885,10 @@ namespace BepInPluginSample
         #region Harmony
         // ====================== 하모니 패치 샘플 ===================================
 
-        //public override int Damage(BattleChar User, int Dmg, bool Cri, bool Pain = false, bool NOEFFECT = false, int PlusPenetration = 0, bool IgnorehealPro = false, bool HealingPro = false, bool OnlyUnscaleTime = false)
         [HarmonyPatch(typeof(BattleAlly), "Damage",
             typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
-        [HarmonyPrefix]
-        public static void DamagePr(BattleAlly __instance, ref int Dmg)
+        [HarmonyPostfix]
+        public static void DamagePo(BattleAlly __instance, BattleChar User, ref int Dmg)
         {
             logger.LogMessage($"Damage {Dmg}");
             if (noDamage.Value)
@@ -855,21 +896,14 @@ namespace BepInPluginSample
                 Dmg = 0;
                 //__instance.HP = 0;
             }
-        }
-
-        [HarmonyPatch(typeof(BattleAlly), "Damage",
-            typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
-        [HarmonyPostfix]
-        public static void DamagePo(BattleAlly __instance, ref int Dmg)
-        {
-            logger.LogMessage($"Damage {Dmg}");
             if (noRecovery.Value)
             {
                 __instance.Recovery = __instance.Info.get_stat.maxhp;
             }
+
         }
         // public virtual void Dead(bool notdeadeffect = false, bool NoTimeSlow = false)
-        [HarmonyPatch(typeof(BattleAlly), "Dead",  typeof(bool),  typeof(bool))]
+        [HarmonyPatch(typeof(BattleAlly), "Dead", typeof(bool), typeof(bool))]
         [HarmonyPrefix]
         public static bool Dead(bool notdeadeffect, bool NoTimeSlow)
         {
@@ -991,6 +1025,15 @@ namespace BepInPluginSample
             }
         }
 
+        // public void SkillAdd(GDESkillData Data, Skill_Extended SkillEn = null)
+        [HarmonyPatch(typeof(UI_DLCNotice), "Update")]
+        [HarmonyPostfix]
+        public static void Update(UI_DLCNotice __instance)//InventoryManager __instance, string StageKey
+        {
+            logger.LogWarning($"DLC !!");
+            __instance.SelfDestroy();
+        }
+
 
         //public Stat AllyLevelPlusStat(int PlusLv = 0)
         /// <summary>
@@ -998,63 +1041,63 @@ namespace BepInPluginSample
         /// </summary>
         /// <param name="__result"></param>
         /*
-        [HarmonyPatch(typeof(Character), "AllyLevelPlusStat", typeof(int))]
-        [HarmonyPostfix]
-        public static void AllyLevelPlusStat(ref Stat __result)//InventoryManager __instance, string StageKey
-        {
-            if (!isMaxHpUp.Value)
-            {
-                return;
-            }
-            logger.LogMessage($"AllyLevelPlusStat maxhp : {__result.maxhp}");
-            __result.maxhp += 100;
-        }
-        */
+		[HarmonyPatch(typeof(Character), "AllyLevelPlusStat", typeof(int))]
+		[HarmonyPostfix]
+		public static void AllyLevelPlusStat(ref Stat __result)//InventoryManager __instance, string StageKey
+		{
+			if (!isMaxHpUp.Value)
+			{
+				return;
+			}
+			logger.LogMessage($"AllyLevelPlusStat maxhp : {__result.maxhp}");
+			__result.maxhp += 100;
+		}
+		*/
 
         /*
-         // public static void Reward(string rewardkey)
-        [HarmonyPatch(typeof(InventoryManager), "Reward", typeof(string))]//, MethodType.StaticConstructor
-        [HarmonyPrefix]
-        public static void Reward(string rewardkey)//InventoryManager __instance,
-        {
-            logger.LogMessage($"Reward3 : {rewardkey}");
-        }
-        */
+		 // public static void Reward(string rewardkey)
+		[HarmonyPatch(typeof(InventoryManager), "Reward", typeof(string))]//, MethodType.StaticConstructor
+		[HarmonyPrefix]
+		public static void Reward(string rewardkey)//InventoryManager __instance,
+		{
+			logger.LogMessage($"Reward3 : {rewardkey}");
+		}
+		*/
         /*
-        [HarmonyPatch(typeof(BattleTeam), "MyTurn")]
-        [HarmonyPostfix]
-        public static void SetAP(BattleTeam __instance)
-        {
-            if (!addDiscard.Value)
-            {
-                return;
-            }
-            __instance.DiscardCount = __instance.GetDiscardCount+10;
-        }
-        */
+		[HarmonyPatch(typeof(BattleTeam), "MyTurn")]
+		[HarmonyPostfix]
+		public static void SetAP(BattleTeam __instance)
+		{
+			if (!addDiscard.Value)
+			{
+				return;
+			}
+			__instance.DiscardCount = __instance.GetDiscardCount+10;
+		}
+		*/
 
 
         /*
 
-        [HarmonyPatch(typeof(XPPicker), MethodType.Constructor)]
-        [HarmonyPostfix]
-        public static void XPPickerCtor(XPPicker __instance, ref float ___pickupRadius)
-        {
-            //logger.LogWarning($"XPPicker.ctor {___pickupRadius}");
-            ___pickupRadius = pickupRadius.Value;
-        }
+		[HarmonyPatch(typeof(XPPicker), MethodType.Constructor)]
+		[HarmonyPostfix]
+		public static void XPPickerCtor(XPPicker __instance, ref float ___pickupRadius)
+		{
+			//logger.LogWarning($"XPPicker.ctor {___pickupRadius}");
+			___pickupRadius = pickupRadius.Value;
+		}
 
-        [HarmonyPatch(typeof(BattleAlly), "Damage", MethodType.Setter)]
-        [HarmonyPrefix]
-        public static void SetDamageMult(ref float __0)
-        {
-            if (!eMultOn.Value)
-            {
-                return;
-            }
-            __0 *= eDamageMult.Value;
-        }
-        */
+		[HarmonyPatch(typeof(BattleAlly), "Damage", MethodType.Setter)]
+		[HarmonyPrefix]
+		public static void SetDamageMult(ref float __0)
+		{
+			if (!eMultOn.Value)
+			{
+				return;
+			}
+			__0 *= eDamageMult.Value;
+		}
+		*/
         // =========================================================
         #endregion
     }
