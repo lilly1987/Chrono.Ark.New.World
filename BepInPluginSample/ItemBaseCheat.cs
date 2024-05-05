@@ -77,7 +77,7 @@ namespace BepInPluginSample
 
         internal static void ArtifactPlusInvenCheat()
         {
-            PlayData.TSavedata.ArkPassivePlus = 9;
+            PlayData.TSavedata.ArkPassivePlus = 16;
             for (int m = PlayData.TSavedata.Passive_Itembase.Count; m < PlayData.TSavedata.ArkPassivePlus; m++)
             {
                 PlayData.TSavedata.Passive_Itembase.Add(null);

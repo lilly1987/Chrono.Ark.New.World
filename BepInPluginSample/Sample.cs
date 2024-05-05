@@ -417,7 +417,7 @@ namespace BepInPluginSample
                 if (GUILayout.Button("Soul +1000")) { PlayData.Soul += 1000; }
                 if (GUILayout.Button("Soul *10")) { PlayData.Soul *= 10; }
 
-                if (GUILayout.Button($"ArkPassivePlus =9 {PlayData.TSavedata?.ArkPassivePlus}")) { ItemBaseCheat.ArtifactPlusInvenCheat(); }
+                if (GUILayout.Button($"ArkPassivePlus {PlayData.TSavedata?.ArkPassivePlus}")) { ItemBaseCheat.ArtifactPlusInvenCheat(); }
 
                 GUILayout.Label("---  ---");
 
@@ -574,7 +574,7 @@ namespace BepInPluginSample
                 {
                     List<string> eventList = new List<string>();
                     GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.RandomEvent, out eventList);
-                    FieldEventSelect.FieldEventSelectOpen(eventList, null, StageSystem.instance.RandomEventMainObject_S1, true);
+                    FieldEventSelect.FieldEventSelectOpen(eventList, null, null, true);
                 }
 
 
@@ -586,7 +586,7 @@ namespace BepInPluginSample
                     list.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter));
                     list.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_GasMask));
                     list.Add(ItemBase.GetItem(GDEItemKeys.Item_Active_PotLid));
-                    UIManager.InstantiateActive(UIManager.inst.RouletteUI).GetComponent<UI_MiniGame_Roulette>().Init();
+                    UIManager.InstantiateActiveAddressable(UIManager.inst.AR_RouletteUI, AddressableLoadManager.ManageType.Battle).GetComponent<UI_MiniGame_Roulette>().Init();
                 }
 
                 if (GUILayout.Button("stageevent"))
@@ -596,7 +596,7 @@ namespace BepInPluginSample
                     {
                         list2.Add(gderandomEventData.Key);
                     }
-                    FieldEventSelect.FieldEventSelectOpen(list2, null, StageSystem.instance.RandomEventMainObject_S1, true);
+                    FieldEventSelect.FieldEventSelectOpen(list2, null, null, true);
                 }
 
                 if (GUILayout.Button("equipget"))
@@ -865,12 +865,12 @@ namespace BepInPluginSample
                 __instance.Recovery = __instance.Info.get_stat.maxhp;
             }
         }
-        // public virtual void Dead(bool notdeadeffect = false)        
-        [HarmonyPatch(typeof(BattleAlly), "Dead",  typeof(bool))]
+        // public virtual void Dead(bool notdeadeffect = false, bool NoTimeSlow = false)
+        [HarmonyPatch(typeof(BattleAlly), "Dead",  typeof(bool),  typeof(bool))]
         [HarmonyPrefix]
-        public static bool Dead(bool notdeadeffect)
+        public static bool Dead(bool notdeadeffect, bool NoTimeSlow)
         {
-            logger.LogMessage($"Dead {notdeadeffect}");
+            logger.LogMessage($"Dead {notdeadeffect}; {NoTimeSlow}");
             if (noDead.Value)
                 return false;
             return true;
