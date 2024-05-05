@@ -13,18 +13,12 @@ namespace BepInPluginSample
 
         internal static void GetPassiveRandom()
         {
-            SelectItemUI(new List<ItemBase>
-                {
-                    PlayData.GetPassiveRandom(),
-                    PlayData.GetPassiveRandom(),
-                    PlayData.GetPassiveRandom(),
-                    PlayData.GetPassiveRandom(),
-                    PlayData.GetPassiveRandom(),
-                    PlayData.GetPassiveRandom(),
-                    PlayData.GetPassiveRandom(),
-                    PlayData.GetPassiveRandom()
-                }
-            );
+            var l = new List<ItemBase>();
+            for (int i = 0; i < 16; i++)
+            {
+                l.Add(PlayData.GetPassiveRandom());
+            }
+            SelectItemUI(l);
         }
 
 
@@ -67,7 +61,7 @@ namespace BepInPluginSample
             List<ItemBase> list12 = new List<ItemBase>();
 
             //for (int i = 0; i < items["Item_Passive_"].Count - 4; i++)
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 8; i++)
             {
                 list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
             }
@@ -77,10 +71,13 @@ namespace BepInPluginSample
 
         internal static void ArtifactPlusInvenCheat()
         {
-            PlayData.TSavedata.ArkPassivePlus = 16;
-            for (int m = PlayData.TSavedata.Passive_Itembase.Count; m < PlayData.TSavedata.ArkPassivePlus; m++)
+            if( PlayData.TSavedata.ArkPassivePlus < 32)
             {
-                PlayData.TSavedata.Passive_Itembase.Add(null);
+                PlayData.TSavedata.ArkPassivePlus = 32;
+                for (int m = PlayData.TSavedata.Passive_Itembase.Count; m < PlayData.TSavedata.ArkPassivePlus; m++)
+                {
+                    PlayData.TSavedata.Passive_Itembase.Add(null);
+                }
             }
         }
 
@@ -124,14 +121,26 @@ namespace BepInPluginSample
             //list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_CuteComputer));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_GolemRelic));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_JokerCard));
+
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_MagicLamp));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_MagicBerry));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Memoryfragment));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_ShadowOrb));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Crossoflight));
+
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_MindsEye));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_WitchRelic));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_OldHourglass));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Revolvercylinder));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Sunset));
+
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_RelicBox));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_BlackFlag));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Tumble));
+            list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Markofdeath));
+
+            //list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_WaterplayTube_SwimDLC));
+            //list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Passive_Suitecase_SwimDLC));
             InventoryManager.Reward(list12);
         }
 

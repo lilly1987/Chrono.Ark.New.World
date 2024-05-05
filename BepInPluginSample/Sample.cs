@@ -336,6 +336,7 @@ namespace BepInPluginSample
 
 
 
+                GUILayout.Label("---  ---");
 
 
 
@@ -374,7 +375,7 @@ namespace BepInPluginSample
                     ItemBaseCheat.ScrollReward();
                 }
 
-                if (GUILayout.Button($"Reward ArtifactPlusInven 5"))
+                if (GUILayout.Button($"Reward ArtifactPlusInven 8"))
                 {
                     ItemBaseCheat.ArtifactPlusInvenReward();
                 }
@@ -810,6 +811,7 @@ namespace BepInPluginSample
 
         private static void Reward(string s = "", int c = 16)
         {
+            logger.LogWarning("Reward");
             if (items[s].Count > 0)
             {
                 List<ItemBase> list = new List<ItemBase>();
@@ -820,6 +822,7 @@ namespace BepInPluginSample
                 InventoryManager.Reward(list);
                 //list.Clear();
             }
+            logger.LogWarning("Reward");
         }
 
         private static void Fogout()
