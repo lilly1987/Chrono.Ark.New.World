@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <NewSaveData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <TimeMoney>1171</TimeMoney>
+  <TimeMoney>1207</TimeMoney>
   <LoopNum>24999</LoopNum>
-  <TryNum>23</TryNum>
+  <TryNum>24</TryNum>
   <IntrolEnd>true</IntrolEnd>
   <TutorialEnd>true</TutorialEnd>
   <ViewDream1>true</ViewDream1>
@@ -13,7 +13,7 @@
   <HiddenHatchFound>true</HiddenHatchFound>
   <CrimsonEnter>true</CrimsonEnter>
   <OpenChallenge>true</OpenChallenge>
-  <SaveTime>2024 - 05 - 06  21:43</SaveTime>
+  <SaveTime>2024 - 05 - 06  22:37</SaveTime>
   <SaveMoney>51155</SaveMoney>
   <CheckLoopMap>true</CheckLoopMap>
   <SaveedKey />
@@ -231,6 +231,7 @@
       <string>RelicBox</string>
       <string>PyonHammer </string>
       <string>S_LucyD_11</string>
+      <string>Featheroflife</string>
     </UnlockItems>
     <UnlockCharacter>
       <string>Queen</string>
@@ -421,6 +422,7 @@
       <string>RingofBlood</string>
       <string>Bellofsalvation</string>
       <string>Sunmoonstarcurse</string>
+      <string>VikingsMace</string>
     </FoundEquip>
     <FoundPassive>
       <string>TwinsRelic</string>
@@ -1149,10 +1151,24 @@
       <string>S_Azar_2</string>
       <string>S_Momori_Draw</string>
       <string>S_LucyD_11</string>
+      <string>S_Phoenix_1</string>
+      <string>S_Phoenix_2</string>
+      <string>S_Phoenix_5</string>
+      <string>S_Phoenix_11</string>
+      <string>S_Phoenix_7</string>
+      <string>S_Phoenix_9</string>
+      <string>S_Phoenix_0</string>
+      <string>S_Phoenix_3</string>
+      <string>S_Phoenix_10</string>
+      <string>S_Phoenix_6</string>
+      <string>S_Lucy_10</string>
+      <string>S_Phoenix_10_1</string>
+      <string>S_Phoenix_10_0</string>
+      <string>S_Phoenix_Draw</string>
     </SkillPreView>
   </unlockList>
   <GameVersion>13</GameVersion>
-  <Stage1ClearNum>18</Stage1ClearNum>
+  <Stage1ClearNum>19</Stage1ClearNum>
   <PharosKill>0</PharosKill>
   <WitchKill>10</WitchKill>
   <JokerKill>11</JokerKill>
@@ -1168,8 +1184,8 @@
         <CharKey>Phoenix</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>0</ExpertClear>
-        <PlayNum>0</PlayNum>
+        <ExpertClear>1</ExpertClear>
+        <PlayNum>1</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1202,8 +1218,8 @@
         <CharKey>Hein</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>1</ExpertClear>
-        <PlayNum>3</PlayNum>
+        <ExpertClear>2</ExpertClear>
+        <PlayNum>4</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1220,8 +1236,8 @@
         <CharKey>Control</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>0</ExpertClear>
-        <PlayNum>3</PlayNum>
+        <ExpertClear>1</ExpertClear>
+        <PlayNum>4</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1289,8 +1305,8 @@
         <CharKey>Trisha</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>1</ExpertClear>
-        <PlayNum>1</PlayNum>
+        <ExpertClear>2</ExpertClear>
+        <PlayNum>2</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1551,7 +1567,7 @@
       </BossKill>
       <BossKill>
         <BossKey>Queue_MBoss2_0</BossKey>
-        <KillNum>6</KillNum>
+        <KillNum>7</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_S2_MainBoss_Luby</BossKey>
@@ -1559,11 +1575,11 @@
       </BossKill>
       <BossKill>
         <BossKey>Queue_S3_Reaper</BossKey>
-        <KillNum>9</KillNum>
+        <KillNum>10</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_Golem</BossKey>
-        <KillNum>8</KillNum>
+        <KillNum>9</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_S2_Joker</BossKey>
@@ -1571,7 +1587,7 @@
       </BossKill>
       <BossKill>
         <BossKey>Queue_MBoss_0</BossKey>
-        <KillNum>12</KillNum>
+        <KillNum>13</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_S4_King</BossKey>
@@ -1591,19 +1607,19 @@
       </BossKill>
       <BossKill>
         <BossKey>Queue_S3_PharosLeader</BossKey>
-        <KillNum>4</KillNum>
+        <KillNum>5</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_S2_BombClown</BossKey>
-        <KillNum>4</KillNum>
+        <KillNum>5</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>LBossFirst_Queue</BossKey>
-        <KillNum>4</KillNum>
+        <KillNum>5</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>LastBoss_MasterBattle_1</BossKey>
-        <KillNum>4</KillNum>
+        <KillNum>5</KillNum>
       </BossKill>
     </BossKills>
     <HopeClear>0</HopeClear>
@@ -1640,16 +1656,7 @@
   <Quest_Dorchi>4</Quest_Dorchi>
   <ModeSelectView>true</ModeSelectView>
   <SavedPreviousItems>
-    <string>FoxOrb</string>
-    <string>FrozenDebt</string>
-    <string>Ilya_Sword_0</string>
-    <string>Morph</string>
-    <string>Candlestick</string>
-    <string>Revenger</string>
-    <string>BlackSpikedArmor</string>
-    <string>MirrorShield</string>
-    <string>BarrierInk</string>
-    <string>RingofDeath</string>
+    <string>CheeseCake</string>
   </SavedPreviousItems>
   <FriendShipItems>
     <FriendShipItem>
@@ -1678,7 +1685,7 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Sa</Key>
-      <Stack>3</Stack>
+      <Stack>4</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Magazine</Key>
@@ -1690,7 +1697,7 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Tea</Key>
-      <Stack>1</Stack>
+      <Stack>2</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Knife</Key>
@@ -1702,7 +1709,7 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Wi</Key>
-      <Stack>3</Stack>
+      <Stack>4</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Co</Key>
@@ -1742,7 +1749,7 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Mic</Key>
-      <Stack>4</Stack>
+      <Stack>6</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Milk</Key>

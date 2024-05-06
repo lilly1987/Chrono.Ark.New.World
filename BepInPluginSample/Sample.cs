@@ -357,7 +357,7 @@ namespace BepInPluginSample
                 {
                     ItemBaseCheat.ArtifactPlusInvenReward(8);
                 }
-                if (GUILayout.Button($"Ark Parts Inven Add my Item (need open Inven)"))
+                if (GUILayout.Button($"Ark Parts Inven Add my Item \n(need open Inven)"))
                 {
                     ItemBaseCheat.ArtifactPlusInvenCheat();
                     if (Inven)
