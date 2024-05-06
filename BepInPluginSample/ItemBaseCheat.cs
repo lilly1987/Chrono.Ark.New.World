@@ -56,12 +56,12 @@ namespace BepInPluginSample
                 InventoryManager.Reward(InventoryManager.RewardKey(i, false));
         }
 
-        internal static void ArtifactPlusInvenReward()
+        internal static void ArtifactPlusInvenReward(int c=4)
         {
             List<ItemBase> list12 = new List<ItemBase>();
 
             //for (int i = 0; i < items["Item_Passive_"].Count - 4; i++)
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < c; i++)
             {
                 list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
             }
@@ -169,6 +169,11 @@ namespace BepInPluginSample
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_King_Armor));
             list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_BlackSpikedArmor));
             InventoryManager.Reward(list12);
+        }
+
+        internal static void ArkPartsInvenAddNewItem()
+        {
+            throw new NotImplementedException();
         }
     }
 }

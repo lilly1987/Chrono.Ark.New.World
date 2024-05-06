@@ -45,6 +45,7 @@ namespace BepInPluginSample
         #region 변수
         // =========================================================
 
+        private static ConfigEntry<bool> minHp1;
         private static ConfigEntry<bool> noDead;
         private static ConfigEntry<bool> noDamage;
         private static ConfigEntry<bool> noRecovery;
@@ -98,8 +99,9 @@ namespace BepInPluginSample
             #region 변수 설정
             // =========================================================
 
+            minHp1 = Config.Bind("game", "minHp1", true);
             noDead = Config.Bind("game", "noDead", true);
-            noDamage = Config.Bind("game", "noDamage", true);
+            noDamage = Config.Bind("game", "noDamage", false);
             noRecovery = Config.Bind("game", "noRecovery", true);
             noAP = Config.Bind("game", "noMana", true);
             addDiscard = Config.Bind("game", "addDiscard", true);
@@ -111,6 +113,7 @@ namespace BepInPluginSample
             //isMaxHpUp = Config.Bind("game", "isMaxHpUp", true);
             // xpMulti = Config.Bind("game", "xpMulti", 2f);
 
+            StageArkPartOn.SettingChanged += StageArkPartOn_SettingChanged;
             // =========================================================
             #endregion
 
@@ -181,6 +184,14 @@ namespace BepInPluginSample
                 }
             }
 
+        }
+
+        private void StageArkPartOn_SettingChanged(object sender, EventArgs e)
+        {
+            if (PlayData.TSavedata != null )
+            {
+                PlayData.TSavedata.StageArkPartOn = StageArkPartOn.Value;
+            }
         }
 
         #region GUI
@@ -308,22 +319,81 @@ namespace BepInPluginSample
 
                 // =========================================================
                 #endregion
-
+                /*
                 if (GUILayout.Button($"my cheat"))
                 {
                     SaveManager.NowData.TimeMoney = 1000;
                     PlayData.Gold = 10000;
                     PlayData.Soul = 1000;
                     PlayData.TSavedata.StageArkPartOn = true;
-                    /*
+                    
 					List<ItemBase> list12 = new List<ItemBase>();                    
 						* for (int i = 0; i < 4; i++)
 					{
 						list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
 					}
 					InventoryManager.Reward(list12);
-					*/
+					
                     ItemBaseCheat.ArtifactPlusInvenCheat();
+                }
+                */
+                GUILayout.Label("---  ---");
+
+                if (GUILayout.Button("save")) SaveManager.savemanager.ProgressOneSave();
+                if (GUILayout.Button("Fogout")) Fogout();
+                if (GUILayout.Button("StageArkPartOn")) PlayData.TSavedata.StageArkPartOn = true; ;
+
+                if (GUILayout.Button("TimeMoney +1000")) { SaveManager.NowData.TimeMoney += 1000; }
+
+                if (GUILayout.Button("gold +1000")) { PlayData.Gold += 1000; }
+                if (GUILayout.Button("gold *10")) { PlayData.Gold *= 10; }
+
+                if (GUILayout.Button("Soul +1000")) { PlayData.Soul += 1000; }
+                if (GUILayout.Button("Soul *10")) { PlayData.Soul *= 10; }
+
+                if (GUILayout.Button($"ArkPassivePlus {PlayData.TSavedata?.ArkPassivePlus}")) { ItemBaseCheat.ArtifactPlusInvenCheat(); }
+
+                if (GUILayout.Button($"ArtifactPlusInven 8"))
+                {
+                    ItemBaseCheat.ArtifactPlusInvenReward(8);
+                }
+                if (GUILayout.Button($"Ark Parts Inven Add my Item (need open Inven)"))
+                {
+                    ItemBaseCheat.ArtifactPlusInvenCheat();
+                    if (Inven)
+                    {
+                        Inven.AddNewItem(ItemBase.GetItem("AlphaBullet"));
+                        Inven.AddNewItem(ItemBase.GetItem("AncientShield"))  ;
+                        Inven.AddNewItem(ItemBase.GetItem("Bookofmoon"))     ;
+                        Inven.AddNewItem(ItemBase.GetItem("Bookofsun"))      ;
+                        Inven.AddNewItem(ItemBase.GetItem("BrightShield"))   ;
+                        Inven.AddNewItem(ItemBase.GetItem("BronzeMotor"))    ;
+                        Inven.AddNewItem(ItemBase.GetItem("Crossoflight"))   ;
+                        Inven.AddNewItem(ItemBase.GetItem("FlameBullet"))    ;
+                        Inven.AddNewItem(ItemBase.GetItem("FlameOilBarrel")) ;
+                        Inven.AddNewItem(ItemBase.GetItem("Goldleaves"))     ;
+                        Inven.AddNewItem(ItemBase.GetItem("HipSack"))        ;
+                        Inven.AddNewItem(ItemBase.GetItem("JokerCard"))      ;
+                        Inven.AddNewItem(ItemBase.GetItem("MagicBerry"))     ;
+                        Inven.AddNewItem(ItemBase.GetItem("MagicLamp"))      ;
+                        Inven.AddNewItem(ItemBase.GetItem("Maskofthesun"))   ;
+                        Inven.AddNewItem(ItemBase.GetItem("MindsEye"))       ;
+                        Inven.AddNewItem(ItemBase.GetItem("MistTotem"))      ;
+                        Inven.AddNewItem(ItemBase.GetItem("Obsidian"))       ;
+                        Inven.AddNewItem(ItemBase.GetItem("Palette"))        ;
+                        Inven.AddNewItem(ItemBase.GetItem("QuickCasting"))   ;
+                        Inven.AddNewItem(ItemBase.GetItem("RedBlossoms"))    ;
+                        Inven.AddNewItem(ItemBase.GetItem("Shiranui_Relic")) ;
+                        Inven.AddNewItem(ItemBase.GetItem("Spinyblowfish"))  ;
+                        Inven.AddNewItem(ItemBase.GetItem("Sunset"))         ;
+                        Inven.AddNewItem(ItemBase.GetItem("Superconductor")) ;
+                        Inven.AddNewItem(ItemBase.GetItem("ThornStem"))      ;
+                        Inven.AddNewItem(ItemBase.GetItem("ToothBottle"))    ;
+                        Inven.AddNewItem(ItemBase.GetItem("Tumble"))         ;
+                        Inven.AddNewItem(ItemBase.GetItem("WhiteMoon"))      ;
+                        Inven.AddNewItem(ItemBase.GetItem("WitchRelic"))     ;
+                        Inven.AddNewItem(ItemBase.GetItem("branche"))        ;
+                    }
                 }
 
                 if (GUILayout.Button($"PassiveReward"))
@@ -378,50 +448,6 @@ namespace BepInPluginSample
                 }
 
 
-
-
-
-                if (GUILayout.Button($"Reward ArtifactPlusInven 8"))
-                {
-                    ItemBaseCheat.ArtifactPlusInvenReward();
-                }
-
-
-                if (GUILayout.Button($"get my info"))
-                {
-                    CelestialCheat.info();
-                }
-
-                GUILayout.Label("---  ---");
-
-                if (GUILayout.Button($"no Dead {noDead.Value}")) { noDead.Value = !noDead.Value; }
-                if (GUILayout.Button($"no Damage {noDamage.Value}")) { noDamage.Value = !noDamage.Value; }
-                if (GUILayout.Button($"Recovery max {noRecovery.Value}")) { noRecovery.Value = !noRecovery.Value; }
-                if (GUILayout.Button($"Mana max {noAP.Value}")) { noAP.Value = !noAP.Value; }
-                if (GUILayout.Button($"MyTurn add Discard 10 {addDiscard.Value}")) { addDiscard.Value = !addDiscard.Value; }
-                if (GUILayout.Button($"not isFogout {isFogout.Value}")) { isFogout.Value = !isFogout.Value; }
-                if (GUILayout.Button($"StageArkPartOn {StageArkPartOn.Value}")) { StageArkPartOn.Value = !StageArkPartOn.Value; }
-                if (GUILayout.Button($"WaitCount {WaitCount.Value}")) { WaitCount.Value = !WaitCount.Value; }
-                if (GUILayout.Button($"WaitCountAdd {WaitCountAdd.Value}")) { WaitCountAdd.Value = !WaitCountAdd.Value; }
-                if (GUILayout.Button($"SkillAdd_Extended {SkillAdd_Extended.Value}")) { SkillAdd_Extended.Value = !SkillAdd_Extended.Value; }
-                //if (GUILayout.Button($"isMaxHpUp {isMaxHpUp.Value}")) { isMaxHpUp.Value = !isMaxHpUp.Value; }
-
-                GUILayout.Label("---  ---");
-
-                if (GUILayout.Button("save")) SaveManager.savemanager.ProgressOneSave();
-                if (GUILayout.Button("Mapping")) Fogout();
-                if (GUILayout.Button("StageArkPartOn")) PlayData.TSavedata.StageArkPartOn = true; ;
-
-                if (GUILayout.Button("TimeMoney +1000")) { SaveManager.NowData.TimeMoney += 1000; }
-
-                if (GUILayout.Button("gold +1000")) { PlayData.Gold += 1000; }
-                if (GUILayout.Button("gold *10")) { PlayData.Gold *= 10; }
-
-                if (GUILayout.Button("Soul +1000")) { PlayData.Soul += 1000; }
-                if (GUILayout.Button("Soul *10")) { PlayData.Soul *= 10; }
-
-                if (GUILayout.Button($"ArkPassivePlus {PlayData.TSavedata?.ArkPassivePlus}")) { ItemBaseCheat.ArtifactPlusInvenCheat(); }
-
                 GUILayout.Label("---  ---");
 
                 if (GUILayout.Button($"select my Equip Legendary"))
@@ -449,6 +475,30 @@ namespace BepInPluginSample
                         ItemBaseCheat.SelectItemUI(list12);
                     }
                 }
+
+
+
+
+
+
+
+                GUILayout.Label("=== on/off ===");
+
+                if (GUILayout.Button($"min Hp 1 {minHp1.Value}")) { minHp1.Value = !minHp1.Value; }
+                if (GUILayout.Button($"no Dead {noDead.Value}")) { noDead.Value = !noDead.Value; }
+                if (GUILayout.Button($"no Damage {noDamage.Value}")) { noDamage.Value = !noDamage.Value; }
+                if (GUILayout.Button($"Recovery max {noRecovery.Value}")) { noRecovery.Value = !noRecovery.Value; }
+                if (GUILayout.Button($"Mana max {noAP.Value}")) { noAP.Value = !noAP.Value; }
+                if (GUILayout.Button($"MyTurn add Discard 10 {addDiscard.Value}")) { addDiscard.Value = !addDiscard.Value; }
+                if (GUILayout.Button($"not isFogout {isFogout.Value}")) { isFogout.Value = !isFogout.Value; }
+                if (GUILayout.Button($"StageArkPartOn {StageArkPartOn.Value}")) { StageArkPartOn.Value = !StageArkPartOn.Value; }
+                if (GUILayout.Button($"WaitCount {WaitCount.Value}")) { WaitCount.Value = !WaitCount.Value; }
+                if (GUILayout.Button($"WaitCountAdd {WaitCountAdd.Value}")) { WaitCountAdd.Value = !WaitCountAdd.Value; }
+                if (GUILayout.Button($"SkillAdd_Extended {SkillAdd_Extended.Value}")) { SkillAdd_Extended.Value = !SkillAdd_Extended.Value; }
+                //if (GUILayout.Button($"isMaxHpUp {isMaxHpUp.Value}")) { isMaxHpUp.Value = !isMaxHpUp.Value; }
+                GUILayout.Label("=== on/off ===");
+
+
                 /*
 				if (GUILayout.Button($"select my Equip "))
 				{
@@ -465,7 +515,7 @@ namespace BepInPluginSample
                 {
                     ItemBaseCheat.GetPassiveRandom();
                 }
-
+                /*
                 if (GUILayout.Button("get skill"))
                 {
                     PlayData.TSavedata.LucySkills.Add(GDEItemKeys.Skill_S_Lucy_25);
@@ -478,7 +528,7 @@ namespace BepInPluginSample
                         gameObject.GetComponent<SkillButtonMain>().Skillbutton.InputData(Skill.TempSkill(key, PlayData.BattleDummy, PlayData.TempBattleTeam), null, false);
                     }
                 }
-
+                */
                 if (GUILayout.Button("potions"))
                 {
                     List<string> list9 = new List<string>();
@@ -492,7 +542,7 @@ namespace BepInPluginSample
                 }
 
 
-                if (GUILayout.Button("rewards"))
+                if (GUILayout.Button("skill book 10"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
                 {
@@ -525,7 +575,7 @@ namespace BepInPluginSample
                 }
 
 
-                if (GUILayout.Button("reward3"))
+                if (GUILayout.Button("GoldenApple, GetPotion"))
                 {
                     List<ItemBase> list11 = new List<ItemBase>();
                     for (int num2 = 0; num2 < 10; num2++)
@@ -536,7 +586,7 @@ namespace BepInPluginSample
                     InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_GoldenApple));
                 }
 
-                if (GUILayout.Button("reward4"))
+                if (GUILayout.Button("skill book 3"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
                 {
@@ -551,21 +601,21 @@ namespace BepInPluginSample
                     InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Passive_JokerCard));
                 }
 
-                if (GUILayout.Button("reward7"))
+                if (GUILayout.Button("Record_7"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
                 {
                     ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_7)
                 });
                 }
-                if (GUILayout.Button("reward8"))
+                if (GUILayout.Button("Record_8"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
                 {
                     ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_8)
                 });
                 }
-                if (GUILayout.Button("reward9"))
+                if (GUILayout.Button("Record_9"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
                 {
@@ -717,7 +767,7 @@ namespace BepInPluginSample
                     if (GUILayout.Button($"{i}")) { itemkey = i; }
                 }
                 GUILayout.Label($"--- {itemkey} ---");
-                if (GUILayout.Button($"grt 16"))
+                if (GUILayout.Button($"get random 16"))
                 {
                     string s;
                     var _sitems = new List<string>(items[itemkey]);
@@ -744,7 +794,7 @@ namespace BepInPluginSample
                     InventoryManager.Reward(_items);
                 }
 
-                if (GUILayout.Button($"grt all {items[itemkey].Count} : bug!"))
+                if (GUILayout.Button($"get all {items[itemkey].Count} : bug!"))
                 {
                     List<ItemBase> list = new List<ItemBase>();
                     if (Input.GetKey(KeyCode.LeftShift))
@@ -841,6 +891,17 @@ namespace BepInPluginSample
                     SaveManager.savemanager._DebugMode = !SaveManager.savemanager._DebugMode;
                 #endregion
 
+                if (GUILayout.Button($"get my info"))
+                {
+                    CelestialCheat.info();
+                }
+                if (GUILayout.Button($"ark inven info"))
+                {
+                    foreach (var item in Inven?.InventoryItems)
+                    {
+                        logger.LogWarning($"{item?.itemkey}");
+                    }
+                }
                 #region GUI
                 GUILayout.EndScrollView();
             }
@@ -887,32 +948,65 @@ namespace BepInPluginSample
 
         [HarmonyPatch(typeof(BattleAlly), "Damage",
             typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
-        [HarmonyPostfix]
-        public static void DamagePo(BattleAlly __instance, BattleChar User, ref int Dmg)
+        [HarmonyPrefix]
+        public static void DamagePr(BattleAlly __instance,  ref int Dmg)
         {
-            logger.LogMessage($"Damage {Dmg}");
+            logger.LogMessage($"DamagePr {Dmg} ; {__instance.HP}; {__instance.Info.Name}" );;
             if (noDamage.Value)
             {
                 Dmg = 0;
                 //__instance.HP = 0;
             }
+            //if (minHp1.Value && __instance.HP < 1 + Dmg)
+            //{
+            //    __instance.HP = 1+ Dmg;
+            //}
+        }
+
+        [HarmonyPatch(typeof(BattleAlly), "Damage",
+            typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
+        [HarmonyPostfix]
+        public static void DamagePo(BattleAlly __instance,  ref int Dmg)
+        {
+            logger.LogMessage($"DamagePo {Dmg} ; {__instance.HP}; {__instance.Info.Name}");
             if (noRecovery.Value)
             {
                 __instance.Recovery = __instance.Info.get_stat.maxhp;
             }
-
+            if (minHp1.Value && __instance.HP < 1)
+            {
+                __instance.HP = 1;
+            }
         }
         // public virtual void Dead(bool notdeadeffect = false, bool NoTimeSlow = false)
         [HarmonyPatch(typeof(BattleAlly), "Dead", typeof(bool), typeof(bool))]
         [HarmonyPrefix]
-        public static bool Dead(bool notdeadeffect, bool NoTimeSlow)
+        public static bool Dead(BattleAlly __instance, bool notdeadeffect, bool NoTimeSlow)
         {
-            logger.LogMessage($"Dead {notdeadeffect}; {NoTimeSlow}");
+            logger.LogMessage($"Dead {notdeadeffect}; {NoTimeSlow} ; {__instance.HP}; {__instance.Info.Name}");
+            if (minHp1.Value && __instance.HP < 1 )
+            {
+                __instance.HP = 1 ;
+            }
             if (noDead.Value)
+            {
                 return false;
+            }
             return true;
         }
-
+        //public void OnlyDamage(int Dmg, bool Weak, bool IgnoreHealPro = false, BattleChar User = null, bool Cri = false)
+        [HarmonyPatch(typeof(BattleChar), "OnlyDamage", typeof(int), typeof(bool), typeof(bool), typeof(BattleChar), typeof(bool))]
+        [HarmonyPostfix]
+        public static void OnlyDamage(BattleChar __instance, int Dmg)
+        {
+            logger.LogMessage($"OnlyDamage  {Dmg} ; {__instance.HP}; {__instance.Info.Name}");
+            if (minHp1.Value && __instance.Info.Ally && __instance.HP < 1 )
+            {
+                __instance.HP = 1 ;
+            }
+        }
+        /*
+        */
         [HarmonyPatch(typeof(BattleTeam), "AP", MethodType.Setter)]
         [HarmonyPrefix]
         public static void SetAP(BattleTeam __instance, ref int __0)
@@ -933,7 +1027,7 @@ namespace BepInPluginSample
             {
                 return;
             }
-            __result += 10;
+            __result += 99;
         }
 
         [HarmonyPatch(typeof(InventoryManager), "Reward", typeof(List<ItemBase>))]
@@ -958,23 +1052,24 @@ namespace BepInPluginSample
         public static void StageStart()//InventoryManager __instance, string StageKey
         {
             //logger.LogMessage($"Reward2 : {Item.GetName}");
-            if (!isFogout.Value)
+            if (isFogout.Value)
             {
-                return;
+                //return;
+                Fogout();
             }
-            Fogout();
+            if (StageArkPartOn.Value)
+            {
+                //return;
+                PlayData.TSavedata.StageArkPartOn = true;
+            }
         }
 
         [HarmonyPatch(typeof(FieldSystem), "NextStage")]
+        [HarmonyPatch(typeof(FieldSystem), "ClearMap")]
         [HarmonyPostfix]
         public static void NextStage()//InventoryManager __instance, string StageKey
         {
             //logger.LogMessage($"Reward2 : {Item.GetName}");
-            if (!StageArkPartOn.Value)
-            {
-                return;
-            }
-            PlayData.TSavedata.StageArkPartOn = true;
         }
 
 
@@ -1032,6 +1127,30 @@ namespace BepInPluginSample
         {
             logger.LogWarning($"DLC !!");
             __instance.SelfDestroy();
+        }
+
+        static ArkPartsInven Inven = null;
+        [HarmonyPatch(typeof(ArkPartsUI), "Start")]
+        [HarmonyPostfix]
+        public static void ArkPartsUI(ArkPartsUI __instance)//InventoryManager __instance, string StageKey
+        {
+            logger.LogWarning($"ArkPartsUI");
+            Inven = __instance.Inven;
+        }
+
+        [HarmonyPatch(typeof(ArkPartsInven), "Start")]
+        [HarmonyPostfix]
+        public static void ArkPartsInven(ArkPartsInven __instance)//InventoryManager __instance, string StageKey
+        {
+            logger.LogWarning($"ArkPartsInven");
+            Inven = __instance;
+        }
+
+        [HarmonyPatch(typeof(ArkPartsInven), "AddNewItem")]
+        [HarmonyPostfix]
+        public static void AddNewItem(ArkPartsInven __instance, int ItemNum, ItemBase Item)//InventoryManager __instance, string StageKey
+        {
+            logger.LogWarning($"AddNewItem : {Item.itemkey}");
         }
 
 
