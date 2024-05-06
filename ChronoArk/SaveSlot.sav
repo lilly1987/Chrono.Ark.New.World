@@ -3,14 +3,16 @@
   <SaveSlotNum>0</SaveSlotNum>
   <SaveLanguage>0</SaveLanguage>
   <ScreenMode>0</ScreenMode>
-  <Resolution>11</Resolution>
+  <Resolution>16</Resolution>
   <VSync>true</VSync>
   <DepthofField>false</DepthofField>
   <Antialiasing>false</Antialiasing>
   <TextureQuality>0</TextureQuality>
   <Shadow>false</Shadow>
   <LowSpecMode>false</LowSpecMode>
-  <SoundMainVolume>80</SoundMainVolume>
-  <SoundEffectVolume>80</SoundEffectVolume>
-  <SoundBGMVolume>80</SoundBGMVolume>
+  <ColorBlindness>false</ColorBlindness>
+  <SoundMainVolume>50</SoundMainVolume>
+  <SoundEffectVolume>50</SoundEffectVolume>
+  <SoundBGMVolume>50</SoundBGMVolume>
+  <ChangeLastBossBGM>false</ChangeLastBossBGM>
 </SaveSlotData>

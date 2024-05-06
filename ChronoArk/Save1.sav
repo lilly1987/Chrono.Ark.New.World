@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <NewSaveData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <TimeMoney>1014</TimeMoney>
+  <TimeMoney>1171</TimeMoney>
   <LoopNum>24999</LoopNum>
-  <TryNum>12</TryNum>
+  <TryNum>23</TryNum>
   <IntrolEnd>true</IntrolEnd>
   <TutorialEnd>true</TutorialEnd>
   <ViewDream1>true</ViewDream1>
   <ViewLoop>true</ViewLoop>
-  <ViewReti>false</ViewReti>
+  <ViewReti>true</ViewReti>
   <KingFlag>0</KingFlag>
   <IsArchiveEnter>true</IsArchiveEnter>
   <HiddenHatchFound>true</HiddenHatchFound>
   <CrimsonEnter>true</CrimsonEnter>
   <OpenChallenge>true</OpenChallenge>
-  <SaveTime>2024 - 05 - 06  01:17</SaveTime>
-  <SaveMoney>48902</SaveMoney>
+  <SaveTime>2024 - 05 - 06  21:43</SaveTime>
+  <SaveMoney>51155</SaveMoney>
   <CheckLoopMap>true</CheckLoopMap>
   <SaveedKey />
   <Try1Ark>false</Try1Ark>
@@ -226,6 +226,11 @@
       <string>WeatherVane</string>
       <string>Bookofsun</string>
       <string>Bookofmoon</string>
+      <string>S_Lucy_25</string>
+      <string>MindsEye</string>
+      <string>RelicBox</string>
+      <string>PyonHammer </string>
+      <string>S_LucyD_11</string>
     </UnlockItems>
     <UnlockCharacter>
       <string>Queen</string>
@@ -252,6 +257,7 @@
       <string>Queue_S3_TheLight</string>
       <string>Queue_S3_PharosLeader</string>
       <string>Queue_S2_BombClown</string>
+      <string>Queue_DorchiX</string>
     </UnlockBoss>
     <UnlockRecord>
       <string>WarmDay</string>
@@ -410,6 +416,11 @@
       <string>Sunmoonstarcurse_Quest</string>
       <string>OldBible</string>
       <string>CubicNecklace</string>
+      <string>RustyHammer</string>
+      <string>RingofDeath</string>
+      <string>RingofBlood</string>
+      <string>Bellofsalvation</string>
+      <string>Sunmoonstarcurse</string>
     </FoundEquip>
     <FoundPassive>
       <string>TwinsRelic</string>
@@ -515,6 +526,8 @@
       <string>WeatherVane</string>
       <string>Twistedlight</string>
       <string>UnknownSeed</string>
+      <string>PhotoCamera_SwimDLC</string>
+      <string>ReapersTiara</string>
     </FoundPassive>
     <FoundConsumable>
       <string>Bread</string>
@@ -573,6 +586,14 @@
       <string>Potion_Battle</string>
       <string>Specialpackage</string>
       <string>SmallChest</string>
+      <string>Potion_Rare</string>
+      <string>Potion_Enegy</string>
+      <string>RerollBox_SR</string>
+      <string>SkillLock</string>
+      <string>Dinner</string>
+      <string>GoldenBread</string>
+      <string>RedHammer</string>
+      <string>DLC_Ticket_SwimDLC</string>
     </FoundConsumable>
     <FoundActive>
       <string>ShadowPriest_Thurible</string>
@@ -649,6 +670,19 @@
       <string>SR_Tumbledochi</string>
       <string>ProgramMaster_0</string>
       <string>ProgramMaster2</string>
+      <string>S1_Dochi_L</string>
+      <string>S1_Kitchenmaid</string>
+      <string>S4_Guard_0</string>
+      <string>S4_Guard_1</string>
+      <string>S4_Guard_2</string>
+      <string>S4_AngryDochi</string>
+      <string>S1_Table</string>
+      <string>S2_Pharos_Healer</string>
+      <string>S2_Pharos_Mage</string>
+      <string>S2_BoomBalloon</string>
+      <string>S2_Animatronics</string>
+      <string>S3_Wolf</string>
+      <string>S4_QuestDorchi</string>
     </FoundMonster>
     <UnlockDictsKey />
     <NewCheckKey>
@@ -699,7 +733,13 @@
       <string>SR_QuickStart</string>
     </UnlockSpecialRuleKey>
     <ClearCheck_SpecialRule_Normal />
-    <ClearCheck_SpecialRule_Expert />
+    <ClearCheck_SpecialRule_Expert>
+      <string>SR_LucysAdventure</string>
+      <string>SR_Solo</string>
+      <string>SR_AllRandom</string>
+      <string>SR_QuickStart</string>
+      <string>SR_Ones</string>
+    </ClearCheck_SpecialRule_Expert>
     <SkillPreView>
       <string>S_Azar_7</string>
       <string>S_Priest_11</string>
@@ -1071,13 +1111,51 @@
       <string>S_SmallChest_Effect_4</string>
       <string>S_Lucy_0</string>
       <string>S_Phoenix_8</string>
+      <string>S_Momori_1</string>
+      <string>S_Momori_6</string>
+      <string>S_Momori_3</string>
+      <string>S_Momori_0</string>
+      <string>S_Momori_7</string>
+      <string>S_Momori_2</string>
+      <string>S_Momori_8</string>
+      <string>S_Momori_4</string>
+      <string>S_Momori_5</string>
+      <string>S_Momori_Rare_1</string>
+      <string>S_Momori_Rare_2</string>
+      <string>S_Lucy_21</string>
+      <string>S_Ilya_8_Rare</string>
+      <string>S_Ilya_9_Rare</string>
+      <string>S_Momori_8_0</string>
+      <string>S_Sizz_13</string>
+      <string>S_ShadowPriest_10_LucyDraw</string>
+      <string>S_LucyCurse_Banana</string>
+      <string>S_TW_Blue_5_1</string>
+      <string>S_TW_Red_4_1</string>
+      <string>S_TW_Red_4_0</string>
+      <string>S_TW_Blue_5_2</string>
+      <string>S_Public_13</string>
+      <string>S_Lucy_25</string>
+      <string>S_Control_12</string>
+      <string>S_Control_11</string>
+      <string>S_Control_9</string>
+      <string>S_Public_3</string>
+      <string>S_Control_12_0</string>
+      <string>S_Leryn_5_1</string>
+      <string>S_Mement_R0</string>
+      <string>S_Public_5</string>
+      <string>S_Ilya_8_1</string>
+      <string>S_MissChain_13</string>
+      <string>S_SilverStein_5_0</string>
+      <string>S_Azar_2</string>
+      <string>S_Momori_Draw</string>
+      <string>S_LucyD_11</string>
     </SkillPreView>
   </unlockList>
   <GameVersion>13</GameVersion>
-  <Stage1ClearNum>13</Stage1ClearNum>
+  <Stage1ClearNum>18</Stage1ClearNum>
   <PharosKill>0</PharosKill>
-  <WitchKill>8</WitchKill>
-  <JokerKill>7</JokerKill>
+  <WitchKill>10</WitchKill>
+  <JokerKill>11</JokerKill>
   <TheLightKill>0</TheLightKill>
   <LianUnlockNum>13</LianUnlockNum>
   <LianTutorialBook>true</LianTutorialBook>
@@ -1106,7 +1184,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>1</ExpertClear>
-        <PlayNum>5</PlayNum>
+        <PlayNum>6</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1125,14 +1203,14 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>1</ExpertClear>
-        <PlayNum>2</PlayNum>
+        <PlayNum>3</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
         <FriendshipLV>4</FriendshipLV>
         <FriendshipAmount>0</FriendshipAmount>
         <IsCrimsonDialogue>false</IsCrimsonDialogue>
-        <IsPlusSkill>true</IsPlusSkill>
+        <IsPlusSkill>false</IsPlusSkill>
         <GetGiftItems>
           <string>Gift_Knife</string>
           <string>Gift_Cartoon</string>
@@ -1143,7 +1221,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>0</ExpertClear>
-        <PlayNum>1</PlayNum>
+        <PlayNum>3</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1177,7 +1255,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>1</ExpertClear>
-        <PlayNum>1</PlayNum>
+        <PlayNum>2</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1194,7 +1272,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>1</ExpertClear>
-        <PlayNum>3</PlayNum>
+        <PlayNum>4</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1248,7 +1326,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>3</ExpertClear>
-        <PlayNum>6</PlayNum>
+        <PlayNum>9</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1288,7 +1366,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>1</ExpertClear>
-        <PlayNum>1</PlayNum>
+        <PlayNum>4</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1305,7 +1383,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>1</ExpertClear>
-        <PlayNum>1</PlayNum>
+        <PlayNum>2</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1320,7 +1398,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>1</ExpertClear>
-        <PlayNum>1</PlayNum>
+        <PlayNum>3</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1338,7 +1416,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>1</ExpertClear>
-        <PlayNum>1</PlayNum>
+        <PlayNum>2</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1371,7 +1449,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>1</ExpertClear>
-        <PlayNum>7</PlayNum>
+        <PlayNum>9</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1404,7 +1482,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>0</ExpertClear>
-        <PlayNum>1</PlayNum>
+        <PlayNum>2</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1434,7 +1512,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>0</ExpertClear>
-        <PlayNum>0</PlayNum>
+        <PlayNum>3</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1442,7 +1520,9 @@
         <FriendshipAmount>0</FriendshipAmount>
         <IsCrimsonDialogue>false</IsCrimsonDialogue>
         <IsPlusSkill>false</IsPlusSkill>
-        <GetGiftItems />
+        <GetGiftItems>
+          <string>Gift_Mic</string>
+        </GetGiftItems>
       </Statistics_Character>
       <Statistics_Character>
         <CharKey>AllyDoll</CharKey>
@@ -1463,11 +1543,11 @@
     <BossKills>
       <BossKill>
         <BossKey>Garden_Midboss</BossKey>
-        <KillNum>4</KillNum>
+        <KillNum>6</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_Witch</BossKey>
-        <KillNum>8</KillNum>
+        <KillNum>10</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_MBoss2_0</BossKey>
@@ -1475,27 +1555,27 @@
       </BossKill>
       <BossKill>
         <BossKey>Queue_S2_MainBoss_Luby</BossKey>
-        <KillNum>4</KillNum>
-      </BossKill>
-      <BossKill>
-        <BossKey>Queue_S3_Reaper</BossKey>
-        <KillNum>6</KillNum>
-      </BossKill>
-      <BossKill>
-        <BossKey>Queue_Golem</BossKey>
         <KillNum>5</KillNum>
       </BossKill>
       <BossKill>
-        <BossKey>Queue_S2_Joker</BossKey>
-        <KillNum>7</KillNum>
-      </BossKill>
-      <BossKill>
-        <BossKey>Queue_MBoss_0</BossKey>
+        <BossKey>Queue_S3_Reaper</BossKey>
         <KillNum>9</KillNum>
       </BossKill>
       <BossKill>
+        <BossKey>Queue_Golem</BossKey>
+        <KillNum>8</KillNum>
+      </BossKill>
+      <BossKill>
+        <BossKey>Queue_S2_Joker</BossKey>
+        <KillNum>11</KillNum>
+      </BossKill>
+      <BossKill>
+        <BossKey>Queue_MBoss_0</BossKey>
+        <KillNum>12</KillNum>
+      </BossKill>
+      <BossKill>
         <BossKey>Queue_S4_King</BossKey>
-        <KillNum>3</KillNum>
+        <KillNum>7</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>CrimsonQueue_GunManBoss</BossKey>
@@ -1503,19 +1583,19 @@
       </BossKill>
       <BossKill>
         <BossKey>Queue_S3_TheLight</BossKey>
-        <KillNum>5</KillNum>
+        <KillNum>7</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_S2_TimeEater</BossKey>
-        <KillNum>2</KillNum>
+        <KillNum>4</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_S3_PharosLeader</BossKey>
-        <KillNum>3</KillNum>
+        <KillNum>4</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_S2_BombClown</BossKey>
-        <KillNum>1</KillNum>
+        <KillNum>4</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>LBossFirst_Queue</BossKey>
@@ -1557,103 +1637,28 @@
   <LucySkin>skin_5</LucySkin>
   <_lucyBasicSkillKey>S_Lucy_0</_lucyBasicSkillKey>
   <HuzUnlockGold>5000</HuzUnlockGold>
-  <Quest_Dorchi>2</Quest_Dorchi>
+  <Quest_Dorchi>4</Quest_Dorchi>
   <ModeSelectView>true</ModeSelectView>
   <SavedPreviousItems>
-    <string>Replica</string>
-    <string>DochiHat</string>
-    <string>HalfMask</string>
-    <string>BloodyMary</string>
-    <string>DarkPrestClothes</string>
-    <string>Arrowofangel</string>
-    <string>JokerCard</string>
-    <string>SweetPotato</string>
-    <string>SweetPotato_0</string>
-    <string>SweetPotato_1</string>
     <string>FoxOrb</string>
-    <string>FoxOrb_0</string>
-    <string>EndlessSoul</string>
-    <string>Bookofmoon</string>
-    <string>Bookofsun</string>
-    <string>BronzeMotor</string>
-    <string>GolemRelic</string>
-    <string>MagicLamp</string>
-    <string>MagicBerry</string>
-    <string>Memoryfragment</string>
-    <string>ShadowOrb</string>
-    <string>Crossoflight</string>
-    <string>MindsEye</string>
-    <string>WitchRelic</string>
-    <string>OldHourglass</string>
-    <string>Revolvercylinder</string>
-    <string>Sunset</string>
-    <string>RelicBox</string>
-    <string>BlackFlag</string>
-    <string>Tumble</string>
-    <string>Markofdeath</string>
-    <string>AlphaBullet</string>
-    <string>P_Ruby</string>
-    <string>Meteorite</string>
-    <string>WeatherVane</string>
-    <string>GhostCoin</string>
     <string>FrozenDebt</string>
-    <string>SandCastle_SwimDLC</string>
-    <string>ToothBottle</string>
-    <string>Sign</string>
-    <string>QuickCasting</string>
-    <string>FlameBullet</string>
-    <string>CCBadge</string>
-    <string>Candy</string>
-    <string>FlameDarkSword</string>
-    <string>SwordOfStar</string>
-    <string>BlackMoonSword</string>
-    <string>King_Sword</string>
     <string>Ilya_Sword_0</string>
-    <string>Ilya_Sword_1</string>
-    <string>MessiahbladesPrototype</string>
-    <string>King_Cape</string>
+    <string>Morph</string>
+    <string>Candlestick</string>
     <string>Revenger</string>
-    <string>King_Armor</string>
     <string>BlackSpikedArmor</string>
-    <string>Shiranui_DLCEquip</string>
-    <string>HuntersNose</string>
-    <string>Swimsuit_SwimDLC</string>
-    <string>GuardsCertificate</string>
-    <string>Deadeye</string>
-    <string>ThePressure</string>
-    <string>DemonHunter</string>
-    <string>Vadzerald</string>
-    <string>StickofFaith</string>
-    <string>CrescentsReflex</string>
-    <string>Guitar</string>
-    <string>WhitePriestCloth</string>
-    <string>ForbiddenLibram</string>
-    <string>HighPriestsLegacy</string>
-    <string>OrderofValiancy</string>
-    <string>ArmletofGambler</string>
-    <string>PrismStick</string>
-    <string>LastStand</string>
-    <string>OrderofSacrifice</string>
-    <string>VikingsBlood</string>
-    <string>DevilsHorn</string>
-    <string>BlankBullet</string>
-    <string>Alicesgift</string>
-    <string>WaterHose_SwimDLC</string>
-    <string>DarkCross</string>
-    <string>Tiara</string>
-    <string>Taegeukring</string>
-    <string>Sunmoonstarcurse_Quest</string>
-    <string>RoseArmor</string>
-    <string>EndlessScroll</string>
+    <string>MirrorShield</string>
+    <string>BarrierInk</string>
+    <string>RingofDeath</string>
   </SavedPreviousItems>
   <FriendShipItems>
     <FriendShipItem>
       <Key>Gift_Art</Key>
-      <Stack>0</Stack>
+      <Stack>2</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Doll</Key>
-      <Stack>4</Stack>
+      <Stack>6</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Cartoon</Key>
@@ -1661,27 +1666,27 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Gun</Key>
-      <Stack>2</Stack>
+      <Stack>3</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Dogcollar</Key>
-      <Stack>1</Stack>
-    </FriendShipItem>
-    <FriendShipItem>
-      <Key>Gift_FishingRod</Key>
-      <Stack>5</Stack>
-    </FriendShipItem>
-    <FriendShipItem>
-      <Key>Drink_Sa</Key>
       <Stack>2</Stack>
     </FriendShipItem>
     <FriendShipItem>
+      <Key>Gift_FishingRod</Key>
+      <Stack>6</Stack>
+    </FriendShipItem>
+    <FriendShipItem>
+      <Key>Drink_Sa</Key>
+      <Stack>3</Stack>
+    </FriendShipItem>
+    <FriendShipItem>
       <Key>Gift_Magazine</Key>
-      <Stack>5</Stack>
+      <Stack>6</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Fan</Key>
-      <Stack>1</Stack>
+      <Stack>2</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Tea</Key>
@@ -1689,19 +1694,19 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Knife</Key>
-      <Stack>2</Stack>
+      <Stack>3</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Violin</Key>
-      <Stack>5</Stack>
+      <Stack>6</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Wi</Key>
-      <Stack>1</Stack>
+      <Stack>3</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Co</Key>
-      <Stack>3</Stack>
+      <Stack>5</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Vo</Key>
@@ -1709,19 +1714,19 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Cake</Key>
-      <Stack>2</Stack>
-    </FriendShipItem>
-    <FriendShipItem>
-      <Key>Gift_Mugwort</Key>
       <Stack>3</Stack>
     </FriendShipItem>
     <FriendShipItem>
+      <Key>Gift_Mugwort</Key>
+      <Stack>6</Stack>
+    </FriendShipItem>
+    <FriendShipItem>
       <Key>Gift_Camera</Key>
-      <Stack>1</Stack>
+      <Stack>3</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Guitar</Key>
-      <Stack>6</Stack>
+      <Stack>7</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_SFNovel</Key>
@@ -1729,7 +1734,7 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_DVD</Key>
-      <Stack>2</Stack>
+      <Stack>4</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Tool</Key>
@@ -1737,39 +1742,39 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Mic</Key>
-      <Stack>5</Stack>
+      <Stack>4</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Milk</Key>
-      <Stack>1</Stack>
+      <Stack>3</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Be</Key>
-      <Stack>1</Stack>
+      <Stack>2</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Novel</Key>
-      <Stack>2</Stack>
+      <Stack>5</Stack>
     </FriendShipItem>
   </FriendShipItems>
   <DLCTicketItems />
   <EnableSkins />
   <VendingRefill>true</VendingRefill>
   <VendingItems>
-    <string>Gift_Doll</string>
-    <string>Gift_FishingRod</string>
-    <string>Gift_Magazine</string>
-    <string>Drink_Sa</string>
-    <string>Drink_Co</string>
+    <string>Drink_Wi</string>
+    <string>Gift_DVD</string>
     <string>Gift_Guitar</string>
+    <string>Gift_Magazine</string>
+    <string>Drink_Milk</string>
+    <string>Gift_Doll</string>
   </VendingItems>
   <VendingBuyItems>
+    <string>Drink_Wi</string>
     <string>Gift_Doll</string>
-    <string>Gift_FishingRod</string>
-    <string>Gift_Magazine</string>
+    <string>Gift_DVD</string>
     <string>Gift_Guitar</string>
-    <string>Drink_Co</string>
-    <string>Drink_Sa</string>
+    <string>Drink_Milk</string>
+    <string>Gift_Magazine</string>
   </VendingBuyItems>
   <TalkMarkFlag>
     <boolean>true</boolean>
