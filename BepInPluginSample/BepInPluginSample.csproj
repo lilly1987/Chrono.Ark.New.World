@@ -93,6 +93,9 @@
       <HintPath>..\..\games\Chrono.Ark-P2P\ChronoArk_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\games\Chrono.Ark-P2P\ChronoArk_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CelestialCheat.cs" />

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BepInPluginSample
 {
@@ -355,6 +356,7 @@ else*/
                     PartyInventory.Init();
                     PartyInventory.Ins.UpdateInvenUI();
                     PartyInventory.Ins.PadLayoutSetting();
+                    //MyPartyInventory.PadLayoutSetting();
 
                 }
                 if (GUILayout.Button($"ArkPassivePlus {PlayData.TSavedata?.ArkPassivePlus}")) { ItemBaseCheat.ArtifactPlusInvenCheat(); }
@@ -1168,6 +1170,59 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
         public static void AddNewItem(ArkPartsInven __instance, int ItemNum, ItemBase Item)//InventoryManager __instance, string StageKey
         {
             logger.LogWarning($"AddNewItem : {Item.itemkey}");
+        }
+        
+        [HarmonyPatch(typeof(PartyInventory), "PadLayoutSetting")]
+        [HarmonyPrefix]
+        public static bool PadLayoutSetting()//InventoryManager __instance, string StageKey
+        {
+            logger.LogWarning($"PadLayoutSetting");
+            {
+                {
+                    if (PartyInventory.Ins.InvenLayout != null && PartyInventory.Ins.InvenLayout.Targets[0] != null)
+                    {
+                        return false;
+                    }
+                    PartyInventory.Ins.InvenLayout = new PadLayout();
+                    PartyInventory.Ins.InvenLayout.ColumnNum = 18;
+                    PartyInventory.Ins.InvenLayout.Index = 0;
+                    PartyInventory.Ins.InvenLayout.Size = new Vector2(80f, 80f);
+                    for (int i = 0; i < PartyInventory.InvenM.Align.transform.childCount; i++)
+                    {
+                        PartyInventory.Ins.InvenLayout.Targets.Add(PartyInventory.InvenM.Align.transform.GetChild(i).GetComponent<RectTransform>());
+                    }
+                    PartyInventory.Ins.InvenLayout.TargetType = typeof(ItemSlot);
+                    PartyInventory.Ins.InvenLayout.LayoutType = typeof(PartyInventory);
+                    GamepadManager.Add(PartyInventory.Ins.InvenLayout, false);
+                    for (int j = 0; j < PlayData.TSavedata.Passive_Itembase.Count; j++)
+                    {
+                        if (PlayData.TSavedata.Passive_Itembase[j] != null)
+                        {
+                            PartyInventory.Ins.PassiveLayoutUpdate = true;
+                            break;
+                        }
+                    }
+                    if (PartyInventory.Ins.HopeLevel1.activeInHierarchy || PartyInventory.Ins.HopeLevel2.activeInHierarchy || PartyInventory.Ins.HopeLevel3.activeInHierarchy)
+                    {
+                        PartyInventory.Ins.PassiveLayoutUpdate = true;
+                    }
+                    if (PartyInventory.Ins.SpruleIcon.activeInHierarchy)
+                    {
+                        PartyInventory.Ins.PassiveLayoutUpdate = true;
+                    }
+                    if (PartyInventory.Ins.CrimsonIcon.activeInHierarchy)
+                    {
+                        PartyInventory.Ins.PassiveLayoutUpdate = true;
+                    }
+                    if (PartyInventory.Ins.BMistIcon.activeInHierarchy)
+                    {
+                        PartyInventory.Ins.PassiveLayoutUpdate = true;
+                    }
+                }
+            }
+            PartyInventory.Ins.Align.transform.localPosition = new Vector3(1150, 0.6f, 0.5f);
+            PartyInventory.InvenM.Align.GetComponent<GridLayoutGroup>().constraintCount = 18;            
+            return false;
         }
 
 
