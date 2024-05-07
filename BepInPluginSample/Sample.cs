@@ -109,7 +109,7 @@ namespace BepInPluginSample
             StageArkPartOn = Config.Bind("game", "StageArkPartOn", true);
             WaitCount = Config.Bind("game", "WaitCount", true);
             WaitCountAdd = Config.Bind("game", "WaitCountAdd", true);
-            SkillAdd_Extended = Config.Bind("game", "SkillAdd_Extended", true);
+            //SkillAdd_Extended = Config.Bind("game", "SkillAdd_Extended", true);
             //isMaxHpUp = Config.Bind("game", "isMaxHpUp", true);
             // xpMulti = Config.Bind("game", "xpMulti", 2f);
 
@@ -337,6 +337,8 @@ namespace BepInPluginSample
                     ItemBaseCheat.ArtifactPlusInvenCheat();
                 }
                 */
+
+                #region item1
                 GUILayout.Label("---  ---");
 
                 if (GUILayout.Button("save")) SaveManager.savemanager.ProgressOneSave();
@@ -345,11 +347,8 @@ namespace BepInPluginSample
 
                 if (GUILayout.Button("TimeMoney +1000")) { SaveManager.NowData.TimeMoney += 1000; }
 
-                if (GUILayout.Button("gold +1000")) { PlayData.Gold += 1000; }
-                if (GUILayout.Button("gold *10")) { PlayData.Gold *= 10; }
-
-                if (GUILayout.Button("Soul +1000")) { PlayData.Soul += 1000; }
-                if (GUILayout.Button("Soul *10")) { PlayData.Soul *= 10; }
+                if (GUILayout.Button("gold +10 (LeftShift +1000)")) { if (Input.GetKey(KeyCode.LeftShift)) PlayData.Gold += 1000; else PlayData.Gold += 10; }
+                if (GUILayout.Button("Soul +10 (LeftShift +1000)")) { if (Input.GetKey(KeyCode.LeftShift)) PlayData.Soul += 1000; else PlayData.Soul += 10; }
 
                 if (GUILayout.Button($"ArkPassivePlus {PlayData.TSavedata?.ArkPassivePlus}")) { ItemBaseCheat.ArtifactPlusInvenCheat(); }
 
@@ -434,19 +433,32 @@ namespace BepInPluginSample
                 }
 
                 GUILayout.Label("---  ---");
+                #endregion 1
 
-
-
-                if (GUILayout.Button($"Skill_ExtendedSelect"))
+                GUILayout.Label("--- Skill Extended ---");
+                /*
+                if (GUILayout.Button($"Select"))
                 {
-                    CelestialCheat.Skill_ExtendedSelect();
+                    CelestialCheat.Skill_ExtendedSelect2();
+                }*/
+                foreach (BattleAlly battleAlly in PlayData.Battleallys)
+                {
+                    GUILayout.Label($"{battleAlly.Info.Name}");
+                    if (GUILayout.Button($"Give")) CelestialCheat.Skill_ExtendedSelect_Give(battleAlly);
+                    if (GUILayout.Button($"receive")) CelestialCheat.Skill_ExtendedSelect_receive(battleAlly);
+                }
+                GUILayout.Label("---  ---");
+                if (GUILayout.Button($"auto all set"))
+                {
+                    CelestialCheat.Skill_ExtendedSelect_random();
                 }
 
-                if (GUILayout.Button($"Skill_ExtendedSet"))
+                if (GUILayout.Button($"all del"))
                 {
-                    CelestialCheat.Skill_ExtendedSet();
+                    CelestialCheat.Skill_ExtendedDel();
                 }
-
+                GUILayout.Label("--- Skill Extended ---");
+                #region item2
 
                 GUILayout.Label("---  ---");
 
@@ -476,11 +488,9 @@ namespace BepInPluginSample
                     }
                 }
 
+                #endregion
 
-
-
-
-
+                #region onoff
 
                 GUILayout.Label("=== on/off ===");
 
@@ -498,7 +508,7 @@ namespace BepInPluginSample
                 //if (GUILayout.Button($"isMaxHpUp {isMaxHpUp.Value}")) { isMaxHpUp.Value = !isMaxHpUp.Value; }
                 GUILayout.Label("=== on/off ===");
 
-
+                #endregion
                 /*
 				if (GUILayout.Button($"select my Equip "))
 				{
@@ -508,7 +518,7 @@ namespace BepInPluginSample
 
                 //if (GUILayout.Button($"get my ArtifactPlusInven {items["Item_Passive_"].Count - 4}"))
 
-
+                #region debug
                 GUILayout.Label("---  ---");
 
                 if (GUILayout.Button("GetPassiveRandom"))
@@ -674,20 +684,7 @@ namespace BepInPluginSample
                 {
                     StageSystem.instance.Player.GetComponent<PlayerController>().Fly();
                 }
-
-                /*
-				if (GUILayout.Button("Soul *10")) {
-					using (List<Character>.Enumerator enumerator5 = PlayData.TSavedata.Party.GetEnumerator())
-					{
-						while (enumerator5.MoveNext())
-						{
-							Character character = enumerator5.Current;
-							character.Hp /= 2;
-						}
-						return;
-					}
-				}
-				*/
+                #endregion
 
                 GUILayout.Label("--- PlayData ---");
 
@@ -1109,7 +1106,7 @@ namespace BepInPluginSample
             }
             if (SkillEn == null)
             {
-                CelestialCheat.AllSet(CelestialCheat.GetList(), __instance.GetBattleChar);
+                //CelestialCheat.AllSkill_ExtendedSet(CelestialCheat.GetList(), __instance.GetBattleChar);
 
 
 
