@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="CelestialCheat.cs" />
     <Compile Include="ItemBaseCheat.cs" />
+    <Compile Include="MyPartyInventory.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

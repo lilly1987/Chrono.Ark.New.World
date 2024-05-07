@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace BepInPluginSample
 {
@@ -127,7 +128,7 @@ namespace BepInPluginSample
 
         internal static void Skill_ExtendedDel()
         {
-            foreach (BattleChar battleChar in PlayData.Battleallys)
+            foreach (BattleAlly battleChar in PlayData.Battleallys)
             {
                 foreach (Skill enforceSkill in battleChar.Skills)
                 {
@@ -137,53 +138,6 @@ namespace BepInPluginSample
             }
         }
 
-        public static void AllSkill_ExtendedSet(List<Skill_Extended> list, BattleChar battleChar)
-        {            
-
-            Sample.logger.LogMessage($"0 {battleChar.Info.Name} {battleChar.Skills.Count} {battleChar.Info.SkillDatas.Count}");
-            foreach (CharInfoSkillData item in battleChar.Info.SkillDatas)
-            {
-                Sample.logger.LogMessage($"b ; {item.Skill.Name} ; {item.SKillExtended?.Name} ;");
-            }
-
-            foreach (Skill enforceSkill in battleChar.Skills)
-            {
-                Sample.logger.LogMessage($"1 {enforceSkill.CharinfoSkilldata.Skill.Name}");
-                Sample.logger.LogMessage($"2 {enforceSkill.CharinfoSkilldata?.SKillExtended}");
-                Sample.logger.LogMessage($"3 {enforceSkill.AllExtendeds.Count}");
-                foreach (var item in enforceSkill.AllExtendeds)
-                {
-                    if (item.Data != null)
-                    {
-                        Sample.logger.LogMessage($"4 {item.Name} ; {item.ExtendedName()}");
-                    }
-                    else
-                        Sample.logger.LogMessage($"4 {item.Name}");
-                }
-
-                List<Skill_Extended> list4 = new List<Skill_Extended>();
-                foreach (Skill_Extended skill_Extended in list)
-                {
-                    if (skill_Extended.CanEnforce(enforceSkill))
-                    {
-                        /*
-[Message: Lilly] 요한; SkillEn_Silver_0
-[Message: Lilly] 요한; SkillEn_Silver_1
-                        */
-                        Sample.logger.LogMessage($"5 {battleChar.Info.Name} ; {skill_Extended.Name}");
-                        list4.Add(skill_Extended);
-                    }
-                }
-                Sample.logger.LogMessage($"6 {list4.Count}");
-                if (list4.Count > 0)
-                {
-                    var _skill_Extended = list4.Random<Skill_Extended>();
-                    Sample.logger.LogMessage($"7 {_skill_Extended.Name} ; {enforceSkill.CharinfoSkilldata.SKillExtended} ;");                    
-                    enforceSkill.CharinfoSkilldata.SKillExtended = _skill_Extended;
-                }
-            }
-        }
-                
 		public static bool Skill_ExtendedSelect_Give(BattleChar battleAlly)
         {
             List<Skill_Extended> list = new List<Skill_Extended>();
@@ -201,19 +155,17 @@ namespace BepInPluginSample
 
             //foreach (BattleAlly battleAlly in PlayData.Battleallys)
             {
-                //List<Skill_Extended> list4 = new List<Skill_Extended>();
                 foreach (Skill_Extended skill_Extended in list)
                 {
                     if (skill_Extended.Data.NeedCharacter == battleAlly.Info.KeyData)
                     {
-                        foreach (BattleChar battleChar in PlayData.Battleallys)
+                        foreach (BattleAlly battleChar in PlayData.Battleallys)
                         {
                             bool flag = false;
                             foreach (Skill enforceSkill in battleChar.Skills)
                             {
                                 if (skill_Extended.CanEnforce(enforceSkill))
                                 {
-                                    //list4.Add(skill_Extended);
                                     list2.Add(skill_Extended);
                                     flag = true;
                                     break;
@@ -226,26 +178,19 @@ namespace BepInPluginSample
                         }
                     }
                 }
-                //if (list4.Count != 0)
-                //{
-                //    list2.Add(list4.Random(RandomClassKey.Celestial));
-                //}
             }
             if (list2.Count >= 1)
             {
                 UIManager.InstantiateActive(UIManager.inst.EnforceUI).GetComponent<UI_Enforce>().Init(list2);
-                //MasterAudio.PlaySound("Crystal", 1f, null, 0f, null, null, false, false);
-                //PlayData.TSavedata.UseItemKeys.Add(GDEItemKeys.Item_Consume_Celestial);
                 return true;
             }
-            //EffectView.SimpleTextout(FieldSystem.instance.TopWindow.transform, ScriptLocalization.System_Item.CelestialCant, 1f, false, 1f);
             return false;
         }
-        
-		public static bool Skill_ExtendedSelect_receive(BattleChar battleChar)
+
+        public static void Skill_ExtendedSelect_random()
         {
             List<Skill_Extended> list = new List<Skill_Extended>();
-            List<Skill_Extended> list2 = new List<Skill_Extended>();
+            List<Skill_Extended> list4 = new List<Skill_Extended>();
             List<string> list3 = new List<string>();
             GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.SkillExtended, out list3);
             foreach (string key in list3)
@@ -258,20 +203,19 @@ namespace BepInPluginSample
             }
             foreach (BattleAlly battleAlly in PlayData.Battleallys)
             {
-                //List<Skill_Extended> list4 = new List<Skill_Extended>();
                 foreach (Skill_Extended skill_Extended in list)
                 {
                     if (skill_Extended.Data.NeedCharacter == battleAlly.Info.KeyData)
                     {
-                        //foreach (BattleChar battleChar in PlayData.Battleallys)
+                        foreach (BattleAlly battleChar in PlayData.Battleallys)
                         {
                             bool flag = false;
                             foreach (Skill enforceSkill in battleChar.Skills)
                             {
                                 if (skill_Extended.CanEnforce(enforceSkill))
                                 {
-                                    //list4.Add(skill_Extended);
-                                    list2.Add(skill_Extended);
+                                    list4.Add(skill_Extended);
+                                    Sample.logger.LogMessage($"list1 ; {battleAlly.Info.Name} ; {battleChar.Info.Name} ; {enforceSkill.CharinfoSkilldata.Skill.Name} ; {skill_Extended.Name} ; {skill_Extended.ExtendedName()} ;");
                                     flag = true;
                                     break;
                                 }
@@ -283,69 +227,36 @@ namespace BepInPluginSample
                         }
                     }
                 }
-                //if (list4.Count != 0)
-                //{
-                //    list2.Add(list4.Random(RandomClassKey.Celestial));
-                //}
             }
-            if (list2.Count >= 1)
-            {
-                UIManager.InstantiateActive(UIManager.inst.EnforceUI).GetComponent<UI_Enforce>().Init(list2);
-                //MasterAudio.PlaySound("Crystal", 1f, null, 0f, null, null, false, false);
-                //PlayData.TSavedata.UseItemKeys.Add(GDEItemKeys.Item_Consume_Celestial);
-                return true;
-            }
-            //EffectView.SimpleTextout(FieldSystem.instance.TopWindow.transform, ScriptLocalization.System_Item.CelestialCant, 1f, false, 1f);
-            return false;
-        }
 
-        public static void Skill_ExtendedSelect_random()
-        {
-            List<Skill_Extended> list = new List<Skill_Extended>();            
-            List<string> list3 = new List<string>();
-            GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.SkillExtended, out list3);
-            foreach (string key in list3)
+            foreach (Character character in PlayData.TSavedata.Party)
             {
-                GDESkillExtendedData Temp = new GDESkillExtendedData(key);
-                if (Temp.Drop && !Temp.Debuff && PlayData.TSavedata.Party.Find((Character a) => a.KeyData == Temp.NeedCharacter) != null)
+                foreach (Skill skill2 in character.GetBattleChar.Skills)
                 {
-                    list.Add(Skill_Extended.DataToExtended(Temp));
-                }
-            }
-            foreach (BattleChar battleChar in PlayData.Battleallys)
-            {
-                foreach (Skill enforceSkill in battleChar.Skills)
-                {
-                    List<Skill_Extended> list4 = new List<Skill_Extended>();
-                    foreach (BattleAlly battleAlly in PlayData.Battleallys)
+                    if (!skill2.Enforce && !skill2.Enforce_CantUse && !skill2.Enforce_Weak && skill2.MySkill.Category.Key != GDEItemKeys.SkillCategory_DefultSkill)
                     {
-                        foreach (Skill_Extended skill_Extended in list)
+                        List<Skill_Extended> list2 = new List<Skill_Extended>();
+                        foreach (var MainExtended in list4)
                         {
-                            if (skill_Extended.Data.NeedCharacter == battleAlly.Info.KeyData)
+                            if(MainExtended.CanSkillEnforce(skill2) && MainExtended.CanSkillEnforceChar(skill2))
                             {
-                                bool flag = false;
-                                if (skill_Extended.CanEnforce(enforceSkill))
-                                {
-                                    list4.Add(skill_Extended);
-                                    flag = true;
-                                    break;
-                                }
-                                if (flag)
-                                {
-                                    break;
-                                }
+                                list2.Add(MainExtended);
+                                Sample.logger.LogMessage($"list2 ; {character.Name} ; {skill2.CharinfoSkilldata.Skill.Name} ; {MainExtended.Name} ; {MainExtended.ExtendedName()} ;");
                             }
                         }
-                    }
-                    if (list4.Count != 0)
-                    {
-                        enforceSkill.CharinfoSkilldata.SKillExtended = 
-                        list4.Random(RandomClassKey.Celestial);
+                        if (list2.Count >= 1)
+                        {
+                            skill2.CharinfoSkilldata.SKillExtended = list2.Random(RandomClassKey.Celestial);
+                        }
                     }
                 }
             }
+
         }
 
         #endregion
+
+
+
     }
 }

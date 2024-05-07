@@ -55,8 +55,8 @@ namespace BepInPluginSample
         private static ConfigEntry<bool> StageArkPartOn;
         private static ConfigEntry<bool> WaitCount;
         private static ConfigEntry<bool> WaitCountAdd;
-        private static ConfigEntry<bool> SkillAdd_Extended;
-        //private static ConfigEntry<bool> isMaxHpUp;
+        private static ConfigEntry<bool> isMaxHpUp;
+        //private static ConfigEntry<bool> SkillAdd_Extended;
         // private static ConfigEntry<float> uiW;
         // private static ConfigEntry<float> xpMulti;
 
@@ -164,13 +164,13 @@ namespace BepInPluginSample
                         else if (memberInfo.Name.StartsWith("Item_Equip_"))
                         {
                             string key = (String)f.GetValue(null);/*
-							// itemBase.InputInfo(key);
-							var k = new GDEItem_EquipData(key).Itemclass.Key;
-							if (k == GDEItemKeys.ItemClass_Legendary)
-								items["Item_Equip_Legendary"].Add(key);
-							else if (k == GDEItemKeys.ItemClass_Unique)
-								items["Item_Equip_Unique"].Add(key);
-							else*/
+// itemBase.InputInfo(key);
+var k = new GDEItem_EquipData(key).Itemclass.Key;
+if (k == GDEItemKeys.ItemClass_Legendary)
+items["Item_Equip_Legendary"].Add(key);
+else if (k == GDEItemKeys.ItemClass_Unique)
+items["Item_Equip_Unique"].Add(key);
+else*/
                             items["Item_Equip_"].Add(key);
 
                         }
@@ -188,7 +188,7 @@ namespace BepInPluginSample
 
         private void StageArkPartOn_SettingChanged(object sender, EventArgs e)
         {
-            if (PlayData.TSavedata != null )
+            if (PlayData.TSavedata != null)
             {
                 PlayData.TSavedata.StageArkPartOn = StageArkPartOn.Value;
             }
@@ -322,19 +322,19 @@ namespace BepInPluginSample
                 /*
                 if (GUILayout.Button($"my cheat"))
                 {
-                    SaveManager.NowData.TimeMoney = 1000;
-                    PlayData.Gold = 10000;
-                    PlayData.Soul = 1000;
-                    PlayData.TSavedata.StageArkPartOn = true;
-                    
-					List<ItemBase> list12 = new List<ItemBase>();                    
-						* for (int i = 0; i < 4; i++)
-					{
-						list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
-					}
-					InventoryManager.Reward(list12);
-					
-                    ItemBaseCheat.ArtifactPlusInvenCheat();
+                SaveManager.NowData.TimeMoney = 1000;
+                PlayData.Gold = 10000;
+                PlayData.Soul = 1000;
+                PlayData.TSavedata.StageArkPartOn = true;
+
+                List<ItemBase> list12 = new List<ItemBase>();                    
+                * for (int i = 0; i < 4; i++)
+                {
+                list12.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_ArtifactPlusInven));
+                }
+                InventoryManager.Reward(list12);
+
+                ItemBaseCheat.ArtifactPlusInvenCheat();
                 }
                 */
 
@@ -350,6 +350,13 @@ namespace BepInPluginSample
                 if (GUILayout.Button("gold +10 (LeftShift +1000)")) { if (Input.GetKey(KeyCode.LeftShift)) PlayData.Gold += 1000; else PlayData.Gold += 10; }
                 if (GUILayout.Button("Soul +10 (LeftShift +1000)")) { if (Input.GetKey(KeyCode.LeftShift)) PlayData.Soul += 1000; else PlayData.Soul += 10; }
 
+                if (GUILayout.Button($"ChangeMaxInventoryNum +9")) {
+                    PartyInventory.InvenM.ChangeMaxInventoryNum(+9);
+                    PartyInventory.Init();
+                    PartyInventory.Ins.UpdateInvenUI();
+                    PartyInventory.Ins.PadLayoutSetting();
+
+                }
                 if (GUILayout.Button($"ArkPassivePlus {PlayData.TSavedata?.ArkPassivePlus}")) { ItemBaseCheat.ArtifactPlusInvenCheat(); }
 
                 if (GUILayout.Button($"ArtifactPlusInven 8"))
@@ -362,36 +369,36 @@ namespace BepInPluginSample
                     if (Inven)
                     {
                         Inven.AddNewItem(ItemBase.GetItem("AlphaBullet"));
-                        Inven.AddNewItem(ItemBase.GetItem("AncientShield"))  ;
-                        Inven.AddNewItem(ItemBase.GetItem("Bookofmoon"))     ;
-                        Inven.AddNewItem(ItemBase.GetItem("Bookofsun"))      ;
-                        Inven.AddNewItem(ItemBase.GetItem("BrightShield"))   ;
-                        Inven.AddNewItem(ItemBase.GetItem("BronzeMotor"))    ;
-                        Inven.AddNewItem(ItemBase.GetItem("Crossoflight"))   ;
-                        Inven.AddNewItem(ItemBase.GetItem("FlameBullet"))    ;
-                        Inven.AddNewItem(ItemBase.GetItem("FlameOilBarrel")) ;
-                        Inven.AddNewItem(ItemBase.GetItem("Goldleaves"))     ;
-                        Inven.AddNewItem(ItemBase.GetItem("HipSack"))        ;
-                        Inven.AddNewItem(ItemBase.GetItem("JokerCard"))      ;
-                        Inven.AddNewItem(ItemBase.GetItem("MagicBerry"))     ;
-                        Inven.AddNewItem(ItemBase.GetItem("MagicLamp"))      ;
-                        Inven.AddNewItem(ItemBase.GetItem("Maskofthesun"))   ;
-                        Inven.AddNewItem(ItemBase.GetItem("MindsEye"))       ;
-                        Inven.AddNewItem(ItemBase.GetItem("MistTotem"))      ;
-                        Inven.AddNewItem(ItemBase.GetItem("Obsidian"))       ;
-                        Inven.AddNewItem(ItemBase.GetItem("Palette"))        ;
-                        Inven.AddNewItem(ItemBase.GetItem("QuickCasting"))   ;
-                        Inven.AddNewItem(ItemBase.GetItem("RedBlossoms"))    ;
-                        Inven.AddNewItem(ItemBase.GetItem("Shiranui_Relic")) ;
-                        Inven.AddNewItem(ItemBase.GetItem("Spinyblowfish"))  ;
-                        Inven.AddNewItem(ItemBase.GetItem("Sunset"))         ;
-                        Inven.AddNewItem(ItemBase.GetItem("Superconductor")) ;
-                        Inven.AddNewItem(ItemBase.GetItem("ThornStem"))      ;
-                        Inven.AddNewItem(ItemBase.GetItem("ToothBottle"))    ;
-                        Inven.AddNewItem(ItemBase.GetItem("Tumble"))         ;
-                        Inven.AddNewItem(ItemBase.GetItem("WhiteMoon"))      ;
-                        Inven.AddNewItem(ItemBase.GetItem("WitchRelic"))     ;
-                        Inven.AddNewItem(ItemBase.GetItem("branche"))        ;
+                        Inven.AddNewItem(ItemBase.GetItem("AncientShield"));
+                        Inven.AddNewItem(ItemBase.GetItem("Bookofmoon"));
+                        Inven.AddNewItem(ItemBase.GetItem("Bookofsun"));
+                        Inven.AddNewItem(ItemBase.GetItem("BrightShield"));
+                        Inven.AddNewItem(ItemBase.GetItem("BronzeMotor"));
+                        Inven.AddNewItem(ItemBase.GetItem("Crossoflight"));
+                        Inven.AddNewItem(ItemBase.GetItem("FlameBullet"));
+                        Inven.AddNewItem(ItemBase.GetItem("FlameOilBarrel"));
+                        Inven.AddNewItem(ItemBase.GetItem("Goldleaves"));
+                        Inven.AddNewItem(ItemBase.GetItem("HipSack"));
+                        Inven.AddNewItem(ItemBase.GetItem("JokerCard"));
+                        Inven.AddNewItem(ItemBase.GetItem("MagicBerry"));
+                        Inven.AddNewItem(ItemBase.GetItem("MagicLamp"));
+                        Inven.AddNewItem(ItemBase.GetItem("Maskofthesun"));
+                        Inven.AddNewItem(ItemBase.GetItem("MindsEye"));
+                        Inven.AddNewItem(ItemBase.GetItem("MistTotem"));
+                        Inven.AddNewItem(ItemBase.GetItem("Obsidian"));
+                        Inven.AddNewItem(ItemBase.GetItem("Palette"));
+                        Inven.AddNewItem(ItemBase.GetItem("QuickCasting"));
+                        Inven.AddNewItem(ItemBase.GetItem("RedBlossoms"));
+                        Inven.AddNewItem(ItemBase.GetItem("Shiranui_Relic"));
+                        Inven.AddNewItem(ItemBase.GetItem("Spinyblowfish"));
+                        Inven.AddNewItem(ItemBase.GetItem("Sunset"));
+                        Inven.AddNewItem(ItemBase.GetItem("Superconductor"));
+                        Inven.AddNewItem(ItemBase.GetItem("ThornStem"));
+                        Inven.AddNewItem(ItemBase.GetItem("ToothBottle"));
+                        Inven.AddNewItem(ItemBase.GetItem("Tumble"));
+                        Inven.AddNewItem(ItemBase.GetItem("WhiteMoon"));
+                        Inven.AddNewItem(ItemBase.GetItem("WitchRelic"));
+                        Inven.AddNewItem(ItemBase.GetItem("branche"));
                     }
                 }
 
@@ -435,19 +442,30 @@ namespace BepInPluginSample
                 GUILayout.Label("---  ---");
                 #endregion 1
 
-                GUILayout.Label("--- Skill Extended ---");
+                GUILayout.Label("=== Skill Extended ===");
                 /*
                 if (GUILayout.Button($"Select"))
                 {
-                    CelestialCheat.Skill_ExtendedSelect2();
+                CelestialCheat.Skill_ExtendedSelect2();
                 }*/
                 foreach (BattleAlly battleAlly in PlayData.Battleallys)
                 {
-                    GUILayout.Label($"{battleAlly.Info.Name}");
-                    if (GUILayout.Button($"Give")) CelestialCheat.Skill_ExtendedSelect_Give(battleAlly);
-                    if (GUILayout.Button($"receive")) CelestialCheat.Skill_ExtendedSelect_receive(battleAlly);
+                    if (GUILayout.Button($"{battleAlly.Info.Name} Give")) CelestialCheat.Skill_ExtendedSelect_Give(battleAlly);
+                    GUILayout.Label("--- del ---");
+                    foreach (Skill enforceSkill in battleAlly.Skills)
+                    {
+                        if(enforceSkill.CharinfoSkilldata.SKillExtended!=null)
+                            if (GUILayout.Button(
+                                $" {enforceSkill.CharinfoSkilldata.Skill.Name}\n{enforceSkill.CharinfoSkilldata.SKillExtended.ExtendedName()}"
+                                ,GUILayout.Width(250)
+                                ))
+                            {
+                                enforceSkill.CharinfoSkilldata.SKillExtended = null;
+                            }
+                    }
+                    GUILayout.Label("---  ---");
                 }
-                GUILayout.Label("---  ---");
+
                 if (GUILayout.Button($"auto all set"))
                 {
                     CelestialCheat.Skill_ExtendedSelect_random();
@@ -457,7 +475,9 @@ namespace BepInPluginSample
                 {
                     CelestialCheat.Skill_ExtendedDel();
                 }
-                GUILayout.Label("--- Skill Extended ---");
+                GUILayout.Label("=== Skill Extended ===");
+
+
                 #region item2
 
                 GUILayout.Label("---  ---");
@@ -504,17 +524,17 @@ namespace BepInPluginSample
                 if (GUILayout.Button($"StageArkPartOn {StageArkPartOn.Value}")) { StageArkPartOn.Value = !StageArkPartOn.Value; }
                 if (GUILayout.Button($"WaitCount {WaitCount.Value}")) { WaitCount.Value = !WaitCount.Value; }
                 if (GUILayout.Button($"WaitCountAdd {WaitCountAdd.Value}")) { WaitCountAdd.Value = !WaitCountAdd.Value; }
-                if (GUILayout.Button($"SkillAdd_Extended {SkillAdd_Extended.Value}")) { SkillAdd_Extended.Value = !SkillAdd_Extended.Value; }
+                //if (GUILayout.Button($"SkillAdd_Extended {SkillAdd_Extended.Value}")) { SkillAdd_Extended.Value = !SkillAdd_Extended.Value; }
                 //if (GUILayout.Button($"isMaxHpUp {isMaxHpUp.Value}")) { isMaxHpUp.Value = !isMaxHpUp.Value; }
                 GUILayout.Label("=== on/off ===");
 
                 #endregion
                 /*
-				if (GUILayout.Button($"select my Equip "))
-				{
-					UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(ItemBaseCheat.Equips());
-				}
-				*/
+                if (GUILayout.Button($"select my Equip "))
+                {
+                UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(ItemBaseCheat.Equips());
+                }
+                */
 
                 //if (GUILayout.Button($"get my ArtifactPlusInven {items["Item_Passive_"].Count - 4}"))
 
@@ -528,15 +548,15 @@ namespace BepInPluginSample
                 /*
                 if (GUILayout.Button("get skill"))
                 {
-                    PlayData.TSavedata.LucySkills.Add(GDEItemKeys.Skill_S_Lucy_25);
-                    ChildClear.Clear(UIManager.inst.CharstatUI.GetComponent<CharStatV3>().LucySkillAlign);
-                    foreach (string key in PlayData.TSavedata.LucySkills)
-                    {
-                        GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(UIManager.inst.CharstatUI.GetComponent<CharStatV3>().SkillView);
-                        gameObject.transform.SetParent(UIManager.inst.CharstatUI.GetComponent<CharStatV3>().LucySkillAlign);
-                        Misc.UIInit(gameObject);
-                        gameObject.GetComponent<SkillButtonMain>().Skillbutton.InputData(Skill.TempSkill(key, PlayData.BattleDummy, PlayData.TempBattleTeam), null, false);
-                    }
+                PlayData.TSavedata.LucySkills.Add(GDEItemKeys.Skill_S_Lucy_25);
+                ChildClear.Clear(UIManager.inst.CharstatUI.GetComponent<CharStatV3>().LucySkillAlign);
+                foreach (string key in PlayData.TSavedata.LucySkills)
+                {
+                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(UIManager.inst.CharstatUI.GetComponent<CharStatV3>().SkillView);
+                gameObject.transform.SetParent(UIManager.inst.CharstatUI.GetComponent<CharStatV3>().LucySkillAlign);
+                Misc.UIInit(gameObject);
+                gameObject.GetComponent<SkillButtonMain>().Skillbutton.InputData(Skill.TempSkill(key, PlayData.BattleDummy, PlayData.TempBattleTeam), null, false);
+                }
                 }
                 */
                 if (GUILayout.Button("potions"))
@@ -544,20 +564,20 @@ namespace BepInPluginSample
                     List<string> list9 = new List<string>();
                     GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.Item_Potions, out list9);
                     InventoryManager.Reward(new List<ItemBase>
-                    {
-                        ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_heal),
-                        ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_weak),
-                        ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_holywater)
-                    });
+{
+ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_heal),
+ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_weak),
+ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_holywater)
+});
                 }
 
 
                 if (GUILayout.Button("skill book 10"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
-                {
-                    ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 10)
-                });
+{
+ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 10)
+});
                 }
 
                 if (GUILayout.Button("Jar*2 SmallReward Sou*10"))
@@ -599,11 +619,11 @@ namespace BepInPluginSample
                 if (GUILayout.Button("skill book 3"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
-                {
-                    ItemBase.GetItem(new GDESkillData(GDEItemKeys.Skill_S_Lucy_17)),
-                    ItemBase.GetItem(new GDESkillData(GDEItemKeys.Skill_S_Public_7)),
-                    ItemBase.GetItem(new GDESkillData(GDEItemKeys.Skill_S_Public_36))
-                });
+{
+ItemBase.GetItem(new GDESkillData(GDEItemKeys.Skill_S_Lucy_17)),
+ItemBase.GetItem(new GDESkillData(GDEItemKeys.Skill_S_Public_7)),
+ItemBase.GetItem(new GDESkillData(GDEItemKeys.Skill_S_Public_36))
+});
                 }
 
                 if (GUILayout.Button("reward5 JokerCard"))
@@ -614,23 +634,23 @@ namespace BepInPluginSample
                 if (GUILayout.Button("Record_7"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
-                {
-                    ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_7)
-                });
+{
+ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_7)
+});
                 }
                 if (GUILayout.Button("Record_8"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
-                {
-                    ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_8)
-                });
+{
+ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_8)
+});
                 }
                 if (GUILayout.Button("Record_9"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
-                {
-                    ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_9)
-                });
+{
+ItemBase.GetItem(GDEItemKeys.Item_Misc_Record_9)
+});
                 }
 
                 if (GUILayout.Button("allevent"))
@@ -665,14 +685,14 @@ namespace BepInPluginSample
                 if (GUILayout.Button("equipget"))
                 {
                     InventoryManager.Reward(new List<ItemBase>
-                {
-                    ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato),
-                    ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato_0),
-                    ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato_1),
-                    ItemBase.GetItem(GDEItemKeys.Item_Equip_FoxOrb),
-                    ItemBase.GetItem(GDEItemKeys.Item_Equip_FoxOrb_0),
-                    ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
-                });
+{
+ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato),
+ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato_0),
+ItemBase.GetItem(GDEItemKeys.Item_Equip_SweetPotato_1),
+ItemBase.GetItem(GDEItemKeys.Item_Equip_FoxOrb),
+ItemBase.GetItem(GDEItemKeys.Item_Equip_FoxOrb_0),
+ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
+});
                 }
 
                 if (GUILayout.Button("fastrun"))
@@ -944,11 +964,11 @@ namespace BepInPluginSample
         // ====================== 하모니 패치 샘플 ===================================
 
         [HarmonyPatch(typeof(BattleAlly), "Damage",
-            typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
+        typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
         [HarmonyPrefix]
-        public static void DamagePr(BattleAlly __instance,  ref int Dmg)
+        public static void DamagePr(BattleAlly __instance, ref int Dmg)
         {
-            logger.LogMessage($"DamagePr {Dmg} ; {__instance.HP}; {__instance.Info.Name}" );;
+            logger.LogMessage($"DamagePr {Dmg} ; {__instance.HP}; {__instance.Info.Name}"); ;
             if (noDamage.Value)
             {
                 Dmg = 0;
@@ -961,9 +981,9 @@ namespace BepInPluginSample
         }
 
         [HarmonyPatch(typeof(BattleAlly), "Damage",
-            typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
+        typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
         [HarmonyPostfix]
-        public static void DamagePo(BattleAlly __instance,  ref int Dmg)
+        public static void DamagePo(BattleAlly __instance, ref int Dmg)
         {
             logger.LogMessage($"DamagePo {Dmg} ; {__instance.HP}; {__instance.Info.Name}");
             if (noRecovery.Value)
@@ -981,9 +1001,9 @@ namespace BepInPluginSample
         public static bool Dead(BattleAlly __instance, bool notdeadeffect, bool NoTimeSlow)
         {
             logger.LogMessage($"Dead {notdeadeffect}; {NoTimeSlow} ; {__instance.HP}; {__instance.Info.Name}");
-            if (minHp1.Value && __instance.HP < 1 )
+            if (minHp1.Value && __instance.HP < 1)
             {
-                __instance.HP = 1 ;
+                __instance.HP = 1;
             }
             if (noDead.Value)
             {
@@ -997,9 +1017,9 @@ namespace BepInPluginSample
         public static void OnlyDamage(BattleChar __instance, int Dmg)
         {
             logger.LogMessage($"OnlyDamage  {Dmg} ; {__instance.HP}; {__instance.Info.Name}");
-            if (minHp1.Value && __instance.Info.Ally && __instance.HP < 1 )
+            if (minHp1.Value && __instance.Info.Ally && __instance.HP < 1)
             {
-                __instance.HP = 1 ;
+                __instance.HP = 1;
             }
         }
         /*
@@ -1100,7 +1120,7 @@ namespace BepInPluginSample
         public static void SkillAdd(Character __instance, GDESkillData Data, Skill_Extended SkillEn)//InventoryManager __instance, string StageKey
         {
             //logger.LogMessage($"Reward2 : {Item.GetName}");
-            if (!SkillAdd_Extended.Value)
+            //if (!SkillAdd_Extended.Value)
             {
                 return;
             }
@@ -1157,63 +1177,63 @@ namespace BepInPluginSample
         /// </summary>
         /// <param name="__result"></param>
         /*
-		[HarmonyPatch(typeof(Character), "AllyLevelPlusStat", typeof(int))]
-		[HarmonyPostfix]
-		public static void AllyLevelPlusStat(ref Stat __result)//InventoryManager __instance, string StageKey
-		{
-			if (!isMaxHpUp.Value)
-			{
-				return;
-			}
-			logger.LogMessage($"AllyLevelPlusStat maxhp : {__result.maxhp}");
-			__result.maxhp += 100;
-		}
-		*/
+        [HarmonyPatch(typeof(Character), "AllyLevelPlusStat", typeof(int))]
+        [HarmonyPostfix]
+        public static void AllyLevelPlusStat(ref Stat __result)//InventoryManager __instance, string StageKey
+        {
+        if (!isMaxHpUp.Value)
+        {
+        return;
+        }
+        logger.LogMessage($"AllyLevelPlusStat maxhp : {__result.maxhp}");
+        __result.maxhp += 100;
+        }
+        */
 
         /*
-		 // public static void Reward(string rewardkey)
-		[HarmonyPatch(typeof(InventoryManager), "Reward", typeof(string))]//, MethodType.StaticConstructor
-		[HarmonyPrefix]
-		public static void Reward(string rewardkey)//InventoryManager __instance,
-		{
-			logger.LogMessage($"Reward3 : {rewardkey}");
-		}
-		*/
+        // public static void Reward(string rewardkey)
+        [HarmonyPatch(typeof(InventoryManager), "Reward", typeof(string))]//, MethodType.StaticConstructor
+        [HarmonyPrefix]
+        public static void Reward(string rewardkey)//InventoryManager __instance,
+        {
+        logger.LogMessage($"Reward3 : {rewardkey}");
+        }
+        */
         /*
-		[HarmonyPatch(typeof(BattleTeam), "MyTurn")]
-		[HarmonyPostfix]
-		public static void SetAP(BattleTeam __instance)
-		{
-			if (!addDiscard.Value)
-			{
-				return;
-			}
-			__instance.DiscardCount = __instance.GetDiscardCount+10;
-		}
-		*/
+        [HarmonyPatch(typeof(BattleTeam), "MyTurn")]
+        [HarmonyPostfix]
+        public static void SetAP(BattleTeam __instance)
+        {
+        if (!addDiscard.Value)
+        {
+        return;
+        }
+        __instance.DiscardCount = __instance.GetDiscardCount+10;
+        }
+        */
 
 
         /*
 
-		[HarmonyPatch(typeof(XPPicker), MethodType.Constructor)]
-		[HarmonyPostfix]
-		public static void XPPickerCtor(XPPicker __instance, ref float ___pickupRadius)
-		{
-			//logger.LogWarning($"XPPicker.ctor {___pickupRadius}");
-			___pickupRadius = pickupRadius.Value;
-		}
+        [HarmonyPatch(typeof(XPPicker), MethodType.Constructor)]
+        [HarmonyPostfix]
+        public static void XPPickerCtor(XPPicker __instance, ref float ___pickupRadius)
+        {
+        //logger.LogWarning($"XPPicker.ctor {___pickupRadius}");
+        ___pickupRadius = pickupRadius.Value;
+        }
 
-		[HarmonyPatch(typeof(BattleAlly), "Damage", MethodType.Setter)]
-		[HarmonyPrefix]
-		public static void SetDamageMult(ref float __0)
-		{
-			if (!eMultOn.Value)
-			{
-				return;
-			}
-			__0 *= eDamageMult.Value;
-		}
-		*/
+        [HarmonyPatch(typeof(BattleAlly), "Damage", MethodType.Setter)]
+        [HarmonyPrefix]
+        public static void SetDamageMult(ref float __0)
+        {
+        if (!eMultOn.Value)
+        {
+        return;
+        }
+        __0 *= eDamageMult.Value;
+        }
+        */
         // =========================================================
         #endregion
     }
