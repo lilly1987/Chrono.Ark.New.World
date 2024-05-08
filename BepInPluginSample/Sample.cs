@@ -57,6 +57,7 @@ namespace BepInPluginSample
         private static ConfigEntry<bool> WaitCount;
         private static ConfigEntry<bool> WaitCountAdd;
         private static ConfigEntry<bool> isMaxHpUp;
+        private static ConfigEntry<bool> onPartyInventoryUI;
         //private static ConfigEntry<bool> SkillAdd_Extended;
         // private static ConfigEntry<float> uiW;
         // private static ConfigEntry<float> xpMulti;
@@ -110,10 +111,12 @@ namespace BepInPluginSample
             StageArkPartOn = Config.Bind("game", "StageArkPartOn", true);
             WaitCount = Config.Bind("game", "WaitCount", true);
             WaitCountAdd = Config.Bind("game", "WaitCountAdd", true);
+            onPartyInventoryUI = Config.Bind("game", "onPartyInventoryUI", false);
             //SkillAdd_Extended = Config.Bind("game", "SkillAdd_Extended", true);
             //isMaxHpUp = Config.Bind("game", "isMaxHpUp", true);
             // xpMulti = Config.Bind("game", "xpMulti", 2f);
 
+            onPartyInventoryUI.SettingChanged += OnPartyInventoryUI_SettingChanged;
             StageArkPartOn.SettingChanged += StageArkPartOn_SettingChanged;
             // =========================================================
             #endregion
@@ -185,6 +188,21 @@ else*/
                 }
             }
 
+        }
+
+        private static void OnPartyInventoryUI_SettingChanged(object sender, EventArgs e)
+        {
+            if (onPartyInventoryUI.Value)
+            {
+                PartyInventory.Ins.Align.transform.localPosition = new Vector3(1150, 0.6f, 0.5f);
+                PartyInventory.InvenM.Align.GetComponent<GridLayoutGroup>().constraintCount = 18;
+            }
+            else
+            {
+                PartyInventory.Ins.Align.transform.localPosition = new Vector3(579.7f, 0.6f, 0.5f);
+                PartyInventory.InvenM.Align.GetComponent<GridLayoutGroup>().constraintCount = 9;
+
+            }
         }
 
         private void StageArkPartOn_SettingChanged(object sender, EventArgs e)
@@ -526,6 +544,7 @@ else*/
                 if (GUILayout.Button($"StageArkPartOn {StageArkPartOn.Value}")) { StageArkPartOn.Value = !StageArkPartOn.Value; }
                 if (GUILayout.Button($"WaitCount {WaitCount.Value}")) { WaitCount.Value = !WaitCount.Value; }
                 if (GUILayout.Button($"WaitCountAdd {WaitCountAdd.Value}")) { WaitCountAdd.Value = !WaitCountAdd.Value; }
+                if (GUILayout.Button($"onPartyInventoryUI {onPartyInventoryUI.Value}")) { onPartyInventoryUI.Value = !onPartyInventoryUI.Value; }
                 //if (GUILayout.Button($"SkillAdd_Extended {SkillAdd_Extended.Value}")) { SkillAdd_Extended.Value = !SkillAdd_Extended.Value; }
                 //if (GUILayout.Button($"isMaxHpUp {isMaxHpUp.Value}")) { isMaxHpUp.Value = !isMaxHpUp.Value; }
                 GUILayout.Label("=== on/off ===");
@@ -1177,52 +1196,55 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
         public static bool PadLayoutSetting()//InventoryManager __instance, string StageKey
         {
             logger.LogWarning($"PadLayoutSetting");
+            if (onPartyInventoryUI.Value)
             {
                 {
-                    if (PartyInventory.Ins.InvenLayout != null && PartyInventory.Ins.InvenLayout.Targets[0] != null)
                     {
-                        return false;
-                    }
-                    PartyInventory.Ins.InvenLayout = new PadLayout();
-                    PartyInventory.Ins.InvenLayout.ColumnNum = 18;
-                    PartyInventory.Ins.InvenLayout.Index = 0;
-                    PartyInventory.Ins.InvenLayout.Size = new Vector2(80f, 80f);
-                    for (int i = 0; i < PartyInventory.InvenM.Align.transform.childCount; i++)
-                    {
-                        PartyInventory.Ins.InvenLayout.Targets.Add(PartyInventory.InvenM.Align.transform.GetChild(i).GetComponent<RectTransform>());
-                    }
-                    PartyInventory.Ins.InvenLayout.TargetType = typeof(ItemSlot);
-                    PartyInventory.Ins.InvenLayout.LayoutType = typeof(PartyInventory);
-                    GamepadManager.Add(PartyInventory.Ins.InvenLayout, false);
-                    for (int j = 0; j < PlayData.TSavedata.Passive_Itembase.Count; j++)
-                    {
-                        if (PlayData.TSavedata.Passive_Itembase[j] != null)
+                        if (PartyInventory.Ins.InvenLayout != null && PartyInventory.Ins.InvenLayout.Targets[0] != null)
+                        {
+                            return false;
+                        }
+                        PartyInventory.Ins.InvenLayout = new PadLayout();
+                        PartyInventory.Ins.InvenLayout.ColumnNum = 18;
+                        PartyInventory.Ins.InvenLayout.Index = 0;
+                        PartyInventory.Ins.InvenLayout.Size = new Vector2(80f, 80f);
+                        for (int i = 0; i < PartyInventory.InvenM.Align.transform.childCount; i++)
+                        {
+                            PartyInventory.Ins.InvenLayout.Targets.Add(PartyInventory.InvenM.Align.transform.GetChild(i).GetComponent<RectTransform>());
+                        }
+                        PartyInventory.Ins.InvenLayout.TargetType = typeof(ItemSlot);
+                        PartyInventory.Ins.InvenLayout.LayoutType = typeof(PartyInventory);
+                        GamepadManager.Add(PartyInventory.Ins.InvenLayout, false);
+                        for (int j = 0; j < PlayData.TSavedata.Passive_Itembase.Count; j++)
+                        {
+                            if (PlayData.TSavedata.Passive_Itembase[j] != null)
+                            {
+                                PartyInventory.Ins.PassiveLayoutUpdate = true;
+                                break;
+                            }
+                        }
+                        if (PartyInventory.Ins.HopeLevel1.activeInHierarchy || PartyInventory.Ins.HopeLevel2.activeInHierarchy || PartyInventory.Ins.HopeLevel3.activeInHierarchy)
                         {
                             PartyInventory.Ins.PassiveLayoutUpdate = true;
-                            break;
+                        }
+                        if (PartyInventory.Ins.SpruleIcon.activeInHierarchy)
+                        {
+                            PartyInventory.Ins.PassiveLayoutUpdate = true;
+                        }
+                        if (PartyInventory.Ins.CrimsonIcon.activeInHierarchy)
+                        {
+                            PartyInventory.Ins.PassiveLayoutUpdate = true;
+                        }
+                        if (PartyInventory.Ins.BMistIcon.activeInHierarchy)
+                        {
+                            PartyInventory.Ins.PassiveLayoutUpdate = true;
                         }
                     }
-                    if (PartyInventory.Ins.HopeLevel1.activeInHierarchy || PartyInventory.Ins.HopeLevel2.activeInHierarchy || PartyInventory.Ins.HopeLevel3.activeInHierarchy)
-                    {
-                        PartyInventory.Ins.PassiveLayoutUpdate = true;
-                    }
-                    if (PartyInventory.Ins.SpruleIcon.activeInHierarchy)
-                    {
-                        PartyInventory.Ins.PassiveLayoutUpdate = true;
-                    }
-                    if (PartyInventory.Ins.CrimsonIcon.activeInHierarchy)
-                    {
-                        PartyInventory.Ins.PassiveLayoutUpdate = true;
-                    }
-                    if (PartyInventory.Ins.BMistIcon.activeInHierarchy)
-                    {
-                        PartyInventory.Ins.PassiveLayoutUpdate = true;
-                    }
                 }
+                OnPartyInventoryUI_SettingChanged(null, null);
+                return false;
             }
-            PartyInventory.Ins.Align.transform.localPosition = new Vector3(1150, 0.6f, 0.5f);
-            PartyInventory.InvenM.Align.GetComponent<GridLayoutGroup>().constraintCount = 18;            
-            return false;
+            return true;
         }
 
 
