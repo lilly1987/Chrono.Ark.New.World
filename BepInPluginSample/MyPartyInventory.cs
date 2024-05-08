@@ -6,6 +6,7 @@ namespace BepInPluginSample
 {
     internal class MyPartyInventory
     {
+        
         public static void ChangeMaxInventoryNum(int num, List<string> ExceptItems = null)
         {
             PlayData.TSavedata.MaxinventoryNumPlus += num;

@@ -65,6 +65,8 @@ namespace BepInPluginSample
         // =========================================================
         #endregion
 
+        static Dictionary<string, string> keyItemNames = new Dictionary<string, string>();
+        static Dictionary<string, ItemBase> keyItems = new Dictionary<string, ItemBase>();
         static Dictionary<string, List<string>> items = new Dictionary<string, List<string>>();
         static List<string> itemkeys = new List<string>();
         static string itemkey = "";
@@ -134,6 +136,7 @@ namespace BepInPluginSample
             items["Item_Misc_"] = new List<string>();
             items["Item_Passive_"] = new List<string>();
             items["Item_Potions_"] = new List<string>();
+            items["Item_Friendship_"] = new List<string>();
             //items["ItemClass_"] = new List<string>();
             items["RandomDrop_"] = new List<string>();
 
@@ -142,51 +145,6 @@ namespace BepInPluginSample
             itemkeys = items.Keys.ToList();
             rewardkeys = rewards.Keys.ToList();
 
-            System.Reflection.MemberInfo[] members = typeof(GDEItemKeys).GetMembers();
-            foreach (var memberInfo in members)
-            {
-                //Logger.LogMessage($"Name: {memberInfo.Name}");
-                try
-                {
-                    System.Reflection.FieldInfo f = typeof(GDEItemKeys).GetField(memberInfo.Name);
-
-                    // Type: String ; IsPublic: True ; IsStatic: True ;
-                    if (f?.FieldType == typeof(String))
-                    {
-                        //Logger.LogMessage($"Name: {memberInfo.Name} ; Type: {f.FieldType.Name} ; IsPublic: {f.IsPublic} ; IsStatic: {f.IsStatic} ; GetValue: {f.GetValue(null)} ;");
-
-                        if (memberInfo.Name.StartsWith("Item_Consume_")) items["Item_Consume_"].Add((String)(f.GetValue(null)));
-                        else if (memberInfo.Name.StartsWith("Item_Active_")) items["Item_Active_"].Add((String)(f.GetValue(null)));
-                        else if (memberInfo.Name.StartsWith("Item_Scroll_")) items["Item_Scroll_"].Add((String)(f.GetValue(null)));
-                        else if (memberInfo.Name.StartsWith("Item_Misc_")) items["Item_Misc_"].Add((String)(f.GetValue(null)));
-                        else if (memberInfo.Name.StartsWith("Item_Passive_")) items["Item_Passive_"].Add((String)(f.GetValue(null)));
-                        else if (memberInfo.Name.StartsWith("Item_Potions_")) items["Item_Potions_"].Add((String)(f.GetValue(null)));
-                        //else if (memberInfo.Name.StartsWith("ItemClass_")) items["ItemClass_"].Add((String)(f.GetValue(null)));
-                        else if (memberInfo.Name.StartsWith("RandomDrop_")) items["RandomDrop_"].Add((String)(f.GetValue(null)));
-                        else if (memberInfo.Name.StartsWith("Reward_")) rewards["Reward_"].Add((String)(f.GetValue(null)));
-
-                        else if (memberInfo.Name.StartsWith("Item_Equip_"))
-                        {
-                            string key = (String)f.GetValue(null);/*
-// itemBase.InputInfo(key);
-var k = new GDEItem_EquipData(key).Itemclass.Key;
-if (k == GDEItemKeys.ItemClass_Legendary)
-items["Item_Equip_Legendary"].Add(key);
-else if (k == GDEItemKeys.ItemClass_Unique)
-items["Item_Equip_Unique"].Add(key);
-else*/
-                            items["Item_Equip_"].Add(key);
-
-                        }
-
-
-                    }
-                }
-                catch (Exception e)
-                {
-                    Logger.LogWarning(e);
-                }
-            }
 
         }
 
@@ -252,15 +210,62 @@ else*/
 
         public void Start()
         {
+            MyItemCollection.Init();
+
+
+            System.Reflection.MemberInfo[] members = typeof(GDEItemKeys).GetMembers();
+            foreach (var memberInfo in members)
+            {
+                //Logger.LogMessage($"Name: {memberInfo.Name}");
+                System.Reflection.FieldInfo f = typeof(GDEItemKeys).GetField(memberInfo.Name);
+
+                if (f?.FieldType == typeof(String))
+                {
+                    // Type: String ; IsPublic: True ; IsStatic: True ;
+                    string key = (String)f.GetValue(null);
+                    try
+                    {
+                        //Logger.LogMessage($"Name: {memberInfo.Name} ; Type: {f.FieldType.Name} ; IsPublic: {f.IsPublic} ; IsStatic: {f.IsStatic} ; GetValue: {f.GetValue(null)} ;");
+
+                        if (memberInfo.Name.StartsWith("Item_Consume_")) items["Item_Consume_"].Add(key);
+                        else if (memberInfo.Name.StartsWith("Item_Active_")) items["Item_Active_"].Add(key);
+                        else if (memberInfo.Name.StartsWith("Item_Scroll_")) items["Item_Scroll_"].Add(key);
+                        else if (memberInfo.Name.StartsWith("Item_Misc_")) items["Item_Misc_"].Add(key);
+                        else if (memberInfo.Name.StartsWith("Item_Passive_")) items["Item_Passive_"].Add(key);
+                        else if (memberInfo.Name.StartsWith("Item_Potions_")) items["Item_Potions_"].Add(key);
+                        //else if (memberInfo.Name.StartsWith("ItemClass_")) items["ItemClass_"].Add((String)(f.GetValue(null)));
+                        else if (memberInfo.Name.StartsWith("RandomDrop_")) items["RandomDrop_"].Add(key);
+                        else if (memberInfo.Name.StartsWith("Item_Equip_"))
+                        {
+                            var k = new GDEItem_EquipData(key).Itemclass.Key;
+                            if (k == GDEItemKeys.ItemClass_Legendary)
+                                items["Item_Equip_Legendary"].Add(key);
+                            else if (k == GDEItemKeys.ItemClass_Unique)
+                                items["Item_Equip_Unique"].Add(key);
+                            else
+                                items["Item_Equip_"].Add(key);
+                        }
+                        else if (memberInfo.Name.StartsWith("Item_Friendship_")) items["Item_Friendship_"].Add(key);
+                        else if (memberInfo.Name.StartsWith("Reward_")) rewards["Reward_"].Add(key);
+                        else
+                        {
+                            Logger.LogMessage($"key skip : {key}");
+                            continue;
+                        }
+                        keyItems[key] = ItemBase.GetItem(key);
+                        keyItemNames[key] = keyItems[key].GetName;
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.LogWarning(e);
+                        Logger.LogMessage($"key err  : {key}");
+                        keyItemNames[key] = key;
+                    }
+                }
+            }
             foreach (var key in items["Item_Equip_"])
             {
-                var k = new GDEItem_EquipData(key).Itemclass.Key;
-                if (k == GDEItemKeys.ItemClass_Legendary)
-                    items["Item_Equip_Legendary"].Add(key);
-                else if (k == GDEItemKeys.ItemClass_Unique)
-                    items["Item_Equip_Unique"].Add(key);
-                //else
-                //    items["Item_Equip_"].Add(key);
+
             }
         }
 
@@ -366,7 +371,7 @@ else*/
 
                 if (GUILayout.Button("TimeMoney +1000")) { SaveManager.NowData.TimeMoney += 1000; }
 
-                if (GUILayout.Button("gold +10 (LeftShift +1000)")) { if (Input.GetKey(KeyCode.LeftShift)) PlayData.Gold += 1000; else PlayData.Gold += 10; }
+                if (GUILayout.Button("gold +100 (LeftShift +10000)")) { if (Input.GetKey(KeyCode.LeftShift)) PlayData.Gold += 10000; else PlayData.Gold += 100; }
                 if (GUILayout.Button("Soul +10 (LeftShift +1000)")) { if (Input.GetKey(KeyCode.LeftShift)) PlayData.Soul += 1000; else PlayData.Soul += 10; }
 
                 if (GUILayout.Button($"ChangeMaxInventoryNum +9")) {
@@ -867,7 +872,7 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
                 GUILayout.Label($"--- LeftShift click = 10 ---");
                 foreach (var i in items[itemkey])
                 {
-                    if (GUILayout.Button($"{i}"))
+                    if (GUILayout.Button($"{keyItemNames[i]}"))
                     {
                         ItemBaseCheat.RewardGetItem(i);
                     }
@@ -1182,6 +1187,14 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
         {
             logger.LogWarning($"ArkPartsInven");
             Inven = __instance;
+        }
+        
+        [HarmonyPatch(typeof(ItemCollection), "Start")]
+        [HarmonyPostfix]
+        public static void ItemCollection(ItemCollection __instance)//InventoryManager __instance, string StageKey
+        {
+            logger.LogWarning($"ItemCollection");
+            MyItemCollection.itemCollection = __instance;
         }
 
         [HarmonyPatch(typeof(ArkPartsInven), "AddNewItem")]
