@@ -69,11 +69,11 @@ namespace BepInPluginSample
             InventoryManager.Reward(list12);
         }
 
-        internal static void ArtifactPlusInvenCheat()
+        internal static void ArtifactPlusInvenCheat(int c=32)
         {
-            if( PlayData.TSavedata.ArkPassivePlus < 32)
+            if( PlayData.TSavedata.ArkPassivePlus < c)
             {
-                PlayData.TSavedata.ArkPassivePlus = 32;
+                PlayData.TSavedata.ArkPassivePlus = c;
                 for (int m = PlayData.TSavedata.Passive_Itembase.Count; m < PlayData.TSavedata.ArkPassivePlus; m++)
                 {
                     PlayData.TSavedata.Passive_Itembase.Add(null);

@@ -3,9 +3,11 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using GameDataEditor;
 using HarmonyLib;
+using I2.Loc;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,6 +81,7 @@ namespace BepInPluginSample
 
         public void Awake()
         {
+            
             #region GUI
             logger = Logger;
             Logger.LogMessage("Awake");
@@ -229,7 +232,14 @@ namespace BepInPluginSample
 
                         if (memberInfo.Name.StartsWith("Item_Consume_")) items["Item_Consume_"].Add(key);
                         else if (memberInfo.Name.StartsWith("Item_Active_")) items["Item_Active_"].Add(key);
-                        else if (memberInfo.Name.StartsWith("Item_Scroll_")) items["Item_Scroll_"].Add(key);
+                        else if (memberInfo.Name.StartsWith("Item_Scroll_"))
+                        {
+                            items["Item_Scroll_"].Add(key);
+                            keyItems[key] = ItemBase.GetItem(key);
+                            ((Item_Scroll)keyItems[key]).Debug = true;
+                            keyItemNames[key] = keyItems[key].GetName;
+                            continue;
+                        }
                         else if (memberInfo.Name.StartsWith("Item_Misc_")) items["Item_Misc_"].Add(key);
                         else if (memberInfo.Name.StartsWith("Item_Passive_")) items["Item_Passive_"].Add(key);
                         else if (memberInfo.Name.StartsWith("Item_Potions_")) items["Item_Potions_"].Add(key);
@@ -374,14 +384,7 @@ namespace BepInPluginSample
                 if (GUILayout.Button("gold +100 (LeftShift +10000)")) { if (Input.GetKey(KeyCode.LeftShift)) PlayData.Gold += 10000; else PlayData.Gold += 100; }
                 if (GUILayout.Button("Soul +10 (LeftShift +1000)")) { if (Input.GetKey(KeyCode.LeftShift)) PlayData.Soul += 1000; else PlayData.Soul += 10; }
 
-                if (GUILayout.Button($"ChangeMaxInventoryNum +9")) {
-                    PartyInventory.InvenM.ChangeMaxInventoryNum(+9);
-                    PartyInventory.Init();
-                    PartyInventory.Ins.UpdateInvenUI();
-                    PartyInventory.Ins.PadLayoutSetting();
-                    //MyPartyInventory.PadLayoutSetting();
-
-                }
+                GUILayout.Label("---  ---");
                 if (GUILayout.Button($"ArkPassivePlus {PlayData.TSavedata?.ArkPassivePlus}")) { ItemBaseCheat.ArtifactPlusInvenCheat(); }
 
                 if (GUILayout.Button($"ArtifactPlusInven 8"))
@@ -390,9 +393,9 @@ namespace BepInPluginSample
                 }
                 if (GUILayout.Button($"Ark Parts Inven Add my Item \n(need open Inven)"))
                 {
-                    ItemBaseCheat.ArtifactPlusInvenCheat();
                     if (Inven)
                     {
+                        ItemBaseCheat.ArtifactPlusInvenCheat();
                         Inven.AddNewItem(ItemBase.GetItem("AlphaBullet"));
                         Inven.AddNewItem(ItemBase.GetItem("AncientShield"));
                         Inven.AddNewItem(ItemBase.GetItem("Bookofmoon"));
@@ -426,7 +429,59 @@ namespace BepInPluginSample
                         Inven.AddNewItem(ItemBase.GetItem("branche"));
                     }
                 }
+                
+                if (GUILayout.Button($"Ark Parts Inven Add my file \n(need open Inven)"))
+                {                    
+                    try
+                    {
+                        List<string> l = new List<string>();
+                        FileInfo fi = new FileInfo("Ark.txt");
+                        if (fi.Exists)
+                        {
+                            using (StreamReader sr = new StreamReader("Ark.txt"))
+                            {
+                                char[] delimiterChars = { ' ' };
+                                String line = sr.ReadLine();
+                                while (line != null)
+                                {
+                                    if (line.Length == 0) continue;
 
+                                    Sample.logger.LogMessage($"read : {line}");
+                                    string[] n=line.Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries);
+                                    if (n.Length == 0) continue;
+
+                                    var t = n.Last();
+                                    Sample.logger.LogMessage($"read : {t}");
+                                    l.Add(t);
+
+                                    line = sr.ReadLine();
+                                }                        
+                            }
+                        }
+                        else
+                        {
+                            Logger.LogWarning($"need Ark.txt in {System.Environment.CurrentDirectory}");
+                        }
+                        if (Inven && l.Count>0)
+                        {
+                            ItemBaseCheat.ArtifactPlusInvenCheat(l.Count);
+                            foreach (var item in l)
+                            {
+                                Inven.AddNewItem(ItemBase.GetItem(item));
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.LogError(e);
+                    }
+                    finally
+                    {
+
+                    }
+                }
+
+                GUILayout.Label("---  ---");
                 if (GUILayout.Button($"PassiveReward"))
                 {
                     ItemBaseCheat.PassiveReward();
@@ -435,10 +490,7 @@ namespace BepInPluginSample
                 if (GUILayout.Button($"Item_Passive_ random"))
                     Reward("Item_Passive_");
 
-                if (GUILayout.Button($"ItemReward"))
-                {
-                    ItemBaseCheat.ItemReward();
-                }
+                GUILayout.Label("---  ---");
 
                 if (GUILayout.Button($"EquipsReward"))
                 {
@@ -455,6 +507,11 @@ namespace BepInPluginSample
                     Reward("Item_Equip_Unique");
                 }
 
+                if (GUILayout.Button($"ItemReward"))
+                {
+                    ItemBaseCheat.ItemReward();
+                }
+
                 if (GUILayout.Button($"ScrollReward"))
                 {
                     ItemBaseCheat.ScrollReward();
@@ -463,10 +520,36 @@ namespace BepInPluginSample
                 {
                     ItemBaseCheat.RewardGetItem(GDEItemKeys.Item_Misc_Item_Key);
                 }
+                if (GUILayout.Button($"ChangeMaxInventoryNum +9")) {
+                    PartyInventory.InvenM.ChangeMaxInventoryNum(+9);
+                    PartyInventory.Init();
+                    PartyInventory.Ins.UpdateInvenUI();
+                    PartyInventory.Ins.PadLayoutSetting();
+                    //MyPartyInventory.PadLayoutSetting();
+
+                }
 
                 GUILayout.Label("---  ---");
                 #endregion 1
+                
 
+                GUILayout.Label("=== Skill ===");
+                foreach (BattleAlly battleAlly in PlayData.Battleallys)
+                {
+                    if (GUILayout.Button($"{battleAlly.Info.Name}"))
+                    {
+                        MySkill.Use(battleAlly);
+                    }
+                }
+                GUILayout.Label("--- Rare ---");
+                foreach (BattleAlly battleAlly in PlayData.Battleallys)
+                {
+                    if (GUILayout.Button($"{battleAlly.Info.Name}"))
+                    {
+                        MySkill.Use(battleAlly,true);
+                    }
+                }
+                GUILayout.Label("=== Skill ===");
                 GUILayout.Label("=== Skill Extended ===");
                 /*
                 if (GUILayout.Button($"Select"))
@@ -868,7 +951,6 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
                         InventoryManager.Reward(list);
                 }
 
-                GUILayout.Label($"--- {itemkey} ---");
                 GUILayout.Label($"--- LeftShift click = 10 ---");
                 foreach (var i in items[itemkey])
                 {
