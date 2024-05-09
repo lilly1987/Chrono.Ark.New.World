@@ -644,10 +644,10 @@ namespace BepInPluginSample
 
                 if (GUILayout.Button($"min Hp 1 {minHp1.Value}")) { minHp1.Value = !minHp1.Value; }
                 if (GUILayout.Button($"no Dead {noDead.Value}")) { noDead.Value = !noDead.Value; }
-                if (GUILayout.Button($"no Damage {noDamage.Value}")) { noDamage.Value = !noDamage.Value; }
+                if (GUILayout.Button($"1 Damage {noDamage.Value}")) { noDamage.Value = !noDamage.Value; }
                 if (GUILayout.Button($"Recovery max {noRecovery.Value}")) { noRecovery.Value = !noRecovery.Value; }
                 if (GUILayout.Button($"Mana max {noAP.Value}")) { noAP.Value = !noAP.Value; }
-                if (GUILayout.Button($"MyTurn add Discard 10 {addDiscard.Value}")) { addDiscard.Value = !addDiscard.Value; }
+                if (GUILayout.Button($"MyTurn add Discard {addDiscard.Value}")) { addDiscard.Value = !addDiscard.Value; }
                 if (GUILayout.Button($"not isFogout {isFogout.Value}")) { isFogout.Value = !isFogout.Value; }
                 if (GUILayout.Button($"StageArkPartOn {StageArkPartOn.Value}")) { StageArkPartOn.Value = !StageArkPartOn.Value; }
                 if (GUILayout.Button($"WaitCount {WaitCount.Value}")) { WaitCount.Value = !WaitCount.Value; }
@@ -1241,7 +1241,7 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
             {
                 return;
             }
-            BattleSystem.instance.AllyTeam.WaitCount += 3;
+            BattleSystem.instance.AllyTeam.WaitCount += 9;
         }
 
         // public void SkillAdd(GDESkillData Data, Skill_Extended SkillEn = null)

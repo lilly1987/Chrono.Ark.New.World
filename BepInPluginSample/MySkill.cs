@@ -313,15 +313,11 @@ namespace BepInPluginSample
                 List<Skill> list = new List<Skill>();
                 List<BattleAlly> battleallys = PlayData.Battleallys;
                 BattleTeam tempBattleTeam = PlayData.TempBattleTeam;
-
-                for (int i = 0; i < PlayData.TSavedata.Party.Count; i++)
+                foreach (var item in battleallys)
                 {
-                    if (PlayData.TSavedata.SpRule != null && PlayData.TSavedata.SpRule.RuleChange.SkillBookPlusNum >= 1)
+                    foreach (var gdeskillData in PlayData.GetCharacterSkillNoOverLap(item.Info, false, null))
                     {
-                        foreach (var gdeskillData in PlayData.GetCharacterSkillNoOverLap(PlayData.TSavedata.Party[i], false, null))
-                        {
-                            list.Add(Skill.TempSkill(gdeskillData.KeyID, battleallys[i], tempBattleTeam));
-                        }
+                        list.Add(Skill.TempSkill(gdeskillData.KeyID, item, tempBattleTeam));
                     }
                 }
                 foreach (Skill skill in list)
@@ -331,6 +327,7 @@ namespace BepInPluginSample
                         SaveManager.NowData.unlockList.SkillPreView.Add(skill.MySkill.KeyID);
                     }
                 }
+                Sample.logger.LogWarning($"SkillBookCharacter {list.Count}");
                 PlayData.TSavedata.UseItemKeys.Add(GDEItemKeys.Item_Consume_SkillBookCharacter);
                 FieldSystem.DelayInput(BattleSystem.I_OtherSkillSelect(list, new SkillButton.SkillClickDel(__instance.SkillAdd), ScriptLocalization.System_Item.SkillAdd, false, true, true, true, true));
                 MasterAudio.PlaySound("BookFlip", 1f, null, 0f, null, null, false, false);
