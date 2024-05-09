@@ -23,6 +23,7 @@ namespace BepInPluginSample
         public static ManualLogSource logger;
 
         static Harmony harmony;
+        static Harmony harmony2;
 
         public ConfigEntry<BepInEx.Configuration.KeyboardShortcut> isGUIOnKey;
         public ConfigEntry<BepInEx.Configuration.KeyboardShortcut> isOpenKey;
@@ -48,18 +49,19 @@ namespace BepInPluginSample
         #region 변수
         // =========================================================
 
-        private static ConfigEntry<bool> minHp1;
-        private static ConfigEntry<bool> noDead;
-        private static ConfigEntry<bool> noDamage;
-        private static ConfigEntry<bool> noRecovery;
-        private static ConfigEntry<bool> noAP;
-        private static ConfigEntry<bool> addDiscard;
-        private static ConfigEntry<bool> isFogout;
-        private static ConfigEntry<bool> StageArkPartOn;
-        private static ConfigEntry<bool> WaitCount;
-        private static ConfigEntry<bool> WaitCountAdd;
-        private static ConfigEntry<bool> isMaxHpUp;
-        private static ConfigEntry<bool> onPartyInventoryUI;
+        internal static ConfigEntry<bool> minHp1;
+        internal static ConfigEntry<bool> noDead;
+        internal static ConfigEntry<bool> noDamage;
+        internal static ConfigEntry<bool> noRecovery;
+        internal static ConfigEntry<bool> noAP;
+        internal static ConfigEntry<bool> addDiscard;
+        internal static ConfigEntry<bool> isFogout;
+        internal static ConfigEntry<bool> StageArkPartOn;
+        internal static ConfigEntry<bool> WaitCount;
+        internal static ConfigEntry<bool> WaitCountAdd;
+        internal static ConfigEntry<bool> isMaxHpUp;
+        internal static ConfigEntry<bool> onPartyInventoryUI;
+        internal static ConfigEntry<bool> skillAll;
         //private static ConfigEntry<bool> SkillAdd_Extended;
         // private static ConfigEntry<float> uiW;
         // private static ConfigEntry<float> xpMulti;
@@ -106,6 +108,7 @@ namespace BepInPluginSample
             #region 변수 설정
             // =========================================================
 
+            skillAll = Config.Bind("game", "skillAll", true);
             minHp1 = Config.Bind("game", "minHp1", true);
             noDead = Config.Bind("game", "noDead", true);
             noDamage = Config.Bind("game", "noDamage", false);
@@ -204,6 +207,14 @@ namespace BepInPluginSample
             try // 가급적 try 처리 해주기. 하모니 패치중에 오류나면 다른 플러그인까지 영향 미침
             {
                 harmony = Harmony.CreateAndPatchAll(typeof(Sample));
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e);
+            }
+            try // 가급적 try 처리 해주기. 하모니 패치중에 오류나면 다른 플러그인까지 영향 미침
+            {
+                harmony2 = Harmony.CreateAndPatchAll(typeof(MySkill));
             }
             catch (Exception e)
             {
@@ -534,6 +545,15 @@ namespace BepInPluginSample
                 
 
                 GUILayout.Label("=== Skill ===");
+                if (GUILayout.Button($"Lucy "))
+                {
+                    MySkill.Use(false);
+                }
+                if (GUILayout.Button($"Lucy Draw"))
+                {
+                    MySkill.Use(true);
+                }
+                GUILayout.Label("---  ---");
                 foreach (BattleAlly battleAlly in PlayData.Battleallys)
                 {
                     if (GUILayout.Button($"{battleAlly.Info.Name}"))
@@ -633,6 +653,7 @@ namespace BepInPluginSample
                 if (GUILayout.Button($"WaitCount {WaitCount.Value}")) { WaitCount.Value = !WaitCount.Value; }
                 if (GUILayout.Button($"WaitCountAdd {WaitCountAdd.Value}")) { WaitCountAdd.Value = !WaitCountAdd.Value; }
                 if (GUILayout.Button($"onPartyInventoryUI {onPartyInventoryUI.Value}")) { onPartyInventoryUI.Value = !onPartyInventoryUI.Value; }
+                if (GUILayout.Button($"all skill show {skillAll.Value}")) { skillAll.Value = !skillAll.Value; }
                 //if (GUILayout.Button($"SkillAdd_Extended {SkillAdd_Extended.Value}")) { SkillAdd_Extended.Value = !SkillAdd_Extended.Value; }
                 //if (GUILayout.Button($"isMaxHpUp {isMaxHpUp.Value}")) { isMaxHpUp.Value = !isMaxHpUp.Value; }
                 GUILayout.Label("=== on/off ===");
@@ -1066,6 +1087,7 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
         {
             Logger.LogWarning("OnDisable");
             harmony?.UnpatchSelf();
+            harmony2?.UnpatchSelf();
         }
 
         #region Harmony
