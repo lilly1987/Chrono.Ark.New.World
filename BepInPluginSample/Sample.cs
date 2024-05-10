@@ -83,7 +83,7 @@ namespace BepInPluginSample
 
         public void Awake()
         {
-            
+
             #region GUI
             logger = Logger;
             Logger.LogMessage("Awake");
@@ -394,6 +394,7 @@ namespace BepInPluginSample
 
                 if (GUILayout.Button("gold +100 (LeftShift +10000)")) { if (Input.GetKey(KeyCode.LeftShift)) PlayData.Gold += 10000; else PlayData.Gold += 100; }
                 if (GUILayout.Button("Soul +10 (LeftShift +1000)")) { if (Input.GetKey(KeyCode.LeftShift)) PlayData.Soul += 1000; else PlayData.Soul += 10; }
+                //if (GUILayout.Button("PlusDiscard +10 (LeftShift +1000)")) { if (Input.GetKey(KeyCode.LeftShift)) BattleSystem.instance.AllyTeam.LucyChar.info.PlusDiscard += 1000;else PlayData.Soul += 10; }
 
                 GUILayout.Label("---  ---");
                 if (GUILayout.Button($"ArkPassivePlus {PlayData.TSavedata?.ArkPassivePlus}")) { ItemBaseCheat.ArtifactPlusInvenCheat(); }
@@ -440,55 +441,58 @@ namespace BepInPluginSample
                         Inven.AddNewItem(ItemBase.GetItem("branche"));
                     }
                 }
-                
+
                 if (GUILayout.Button($"Ark Parts Inven Add my file \n(need open Inven)"))
-                {                    
-                    try
+                {
+                    List<string> l = new List<string>();
+                    FileInfo fi = new FileInfo("Ark.txt");
+                    if (fi.Exists)
                     {
-                        List<string> l = new List<string>();
-                        FileInfo fi = new FileInfo("Ark.txt");
-                        if (fi.Exists)
+                        using (StreamReader sr = new StreamReader("Ark.txt"))
                         {
-                            using (StreamReader sr = new StreamReader("Ark.txt"))
+                            char[] delimiterChars = { ' ' };
+                            String line = sr.ReadLine();
+                            while (line != null)
                             {
-                                char[] delimiterChars = { ' ' };
-                                String line = sr.ReadLine();
-                                while (line != null)
-                                {
-                                    if (line.Length == 0) continue;
+                                if (line.Length == 0) continue;
 
-                                    Sample.logger.LogMessage($"read : {line}");
-                                    string[] n=line.Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries);
-                                    if (n.Length == 0) continue;
+                                Sample.logger.LogMessage($"read : {line}");
+                                string[] n = line.Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries);
+                                if (n.Length == 0) continue;
 
-                                    var t = n.Last();
-                                    Sample.logger.LogMessage($"read : {t}");
-                                    l.Add(t);
+                                var t = n.Last();
+                                if (t.Length == 0) continue;
+                                Sample.logger.LogMessage($"add  : {t}");
+                                l.Add(t);
 
-                                    line = sr.ReadLine();
-                                }                        
+                                line = sr.ReadLine();
                             }
                         }
-                        else
+                    }
+                    else
+                    {
+                        Logger.LogWarning($"need Ark.txt in {System.Environment.CurrentDirectory}");
+                    }
+                    if (Inven && l.Count > 0)
+                    {
+                        ItemBaseCheat.ArtifactPlusInvenCheat(l.Count);
+                        foreach (var item in l)
                         {
-                            Logger.LogWarning($"need Ark.txt in {System.Environment.CurrentDirectory}");
-                        }
-                        if (Inven && l.Count>0)
-                        {
-                            ItemBaseCheat.ArtifactPlusInvenCheat(l.Count);
-                            foreach (var item in l)
+                            try
                             {
                                 Inven.AddNewItem(ItemBase.GetItem(item));
                             }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.LogError(e);
-                    }
-                    finally
-                    {
+                            catch (Exception e)
+                            {
+                                Logger.LogError($"err  : {item}");
+                                //Logger.LogWarning(item);
+                                //Logger.LogError(e);
+                            }
+                            finally
+                            {
 
+                            }
+                        }
                     }
                 }
 
@@ -531,7 +535,8 @@ namespace BepInPluginSample
                 {
                     ItemBaseCheat.RewardGetItem(GDEItemKeys.Item_Misc_Item_Key);
                 }
-                if (GUILayout.Button($"ChangeMaxInventoryNum +9")) {
+                if (GUILayout.Button($"ChangeMaxInventoryNum +9"))
+                {
                     PartyInventory.InvenM.ChangeMaxInventoryNum(+9);
                     PartyInventory.Init();
                     PartyInventory.Ins.UpdateInvenUI();
@@ -542,7 +547,7 @@ namespace BepInPluginSample
 
                 GUILayout.Label("---  ---");
                 #endregion 1
-                
+
 
                 GUILayout.Label("=== Skill ===");
                 if (GUILayout.Button($"Lucy "))
@@ -566,7 +571,7 @@ namespace BepInPluginSample
                 {
                     if (GUILayout.Button($"{battleAlly.Info.Name}"))
                     {
-                        MySkill.Use(battleAlly,true);
+                        MySkill.Use(battleAlly, true);
                     }
                 }
                 GUILayout.Label("=== Skill ===");
@@ -582,10 +587,10 @@ namespace BepInPluginSample
                     GUILayout.Label("--- del ---");
                     foreach (Skill enforceSkill in battleAlly.Skills)
                     {
-                        if(enforceSkill.CharinfoSkilldata.SKillExtended!=null)
+                        if (enforceSkill.CharinfoSkilldata.SKillExtended != null)
                             if (GUILayout.Button(
                                 $" {enforceSkill.CharinfoSkilldata.Skill.Name}\n{enforceSkill.CharinfoSkilldata.SKillExtended.ExtendedName()}"
-                                ,GUILayout.Width(250)
+                                , GUILayout.Width(250)
                                 ))
                             {
                                 enforceSkill.CharinfoSkilldata.SKillExtended = null;
@@ -693,21 +698,25 @@ namespace BepInPluginSample
                 {
                     List<string> list9 = new List<string>();
                     GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.Item_Potions, out list9);
-                    InventoryManager.Reward(new List<ItemBase>
-{
-ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_heal),
-ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_weak),
-ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_holywater)
-});
+                    InventoryManager.Reward(
+                        new List<ItemBase>
+                        {
+                        ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_heal),
+                        ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_weak),
+                        ItemBase.GetItem(GDEItemKeys.Item_Potions_Potion_holywater)
+                        }
+                    );
                 }
 
 
                 if (GUILayout.Button("skill book 10"))
                 {
-                    InventoryManager.Reward(new List<ItemBase>
-{
-ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 10)
-});
+                    InventoryManager.Reward(
+                        new List<ItemBase>
+                        {
+                        ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 10)
+                        }
+                    );
                 }
 
                 if (GUILayout.Button("Jar*2 SmallReward Sou*10"))
@@ -840,23 +849,23 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
 
                 if (PlayData.TSavedata != null)
                 {
-                    if (GUILayout.Button($"maxhp +500 ;"))
+                    if (GUILayout.Button($"all maxhp +500 ;"))
                         foreach (var c in PlayData.TSavedata.Party)
                             c.OriginStat.maxhp += 500;
 
                     foreach (var c in PlayData.TSavedata.Party)
                     {
-                        GUILayout.Label($"{c.Name}");
-                        if (GUILayout.Button($"maxhp +500 ; {c.OriginStat.maxhp}")) { c.OriginStat.maxhp += 500; }
+                        if (GUILayout.Button($"{c.Name} maxhp +500 ; {c.OriginStat.maxhp}")) { c.OriginStat.maxhp += 500; }
                     }
                 }
+                /*
                 GUILayout.Label("--- FieldSystem ---");
 
                 if (FieldSystem.instance != null)
                 {
 
                 }
-
+                */
                 GUILayout.Label("--- BattleSystem ---");
 
                 if (BattleSystem.instance != null)
@@ -1102,12 +1111,7 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
             if (noDamage.Value)
             {
                 Dmg = 0;
-                //__instance.HP = 0;
             }
-            //if (minHp1.Value && __instance.HP < 1 + Dmg)
-            //{
-            //    __instance.HP = 1+ Dmg;
-            //}
         }
 
         [HarmonyPatch(typeof(BattleAlly), "Damage",
@@ -1158,6 +1162,7 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
         [HarmonyPrefix]
         public static void SetAP(BattleTeam __instance, ref int __0)
         {
+            logger.LogMessage($"SetAP");
             if (!noAP.Value)
             {
                 return;
@@ -1167,16 +1172,19 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
 
 
         [HarmonyPatch(typeof(BattleTeam), "GetDiscardCount", MethodType.Getter)]
-        [HarmonyPostfix]
-        public static void GetDiscardCount(ref int __result)//BattleTeam __instance,
+        [HarmonyPrefix]
+        public static bool GetDiscardCount(ref int __result)//BattleTeam __instance,
         {
+            logger.LogMessage($"GetDiscardCount");
             if (!addDiscard.Value)
             {
-                return;
+                return true;
             }
-            __result += 99;
+            __result = 99;
+            return false;
         }
 
+        /*
         [HarmonyPatch(typeof(InventoryManager), "Reward", typeof(List<ItemBase>))]
         [HarmonyPrefix]
         public static void Reward(List<ItemBase> Items)//InventoryManager __instance,
@@ -1186,19 +1194,19 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
                 logger.LogMessage($"Reward1 : {item.itemkey}");
             }
         }
-
         [HarmonyPatch(typeof(InventoryManager), "Reward", typeof(ItemBase))]
         [HarmonyPrefix]
         public static void Reward(ItemBase Item)//InventoryManager __instance,
         {
             logger.LogMessage($"Reward2 : {Item.itemkey}");
         }
+        */
 
         [HarmonyPatch(typeof(FieldSystem), "StageStart", typeof(string))]
         [HarmonyPostfix]
         public static void StageStart()//InventoryManager __instance, string StageKey
         {
-            //logger.LogMessage($"Reward2 : {Item.GetName}");
+            logger.LogMessage($"StageStart");
             if (isFogout.Value)
             {
                 //return;
@@ -1211,6 +1219,7 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
             }
         }
 
+        /*
         [HarmonyPatch(typeof(FieldSystem), "NextStage")]
         [HarmonyPatch(typeof(FieldSystem), "ClearMap")]
         [HarmonyPostfix]
@@ -1218,13 +1227,13 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
         {
             //logger.LogMessage($"Reward2 : {Item.GetName}");
         }
-
+        */
 
         [HarmonyPatch(typeof(WaitButton), "WaitAct")]
         [HarmonyPostfix]
         public static void WaitAct()//InventoryManager __instance, string StageKey
         {
-            //logger.LogMessage($"Reward2 : {Item.GetName}");
+            logger.LogMessage($"WaitAct");
             if (!WaitCount.Value)
             {
                 return;
@@ -1236,35 +1245,12 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
         [HarmonyPostfix]
         public static void MyTurn()//InventoryManager __instance, string StageKey
         {
-            //logger.LogMessage($"Reward2 : {Item.GetName}");
+            logger.LogMessage($"MyTurn");
             if (!WaitCountAdd.Value)
             {
                 return;
             }
             BattleSystem.instance.AllyTeam.WaitCount += 9;
-        }
-
-        // public void SkillAdd(GDESkillData Data, Skill_Extended SkillEn = null)
-        [HarmonyPatch(typeof(Character), "SkillAdd", typeof(GDESkillData), typeof(Skill_Extended))]
-        [HarmonyPostfix]
-        public static void SkillAdd(Character __instance, GDESkillData Data, Skill_Extended SkillEn)//InventoryManager __instance, string StageKey
-        {
-            //logger.LogMessage($"Reward2 : {Item.GetName}");
-            //if (!SkillAdd_Extended.Value)
-            {
-                return;
-            }
-            if (SkillEn == null)
-            {
-                //CelestialCheat.AllSkill_ExtendedSet(CelestialCheat.GetList(), __instance.GetBattleChar);
-
-
-
-
-                //__instance.GetBattleChar
-                //__instance.SkillDatas.Last().SKillExtended = SkillEn;
-                //charInfoSkillData.SKillExtended = SkillEn;
-            }
         }
 
         // public void SkillAdd(GDESkillData Data, Skill_Extended SkillEn = null)
@@ -1292,7 +1278,7 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
             logger.LogWarning($"ArkPartsInven");
             Inven = __instance;
         }
-        
+
         [HarmonyPatch(typeof(ItemCollection), "Start")]
         [HarmonyPostfix]
         public static void ItemCollection(ItemCollection __instance)//InventoryManager __instance, string StageKey
@@ -1307,9 +1293,9 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
         {
             logger.LogWarning($"AddNewItem : {Item.itemkey}");
         }
-        
-        [HarmonyPatch(typeof(PartyInventory), "PadLayoutSetting")]
-        [HarmonyPrefix]
+
+        //[HarmonyPatch(typeof(PartyInventory), "PadLayoutSetting")]
+        //[HarmonyPrefix]
         public static bool PadLayoutSetting()//InventoryManager __instance, string StageKey
         {
             logger.LogWarning($"PadLayoutSetting");
@@ -1364,71 +1350,6 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
             return true;
         }
 
-
-        //public Stat AllyLevelPlusStat(int PlusLv = 0)
-        /// <summary>
-        /// 다른곳하고 공유되서 비효율적
-        /// </summary>
-        /// <param name="__result"></param>
-        /*
-        [HarmonyPatch(typeof(Character), "AllyLevelPlusStat", typeof(int))]
-        [HarmonyPostfix]
-        public static void AllyLevelPlusStat(ref Stat __result)//InventoryManager __instance, string StageKey
-        {
-        if (!isMaxHpUp.Value)
-        {
-        return;
-        }
-        logger.LogMessage($"AllyLevelPlusStat maxhp : {__result.maxhp}");
-        __result.maxhp += 100;
-        }
-        */
-
-        /*
-        // public static void Reward(string rewardkey)
-        [HarmonyPatch(typeof(InventoryManager), "Reward", typeof(string))]//, MethodType.StaticConstructor
-        [HarmonyPrefix]
-        public static void Reward(string rewardkey)//InventoryManager __instance,
-        {
-        logger.LogMessage($"Reward3 : {rewardkey}");
-        }
-        */
-        /*
-        [HarmonyPatch(typeof(BattleTeam), "MyTurn")]
-        [HarmonyPostfix]
-        public static void SetAP(BattleTeam __instance)
-        {
-        if (!addDiscard.Value)
-        {
-        return;
-        }
-        __instance.DiscardCount = __instance.GetDiscardCount+10;
-        }
-        */
-
-
-        /*
-
-        [HarmonyPatch(typeof(XPPicker), MethodType.Constructor)]
-        [HarmonyPostfix]
-        public static void XPPickerCtor(XPPicker __instance, ref float ___pickupRadius)
-        {
-        //logger.LogWarning($"XPPicker.ctor {___pickupRadius}");
-        ___pickupRadius = pickupRadius.Value;
-        }
-
-        [HarmonyPatch(typeof(BattleAlly), "Damage", MethodType.Setter)]
-        [HarmonyPrefix]
-        public static void SetDamageMult(ref float __0)
-        {
-        if (!eMultOn.Value)
-        {
-        return;
-        }
-        __0 *= eDamageMult.Value;
-        }
-        */
-        // =========================================================
         #endregion
     }
 }
