@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <NewSaveData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <TimeMoney>1207</TimeMoney>
+  <TimeMoney>4326</TimeMoney>
   <LoopNum>24999</LoopNum>
-  <TryNum>24</TryNum>
+  <TryNum>36</TryNum>
   <IntrolEnd>true</IntrolEnd>
   <TutorialEnd>true</TutorialEnd>
   <ViewDream1>true</ViewDream1>
@@ -13,8 +13,8 @@
   <HiddenHatchFound>true</HiddenHatchFound>
   <CrimsonEnter>true</CrimsonEnter>
   <OpenChallenge>true</OpenChallenge>
-  <SaveTime>2024 - 05 - 06  22:37</SaveTime>
-  <SaveMoney>51155</SaveMoney>
+  <SaveTime>2024 - 05 - 11  00:01</SaveTime>
+  <SaveMoney>54113</SaveMoney>
   <CheckLoopMap>true</CheckLoopMap>
   <SaveedKey />
   <Try1Ark>false</Try1Ark>
@@ -25,7 +25,7 @@
     <boolean>false</boolean>
     <boolean>false</boolean>
     <boolean>true</boolean>
-    <boolean>false</boolean>
+    <boolean>true</boolean>
     <boolean>false</boolean>
     <boolean>false</boolean>
     <boolean>false</boolean>
@@ -63,10 +63,10 @@
     <FastBattle>true</FastBattle>
     <ColorBlindness>false</ColorBlindness>
     <DLCBossIllustChange>true</DLCBossIllustChange>
-    <GamepadOn>true</GamepadOn>
+    <GamepadOn>false</GamepadOn>
     <Language>0</Language>
-    <ScreenMode>0</ScreenMode>
-    <resolution>16</resolution>
+    <ScreenMode>2</ScreenMode>
+    <resolution>9</resolution>
     <VSync>true</VSync>
     <SoundMainVolume>50</SoundMainVolume>
     <SoundEffectVolume>50</SoundEffectVolume>
@@ -232,6 +232,16 @@
       <string>PyonHammer </string>
       <string>S_LucyD_11</string>
       <string>Featheroflife</string>
+      <string>Suitecase_SwimDLC</string>
+      <string>IceBox_SwimDLC</string>
+      <string>PhotoCamera_SwimDLC</string>
+      <string>SandCastle_SwimDLC</string>
+      <string>WaterplayTube_SwimDLC</string>
+      <string>Shiranui_DLCEquip</string>
+      <string>IceSnack_SwimDLC</string>
+      <string>WaterMelon_SwimDLC</string>
+      <string>Swimsuit_SwimDLC</string>
+      <string>BeachShawl_SwimDLC</string>
     </UnlockItems>
     <UnlockCharacter>
       <string>Queen</string>
@@ -423,6 +433,16 @@
       <string>Bellofsalvation</string>
       <string>Sunmoonstarcurse</string>
       <string>VikingsMace</string>
+      <string>WoodenSword</string>
+      <string>RingofStupidman</string>
+      <string>ForestSword_0</string>
+      <string>LeavesBelt</string>
+      <string>RingofBanalman</string>
+      <string>WoodenBat</string>
+      <string>SunCape</string>
+      <string>ThrowingDagger</string>
+      <string>LongSword</string>
+      <string>SafetyPrayAmulet</string>
     </FoundEquip>
     <FoundPassive>
       <string>TwinsRelic</string>
@@ -530,6 +550,7 @@
       <string>UnknownSeed</string>
       <string>PhotoCamera_SwimDLC</string>
       <string>ReapersTiara</string>
+      <string>Coppercoil</string>
     </FoundPassive>
     <FoundConsumable>
       <string>Bread</string>
@@ -596,9 +617,23 @@
       <string>GoldenBread</string>
       <string>RedHammer</string>
       <string>DLC_Ticket_SwimDLC</string>
+      <string>Scrap_0</string>
+      <string>Scrap_1</string>
+      <string>Potion_Cycle</string>
+      <string>Potion_Clone</string>
+      <string>DLC_Ticket_SwimDLC</string>
+      <string>DLC_Ticket_SwimDLC</string>
+      <string>DLC_Ticket_SwimDLC</string>
+      <string>DLC_Ticket_SwimDLC</string>
+      <string>DLC_Ticket_SwimDLC</string>
+      <string>DLC_Ticket_SwimDLC</string>
+      <string>DLC_Ticket_SwimDLC</string>
+      <string>DLC_Ticket_SwimDLC</string>
+      <string>DLC_Ticket_SwimDLC</string>
     </FoundConsumable>
     <FoundActive>
       <string>ShadowPriest_Thurible</string>
+      <string>LucysNecklace4</string>
     </FoundActive>
     <FoundMonster>
       <string>TutorialSandbag</string>
@@ -685,6 +720,14 @@
       <string>S2_Animatronics</string>
       <string>S3_Wolf</string>
       <string>S4_QuestDorchi</string>
+      <string>S1_Carpenterdoll</string>
+      <string>S1_BossDorchiX</string>
+      <string>S1_BossDorchiX_Sword</string>
+      <string>S2_Pharos_Tanker</string>
+      <string>S1_Armor</string>
+      <string>TrialofStrength_Enemy</string>
+      <string>S2_Shiranui</string>
+      <string>S2_PharosWitch</string>
     </FoundMonster>
     <UnlockDictsKey />
     <NewCheckKey>
@@ -724,6 +767,11 @@
       <string>StoryOfMyLife</string>
       <string>DiaryPapa</string>
       <string>MemoirsOfClyne</string>
+      <string>DiaryDaughter</string>
+      <string>MemoryData</string>
+      <string>DreamData</string>
+      <string>AshenOrder</string>
+      <string>SecurityReport</string>
     </NewCheckKey>
     <UnlockSpecialRuleKey>
       <string>BloodyMist</string>
@@ -1165,18 +1213,47 @@
       <string>S_Phoenix_10_1</string>
       <string>S_Phoenix_10_0</string>
       <string>S_Phoenix_Draw</string>
+      <string>S_Phoenix_P</string>
+      <string>S_Lian_4</string>
+      <string>S_Lian_6</string>
+      <string>S_Public_21</string>
+      <string>S_Phoenix_12</string>
+      <string>S_Phoenix_Draw_1</string>
+      <string>S_Ilya_8_0</string>
+      <string>S_Public_12</string>
+      <string>S_Public_6</string>
+      <string>S_Trisha_3_1</string>
+      <string>S_Public_1</string>
+      <string>S_Momori_Draw_1</string>
+      <string>S_SmallChest_Effect_3</string>
+      <string>S_TW_Red_R1</string>
+      <string>S_Prime_8</string>
+      <string>S_LucyD_17_SwimDLC</string>
+      <string>S_LucyD_18_SwimDLC</string>
+      <string>S_LucyD_19_SwimDLC</string>
+      <string>S_LucyD_20_SwimDLC</string>
+      <string>S_LucyD_21_SwimDLC</string>
+      <string>S_LucySwimDLC_0</string>
+      <string>S_TW_Red_R0</string>
+      <string>S_TW_Blue_R0</string>
+      <string>S_LucyCurse_Heavy</string>
+      <string>S_LucyD_19_1_SwimDLC</string>
+      <string>S_LucyD_19_0_SwimDLC</string>
+      <string>S_LBossFirst_LucySwordremove</string>
+      <string>S_TW_Blue_7_1</string>
+      <string>S_Trisha_9</string>
     </SkillPreView>
   </unlockList>
   <GameVersion>13</GameVersion>
-  <Stage1ClearNum>19</Stage1ClearNum>
+  <Stage1ClearNum>25</Stage1ClearNum>
   <PharosKill>0</PharosKill>
-  <WitchKill>10</WitchKill>
-  <JokerKill>11</JokerKill>
+  <WitchKill>12</WitchKill>
+  <JokerKill>12</JokerKill>
   <TheLightKill>0</TheLightKill>
   <LianUnlockNum>13</LianUnlockNum>
   <LianTutorialBook>true</LianTutorialBook>
   <StoreQuestClear>true</StoreQuestClear>
-  <DorchiKill>0</DorchiKill>
+  <DorchiKill>1</DorchiKill>
   <FountainOblivion>true</FountainOblivion>
   <statistics>
     <Characters>
@@ -1184,8 +1261,8 @@
         <CharKey>Phoenix</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>1</ExpertClear>
-        <PlayNum>1</PlayNum>
+        <ExpertClear>2</ExpertClear>
+        <PlayNum>4</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1218,14 +1295,14 @@
         <CharKey>Hein</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>2</ExpertClear>
-        <PlayNum>4</PlayNum>
+        <ExpertClear>3</ExpertClear>
+        <PlayNum>5</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
         <FriendshipLV>4</FriendshipLV>
         <FriendshipAmount>0</FriendshipAmount>
-        <IsCrimsonDialogue>false</IsCrimsonDialogue>
+        <IsCrimsonDialogue>true</IsCrimsonDialogue>
         <IsPlusSkill>false</IsPlusSkill>
         <GetGiftItems>
           <string>Gift_Knife</string>
@@ -1252,7 +1329,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>3</ExpertClear>
-        <PlayNum>7</PlayNum>
+        <PlayNum>8</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1288,7 +1365,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>1</ExpertClear>
-        <PlayNum>4</PlayNum>
+        <PlayNum>6</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1305,8 +1382,8 @@
         <CharKey>Trisha</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>2</ExpertClear>
-        <PlayNum>2</PlayNum>
+        <ExpertClear>3</ExpertClear>
+        <PlayNum>4</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1323,7 +1400,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>2</ExpertClear>
-        <PlayNum>2</PlayNum>
+        <PlayNum>3</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1341,8 +1418,8 @@
         <CharKey>SilverStein</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>3</ExpertClear>
-        <PlayNum>9</PlayNum>
+        <ExpertClear>5</ExpertClear>
+        <PlayNum>12</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1382,7 +1459,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>1</ExpertClear>
-        <PlayNum>4</PlayNum>
+        <PlayNum>5</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1398,8 +1475,8 @@
         <CharKey>TW_Red</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>1</ExpertClear>
-        <PlayNum>2</PlayNum>
+        <ExpertClear>2</ExpertClear>
+        <PlayNum>7</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1413,8 +1490,8 @@
         <CharKey>Ilya</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>1</ExpertClear>
-        <PlayNum>3</PlayNum>
+        <ExpertClear>2</ExpertClear>
+        <PlayNum>5</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1431,8 +1508,8 @@
         <CharKey>TW_Blue</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>1</ExpertClear>
-        <PlayNum>2</PlayNum>
+        <ExpertClear>2</ExpertClear>
+        <PlayNum>7</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1464,8 +1541,8 @@
         <CharKey>Azar</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>1</ExpertClear>
-        <PlayNum>9</PlayNum>
+        <ExpertClear>2</ExpertClear>
+        <PlayNum>11</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1480,7 +1557,7 @@
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
         <ExpertClear>1</ExpertClear>
-        <PlayNum>1</PlayNum>
+        <PlayNum>2</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
@@ -1527,14 +1604,14 @@
         <CharKey>Momori</CharKey>
         <CasualClear>0</CasualClear>
         <NomalClear>0</NomalClear>
-        <ExpertClear>0</ExpertClear>
-        <PlayNum>3</PlayNum>
+        <ExpertClear>1</ExpertClear>
+        <PlayNum>4</PlayNum>
         <HopeNomalClear>0</HopeNomalClear>
         <HopeExpertClear>0</HopeExpertClear>
         <HopePlayNum>0</HopePlayNum>
         <FriendshipLV>4</FriendshipLV>
         <FriendshipAmount>0</FriendshipAmount>
-        <IsCrimsonDialogue>false</IsCrimsonDialogue>
+        <IsCrimsonDialogue>true</IsCrimsonDialogue>
         <IsPlusSkill>false</IsPlusSkill>
         <GetGiftItems>
           <string>Gift_Mic</string>
@@ -1559,11 +1636,11 @@
     <BossKills>
       <BossKill>
         <BossKey>Garden_Midboss</BossKey>
-        <KillNum>6</KillNum>
+        <KillNum>10</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_Witch</BossKey>
-        <KillNum>10</KillNum>
+        <KillNum>12</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_MBoss2_0</BossKey>
@@ -1571,43 +1648,43 @@
       </BossKill>
       <BossKill>
         <BossKey>Queue_S2_MainBoss_Luby</BossKey>
-        <KillNum>5</KillNum>
+        <KillNum>7</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_S3_Reaper</BossKey>
-        <KillNum>10</KillNum>
-      </BossKill>
-      <BossKill>
-        <BossKey>Queue_Golem</BossKey>
-        <KillNum>9</KillNum>
-      </BossKill>
-      <BossKill>
-        <BossKey>Queue_S2_Joker</BossKey>
-        <KillNum>11</KillNum>
-      </BossKill>
-      <BossKill>
-        <BossKey>Queue_MBoss_0</BossKey>
         <KillNum>13</KillNum>
       </BossKill>
       <BossKill>
+        <BossKey>Queue_Golem</BossKey>
+        <KillNum>10</KillNum>
+      </BossKill>
+      <BossKill>
+        <BossKey>Queue_S2_Joker</BossKey>
+        <KillNum>12</KillNum>
+      </BossKill>
+      <BossKill>
+        <BossKey>Queue_MBoss_0</BossKey>
+        <KillNum>15</KillNum>
+      </BossKill>
+      <BossKill>
         <BossKey>Queue_S4_King</BossKey>
-        <KillNum>7</KillNum>
+        <KillNum>9</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>CrimsonQueue_GunManBoss</BossKey>
-        <KillNum>4</KillNum>
+        <KillNum>5</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_S3_TheLight</BossKey>
-        <KillNum>7</KillNum>
+        <KillNum>8</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_S2_TimeEater</BossKey>
-        <KillNum>4</KillNum>
+        <KillNum>5</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_S3_PharosLeader</BossKey>
-        <KillNum>5</KillNum>
+        <KillNum>8</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>Queue_S2_BombClown</BossKey>
@@ -1615,11 +1692,19 @@
       </BossKill>
       <BossKill>
         <BossKey>LBossFirst_Queue</BossKey>
-        <KillNum>5</KillNum>
+        <KillNum>7</KillNum>
       </BossKill>
       <BossKill>
         <BossKey>LastBoss_MasterBattle_1</BossKey>
-        <KillNum>5</KillNum>
+        <KillNum>7</KillNum>
+      </BossKill>
+      <BossKill>
+        <BossKey>Queue_DorchiX</BossKey>
+        <KillNum>1</KillNum>
+      </BossKill>
+      <BossKill>
+        <BossKey>Shiranui_Queue</BossKey>
+        <KillNum>2</KillNum>
       </BossKill>
     </BossKills>
     <HopeClear>0</HopeClear>
@@ -1645,18 +1730,53 @@
     <WinAzarBattle>true</WinAzarBattle>
     <WinMasterBattle>true</WinMasterBattle>
     <Gunman>3</Gunman>
-    <DochichiTalk>false</DochichiTalk>
-    <MonkQuestClear>false</MonkQuestClear>
-    <MonkQuestOn>false</MonkQuestOn>
+    <DochichiTalk>true</DochichiTalk>
+    <MonkQuestClear>true</MonkQuestClear>
+    <MonkQuestOn>true</MonkQuestOn>
     <IsEnterTrueEndPoint>true</IsEnterTrueEndPoint>
   </storydata>
-  <LucySkin>skin_5</LucySkin>
-  <_lucyBasicSkillKey>S_Lucy_0</_lucyBasicSkillKey>
+  <LucySkin>Swim_Skin</LucySkin>
+  <_lucyBasicSkillKey>S_LucySwimDLC_0</_lucyBasicSkillKey>
   <HuzUnlockGold>5000</HuzUnlockGold>
   <Quest_Dorchi>4</Quest_Dorchi>
   <ModeSelectView>true</ModeSelectView>
   <SavedPreviousItems>
-    <string>CheeseCake</string>
+    <string>WarlockSkull</string>
+    <string>King_Sword</string>
+    <string>HolySwordKarsaga</string>
+    <string>FlameDarkSword</string>
+    <string>WoodenSword13</string>
+    <string>CrownofThorns</string>
+    <string>LostofDecedent</string>
+    <string>DolorousStroke</string>
+    <string>RingofAngel</string>
+    <string>HeartofIceSpirit</string>
+    <string>BlackSpikedArmor</string>
+    <string>HandprintofGrimReaper</string>
+    <string>Arrowofangel</string>
+    <string>StraightFlush</string>
+    <string>DarkPrestClothes</string>
+    <string>SweetPotato_1</string>
+    <string>FoxOrb_0</string>
+    <string>GasMask</string>
+    <string>Revenger</string>
+    <string>MessiahbladesPrototype</string>
+    <string>FlameShieldGenerator</string>
+    <string>Analyticalscope</string>
+    <string>HalfMask</string>
+    <string>BlackMoonSword</string>
+    <string>King_Cape</string>
+    <string>King_Armor</string>
+    <string>AgentSunglass</string>
+    <string>SwordOfStar</string>
+    <string>Replica</string>
+    <string>Morph</string>
+    <string>BarrierInk</string>
+    <string>PyonHammer </string>
+    <string>Candlestick</string>
+    <string>MirrorShield</string>
+    <string>WaterMelon_SwimDLC</string>
+    <string>IceSnack_SwimDLC</string>
   </SavedPreviousItems>
   <FriendShipItems>
     <FriendShipItem>
@@ -1665,7 +1785,7 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Doll</Key>
-      <Stack>6</Stack>
+      <Stack>9</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Cartoon</Key>
@@ -1673,7 +1793,7 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Gun</Key>
-      <Stack>3</Stack>
+      <Stack>5</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Dogcollar</Key>
@@ -1681,7 +1801,7 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_FishingRod</Key>
-      <Stack>6</Stack>
+      <Stack>7</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Sa</Key>
@@ -1689,11 +1809,11 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Magazine</Key>
-      <Stack>6</Stack>
+      <Stack>8</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Fan</Key>
-      <Stack>2</Stack>
+      <Stack>4</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Tea</Key>
@@ -1705,7 +1825,7 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Violin</Key>
-      <Stack>6</Stack>
+      <Stack>7</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Wi</Key>
@@ -1713,23 +1833,23 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Drink_Co</Key>
-      <Stack>5</Stack>
-    </FriendShipItem>
-    <FriendShipItem>
-      <Key>Drink_Vo</Key>
-      <Stack>1</Stack>
-    </FriendShipItem>
-    <FriendShipItem>
-      <Key>Gift_Cake</Key>
-      <Stack>3</Stack>
-    </FriendShipItem>
-    <FriendShipItem>
-      <Key>Gift_Mugwort</Key>
       <Stack>6</Stack>
     </FriendShipItem>
     <FriendShipItem>
-      <Key>Gift_Camera</Key>
+      <Key>Drink_Vo</Key>
       <Stack>3</Stack>
+    </FriendShipItem>
+    <FriendShipItem>
+      <Key>Gift_Cake</Key>
+      <Stack>4</Stack>
+    </FriendShipItem>
+    <FriendShipItem>
+      <Key>Gift_Mugwort</Key>
+      <Stack>8</Stack>
+    </FriendShipItem>
+    <FriendShipItem>
+      <Key>Gift_Camera</Key>
+      <Stack>4</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Guitar</Key>
@@ -1745,7 +1865,7 @@
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Tool</Key>
-      <Stack>4</Stack>
+      <Stack>5</Stack>
     </FriendShipItem>
     <FriendShipItem>
       <Key>Gift_Mic</Key>
@@ -1764,8 +1884,31 @@
       <Stack>5</Stack>
     </FriendShipItem>
   </FriendShipItems>
-  <DLCTicketItems />
-  <EnableSkins />
+  <DLCTicketItems>
+    <string>Suitecase_SwimDLC</string>
+  </DLCTicketItems>
+  <EnableSkins>
+    <SkinData>
+      <charKey>ShadowPriest</charKey>
+      <skinKey>Charon_Swimsuit</skinKey>
+    </SkinData>
+    <SkinData>
+      <charKey>Priest</charKey>
+      <skinKey>Pressel_Swimsuit</skinKey>
+    </SkinData>
+    <SkinData>
+      <charKey>Azar</charKey>
+      <skinKey>Azar_Swimsuit</skinKey>
+    </SkinData>
+    <SkinData>
+      <charKey>Trisha</charKey>
+      <skinKey>Trisha_Swimsuit</skinKey>
+    </SkinData>
+    <SkinData>
+      <charKey>Queen</charKey>
+      <skinKey>Huz_Swimsuit</skinKey>
+    </SkinData>
+  </EnableSkins>
   <VendingRefill>true</VendingRefill>
   <VendingItems>
     <string>Drink_Wi</string>
@@ -1784,7 +1927,7 @@
     <string>Gift_Magazine</string>
   </VendingBuyItems>
   <TalkMarkFlag>
-    <boolean>true</boolean>
+    <boolean>false</boolean>
     <boolean>true</boolean>
     <boolean>false</boolean>
     <boolean>false</boolean>

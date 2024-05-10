@@ -2,8 +2,8 @@
 <SaveSlotData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SaveSlotNum>0</SaveSlotNum>
   <SaveLanguage>0</SaveLanguage>
-  <ScreenMode>0</ScreenMode>
-  <Resolution>16</Resolution>
+  <ScreenMode>2</ScreenMode>
+  <Resolution>9</Resolution>
   <VSync>true</VSync>
   <DepthofField>false</DepthofField>
   <Antialiasing>false</Antialiasing>
@@ -15,4 +15,5 @@
   <SoundEffectVolume>50</SoundEffectVolume>
   <SoundBGMVolume>50</SoundBGMVolume>
   <ChangeLastBossBGM>false</ChangeLastBossBGM>
+  <GamepadOn>false</GamepadOn>
 </SaveSlotData>
