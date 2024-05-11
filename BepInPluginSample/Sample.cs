@@ -882,7 +882,7 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
                         if (GUILayout.Button($"ActionNum =0 ; {allyTeam.LucyAlly.ActionNum}")) { allyTeam.LucyAlly.ActionNum = 0; }
 
                         if (GUILayout.Button($"UsedDeckToDeckNum =0 ; {allyTeam.UsedDeckToDeckNum}")) { allyTeam.UsedDeckToDeckNum = 0; }
-                        if (GUILayout.Button($"GetDiscardCount ={allyTeam.GetDiscardCount + 10} ; {allyTeam.DiscardCount}")) { allyTeam.DiscardCount = allyTeam.GetDiscardCount + 10; }
+                        if (GUILayout.Button($"Discard Count  ; ")) { allyTeam.DiscardCount = allyTeam.GetDiscardCount + 10; }
                         if (GUILayout.Button($"PartySpeed ={1 + PlayData.TSavedata._PartySpeed} ; {PlayData.TSavedata._PartySpeed}")) { PlayData.TSavedata._PartySpeed = 1 + PlayData.TSavedata._PartySpeed; }
                         if (GUILayout.Button($"WaitCount ={1 + allyTeam.WaitCount} ; {allyTeam.WaitCount}")) { allyTeam.WaitCount = 1 + allyTeam.WaitCount; }
 
@@ -1175,7 +1175,7 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
         [HarmonyPrefix]
         public static bool GetDiscardCount(ref int __result)//BattleTeam __instance,
         {
-            logger.LogMessage($"GetDiscardCount");
+            //logger.LogMessage($"GetDiscardCount");
             if (!addDiscard.Value)
             {
                 return true;
