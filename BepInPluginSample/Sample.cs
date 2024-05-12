@@ -62,6 +62,7 @@ namespace BepInPluginSample
         internal static ConfigEntry<bool> isMaxHpUp;
         internal static ConfigEntry<bool> onPartyInventoryUI;
         internal static ConfigEntry<bool> skillAll;
+        internal static ConfigEntry<bool> CheckFullHand;
         //private static ConfigEntry<bool> SkillAdd_Extended;
         // private static ConfigEntry<float> uiW;
         // private static ConfigEntry<float> xpMulti;
@@ -108,18 +109,19 @@ namespace BepInPluginSample
             #region 변수 설정
             // =========================================================
 
-            skillAll = Config.Bind("game", "skillAll", true);
-            minHp1 = Config.Bind("game", "minHp1", true);
-            noDead = Config.Bind("game", "noDead", true);
+            skillAll = Config.Bind("game", "skillAll", false);
+            minHp1 = Config.Bind("game", "minHp1", false);
+            noDead = Config.Bind("game", "noDead", false);
             noDamage = Config.Bind("game", "noDamage", false);
-            noRecovery = Config.Bind("game", "noRecovery", true);
-            noAP = Config.Bind("game", "noMana", true);
-            addDiscard = Config.Bind("game", "addDiscard", true);
-            isFogout = Config.Bind("game", "isFogout", true);
-            StageArkPartOn = Config.Bind("game", "StageArkPartOn", true);
-            WaitCount = Config.Bind("game", "WaitCount", true);
-            WaitCountAdd = Config.Bind("game", "WaitCountAdd", true);
+            noRecovery = Config.Bind("game", "noRecovery", false);
+            noAP = Config.Bind("game", "noMana", false);
+            addDiscard = Config.Bind("game", "addDiscard", false);
+            isFogout = Config.Bind("game", "isFogout", false);
+            StageArkPartOn = Config.Bind("game", "StageArkPartOn", false);
+            WaitCount = Config.Bind("game", "WaitCount", false);
+            WaitCountAdd = Config.Bind("game", "WaitCountAdd", false);
             onPartyInventoryUI = Config.Bind("game", "onPartyInventoryUI", false);
+            CheckFullHand = Config.Bind("game", "CheckFullHand", false);
             //SkillAdd_Extended = Config.Bind("game", "SkillAdd_Extended", true);
             //isMaxHpUp = Config.Bind("game", "isMaxHpUp", true);
             // xpMulti = Config.Bind("game", "xpMulti", 2f);
@@ -659,6 +661,7 @@ namespace BepInPluginSample
                 if (GUILayout.Button($"WaitCountAdd {WaitCountAdd.Value}")) { WaitCountAdd.Value = !WaitCountAdd.Value; }
                 if (GUILayout.Button($"onPartyInventoryUI {onPartyInventoryUI.Value}")) { onPartyInventoryUI.Value = !onPartyInventoryUI.Value; }
                 if (GUILayout.Button($"all skill show {skillAll.Value}")) { skillAll.Value = !skillAll.Value; }
+                if (GUILayout.Button($"CheckFullHand {CheckFullHand.Value}")) { CheckFullHand.Value = !CheckFullHand.Value; }
                 //if (GUILayout.Button($"SkillAdd_Extended {SkillAdd_Extended.Value}")) { SkillAdd_Extended.Value = !SkillAdd_Extended.Value; }
                 //if (GUILayout.Button($"isMaxHpUp {isMaxHpUp.Value}")) { isMaxHpUp.Value = !isMaxHpUp.Value; }
                 GUILayout.Label("=== on/off ===");
@@ -1102,6 +1105,19 @@ ItemBase.GetItem(GDEItemKeys.Item_Passive_EndlessSoul)
         #region Harmony
         // ====================== 하모니 패치 샘플 ===================================
 
+        [HarmonyPatch(
+            typeof(BattleTeam), "CheckFullHand"        
+            )]
+        [HarmonyPrefix]
+        public static bool CheckFullHandPre(BattleTeam __instance)
+        {
+            //logger.LogMessage($"CheckFullHand"); ;
+            if (CheckFullHand.Value)
+            {
+                return false;
+            }
+            return true;
+        }
         [HarmonyPatch(typeof(BattleAlly), "Damage",
         typeof(BattleChar), typeof(int), typeof(bool), typeof(bool), typeof(bool), typeof(int), typeof(bool), typeof(bool), typeof(bool))]
         [HarmonyPrefix]
